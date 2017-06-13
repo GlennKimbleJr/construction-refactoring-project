@@ -13,3 +13,4 @@ I wanted to take this old piece of junk, and step by step turn it into something
     - After a quick look around, refamiliarizing myself on exactly what this thing was suppose to do, I've decided my first objective is to write some really simple tests to document the basic behavior. I've got so many things to tackle that I'd like at least some security going forward that this thing still works. Who knows what change will be the dominio to make them all fall?
 ## 2017.06.13
     - Having all the files in the root directory is making my eye twitch so I moved files into public/, public/includes, and public/images directories.
+    - The next thing I want to improve is readability. I'll be going through all the files fixing the spacing/indentation and converting tabs to spaces.
