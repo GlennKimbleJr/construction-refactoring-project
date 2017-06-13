@@ -1,0 +1,43 @@
+<?php 
+
+$I = new AcceptanceTester($scenario);
+$I->wantTo('Add a new project.');
+
+$zone = $I->create('zone');
+$project = make('project');
+$project_date = explode('-', $project->bidduedate);
+
+$I->amOnPage('/project.php');
+$I->click('+ ADD NEW');
+$I->see('Start a New Project');
+
+$I->fillField(['id' => 'name'], $project->name);
+$I->fillField(['id' => 'plans'], $project->plans);
+$I->fillField(['id' => 'planuser'], $project->planuser);
+$I->fillField(['id' => 'planpass'], $project->planpass);
+$I->fillField(['id' => 'owner_name'], $project->owner_name);
+$I->fillField(['id' => 'owner_phone'], $project->owner_phone);
+$I->selectOption(['name' => 'due1'], ['value' => $project_date[1]]);
+$I->selectOption(['name' => 'due2'], ['value' => $project_date[2]]);
+$I->fillField(['id' => 'due3'], $project_date[0]);
+$I->selectOption(['name' => 'zone'], ['value' => $zone->name]);
+$I->fillField(['id' => 'location'], $project->location);
+$I->click('Create');
+$I->see('Project Created!');
+
+$I->seeInDatabase('project', [
+    'name' => $project->name,
+    'bidduedate' => $project->bidduedate,
+    'completedate' => $project->completedate,
+    'zone' => $zone->name,
+    'plans' => $project->plans,
+    'planuser' => $project->planuser,
+    'planpass' => $project->planpass,
+    'owner_name' => $project->owner_name,
+    'owner_phone' => $project->owner_phone,
+    'super_name' => $project->super_name,
+    'super_phone' => $project->super_phone,
+]);
+
+$I->click('VIEW LIST');
+$I->see("{$project->name} - {$project->bidduedate}");
