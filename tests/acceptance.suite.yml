@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://construction.dev
+            url: http://construction.dev/public
         - \Helper\Acceptance
         - Db:
             dsn: 'mysql:host=127.0.0.1;dbname=construction;port=33060'

@@ -164,11 +164,11 @@ echo "<b> [ <a href='?details=$win'>GO BACK</a> ]</b><br><h1>BID AWARDED!</h1>";
 
 echo "<b> [ <a href='?details=$l'>GO BACK</a> ]</b><br><br><b>How would you rate $n's preformance on this project?</b><br><br>
 
-<a href='?score2=$score&r=happy&l=$l'><img src='happy.png' border='0'></a> 
-<a href='?score2=$score&r=good&l=$l'><img src='good.png' border='0'></a> 
-<a href='?score2=$score&r=ok&l=$l'><img src='ok.png' border='0'></a> 
-<a href='?score2=$score&r=bad&l=$l'><img src='bad.png' border='0'></a>
-<a href='?score2=$score&r=angry&l=$l'><img src='angry.png' border='0'></a>  
+<a href='?score2=$score&r=happy&l=$l'><img src='images/happy.png' border='0'></a> 
+<a href='?score2=$score&r=good&l=$l'><img src='images/good.png' border='0'></a> 
+<a href='?score2=$score&r=ok&l=$l'><img src='images/ok.png' border='0'></a> 
+<a href='?score2=$score&r=bad&l=$l'><img src='images/bad.png' border='0'></a>
+<a href='?score2=$score&r=angry&l=$l'><img src='images/angry.png' border='0'></a>  
 ";
 
 }

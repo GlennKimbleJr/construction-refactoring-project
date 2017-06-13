@@ -1,8 +1,8 @@
 <?php 
 
 	define('TITLE', 'super Menu');	
-	require('functions/connect.php');
-	include('functions/header.php');
+	require('../functions/connect.php');
+	include('../functions/header.php');
 
 
 
@@ -19,17 +19,17 @@
 			echo "<td width='40'>&nbsp;</td><td width='660' valign='top' align='left'>";
 
 
-			require('functions/super_new.php'); 
-			require('functions/super_view.php'); 
-			require('functions/super_edit.php'); 
-			require('functions/super_delete.php'); 
+			require('../functions/super_new.php'); 
+			require('../functions/super_view.php'); 
+			require('../functions/super_edit.php'); 
+			require('../functions/super_delete.php'); 
 
 			echo "</td></tr>";
 
 			echo "</table></center>";
 
 
-	include('functions/footer.php');
+	include('../functions/footer.php');
 ?>
 
 
