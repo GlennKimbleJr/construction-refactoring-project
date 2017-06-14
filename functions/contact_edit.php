@@ -31,45 +31,45 @@ if (isset($_GET['edit'])) {
         $zone8 = $_POST['zone8'];
         $zone9 = $_POST['zone9'];
 
-        // updates information in the database
-        $update_league = "UPDATE contact SET first='$first', last='$last', street='$street', city='$city', state='$state', email='$email', officephone='$officephone', cellphone='$cellphone', fax='$fax', zone='$zone', type='$type', company='$company', zip='$zip', zone2='$zone2', zone3='$zone3', zone4='$zone4', zone5='$zone5', zone6='$zone6', zone7='$zone7', zone8='$zone8', zone9='$zone9' WHERE id='$id2'";
-        $update_works = mysql_query($update_league);
-        if (! $update_works) {
+        $query = $db->setData(
+            'UPDATE contact SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, zone = ?, type = ?, company = ?, zip = ?, zone2 = ?, zone3 = ?, zone4 = ?, zone5 = ?, zone6 = ?, zone7 = ?, zone8 = ?, zone9 = ? WHERE id = ?', 
+            [$first, $last, $street, $city, $state, $email, $officephone, $cellphone, $fax, $zone, $type, $company, $zip, $zone2, $zone3, $zone4, $zone5, $zone6, $zone7, $zone8, $zone9, $id2]
+        );
+
+        if (! $db->updated($query)) {
             die('<br><br>Update Error');
         } else {
             die('<br><br>Updated!');
         }
     }
 
-    $selectusercheck = "SELECT * FROM contact WHERE id='$did'";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-       die('Could not get data: ' . mysql_error());
-    }
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $mid = $selectusercheck_row['id'];
-        $mfirst = $selectusercheck_row['first'];
-        $mlast = $selectusercheck_row['last'];
-        $mstreet = $selectusercheck_row['street'];
-        $mcity = $selectusercheck_row['city'];
-        $mstate = $selectusercheck_row['state'];
-        $mzone = $selectusercheck_row['zone'];
-        $memail = $selectusercheck_row['email'];
-        $mofficephone = $selectusercheck_row['officephone'];
-        $mcellphone = $selectusercheck_row['cellphone'];
-        $mfax = $selectusercheck_row['fax'];
-        $mtype = $selectusercheck_row['type'];
-        $mcompany = $selectusercheck_row['company'];
-        $mzip = $selectusercheck_row['zip'];
-        $mzone2 = $selectusercheck_row['zone2'];
-        $mzone3 = $selectusercheck_row['zone3'];
-        $mzone4 = $selectusercheck_row['zone4'];
-        $mzone5 = $selectusercheck_row['zone5'];
-        $mzone6 = $selectusercheck_row['zone6'];
-        $mzone7 = $selectusercheck_row['zone7'];
-        $mzone8 = $selectusercheck_row['zone8'];
-        $mzone9 = $selectusercheck_row['zone9'];
-    }
+    $contact = $db->getFirst('SELECT * FROM contact WHERE id = ?', [$did]);
+
+    $mid = $contact['id'];
+    $mfirst = $contact['first'];
+    $mlast = $contact['last'];
+    $mstreet = $contact['street'];
+    $mcity = $contact['city'];
+    $mstate = $contact['state'];
+    $mzone = $contact['zone'];
+    $memail = $contact['email'];
+    $mofficephone = $contact['officephone'];
+    $mcellphone = $contact['cellphone'];
+    $mfax = $contact['fax'];
+    $mtype = $contact['type'];
+    $mcompany = $contact['company'];
+    $mzip = $contact['zip'];
+    $mzone2 = $contact['zone2'];
+    $mzone3 = $contact['zone3'];
+    $mzone4 = $contact['zone4'];
+    $mzone5 = $contact['zone5'];
+    $mzone6 = $contact['zone6'];
+    $mzone7 = $contact['zone7'];
+    $mzone8 = $contact['zone8'];
+    $mzone9 = $contact['zone9'];
+
+    $zones = $db->getData('SELECT * FROM zone ORDER BY name');
+    $categories = $db->getData('SELECT * FROM type ORDER BY name');
 
     ?>
 
@@ -124,52 +124,25 @@ if (isset($_GET['edit'])) {
 
             <select name="zone">    
                 <option value="<?php echo "$mzone" ?>"><?php echo "$mzone" ?></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
 
             <select name="zone2">   
                 <option value="<?php echo "$mzone2" ?>"><?php echo "$mzone2" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
 
             <select name="zone3">
                 <option value="<?php echo "$mzone3" ?>"><?php echo "$mzone3" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
         </p>
 
@@ -177,53 +150,25 @@ if (isset($_GET['edit'])) {
             <select name="zone4">
                 <option value="<?php echo "$mzone4" ?>"><?php echo "$mzone4" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
 
             <select name="zone5">
                 <option value="<?php echo "$mzone5" ?>"><?php echo "$mzone5" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
 
             <select name="zone6">
                 <option value="<?php echo "$mzone6" ?>"><?php echo "$mzone6" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
         </p>
 
@@ -231,55 +176,25 @@ if (isset($_GET['edit'])) {
             <select name="zone7">
                 <option value="<?php echo "$mzone7" ?>"><?php echo "$mzone7" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
 
             <select name="zone8">
                 <option value="<?php echo "$mzone8" ?>"><?php echo "$mzone8" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
 
             <select name="zone9">
                 <option value="<?php echo "$mzone9" ?>"><?php echo "$mzone9" ?></option>
                 <option value=""></option>
-                <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
         </p>
 
@@ -287,19 +202,9 @@ if (isset($_GET['edit'])) {
             <label>Category: </label>
             <select name="type">
                 <option value="<?php echo "$mtype" ?>"><?php echo "$mtype" ?></option>
-                <?php
-
-                $sql_selectleague2 = "SELECT * FROM type ORDER BY name";
-                $works_selectleague2 = mysql_query( $sql_selectleague2, $connection );
-                if (! $works_selectleague2) {
-                    die('Could not get data: ' . mysql_error());
-                }
-
-                while ($row_selectleague2 = mysql_fetch_array($works_selectleague2, MYSQL_ASSOC)) {
-                    $leaguename2 = $row_selectleague2['name'];
-                    echo "<option value='" . $leaguename2 . "'>"; ?><?php echo "$leaguename2";?><?php echo "</option>"; 
-                }
-                ?>
+                <?php foreach ($categories as $cat) {
+                    echo "<option value='{$cat['name']}'>{$cat['name']}</option>";
+                } ?>
             </select>
         </p>
 

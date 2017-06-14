@@ -19,24 +19,20 @@ if (isset($_GET['view'])) {
 
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact ORDER BY company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact ORDER BY company");
 
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -77,24 +73,20 @@ if (isset($_GET['viewf'])) {
     <div id='pagenation'>";
 
 
-    $selectusercheck = "SELECT * FROM contact ORDER BY first, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact ORDER BY first, company");
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -135,24 +127,20 @@ if (isset($_GET['viewl'])) {
     </table>
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact ORDER BY last, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact ORDER BY last, company");
 
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -193,24 +181,20 @@ if (isset($_GET['viewc'])) {
 
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact ORDER BY city, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact ORDER BY city, company");
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -251,24 +235,20 @@ if (isset($_GET['views'])) {
     
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact ORDER BY state, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact ORDER BY state, company");
 
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -309,24 +289,20 @@ if (isset($_GET['viewt'])) {
     
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact ORDER BY type, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact ORDER BY type, company");
 
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -353,14 +329,10 @@ if (isset($_GET['viewt'])) {
 if (isset($_GET['type'])) {
     echo "<h3>SELECT A TYPE</h3>";
 
-    $selectusercheck = "SELECT * FROM type ORDER BY name";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM type ORDER BY name");
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $name = $selectusercheck_row['name'];
+    foreach ($contacts as $contact) {
+        $name = $contact['name'];
 
         echo "<A href='?t=$name'>$name</a><br>";
     }
@@ -385,24 +357,20 @@ if (isset($_GET['t'])) {
 
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE type = '$t' ORDER BY company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY company", [$t]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -444,24 +412,20 @@ if (isset($_GET['tf'])) {
     
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE type = '$tf' ORDER BY first, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY first, company", [$tf]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -503,24 +467,20 @@ if (isset($_GET['tl'])) {
         
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE type = '$tl' ORDER BY last, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
-    
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY last, company", [$tl]);
+
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -562,24 +522,20 @@ if (isset($_GET['tc'])) {
 
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE type = '$tc' ORDER BY city, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY city, company", [$tc]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -621,24 +577,20 @@ if (isset($_GET['ts'])) {
     
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE type = '$ts' ORDER BY state, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY state, company", [$ts]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -665,14 +617,10 @@ if (isset($_GET['ts'])) {
 if (isset($_GET['zone'])) {
     echo "<h3>SELECT A ZONE</h3>";
 
-    $selectusercheck = "SELECT * FROM zone ORDER BY name";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM zone ORDER BY name");
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $name = $selectusercheck_row['name'];
+    foreach ($contacts as $contact) {
+        $name = $contact['name'];
 
         echo "<A href='?z=$name'>$name</a><br>";
     }
@@ -696,24 +644,20 @@ if (isset($_GET['z'])) {
 
         <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE (zone = '$z' OR zone2 = '$z' OR zone3 = '$z' OR zone4 = '$z' OR zone5 = '$z' OR zone6 = '$z' OR zone7 = '$z' OR zone8 = '$z' OR zone9 = '$z') ORDER BY company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company", [$z, $z, $z, $z, $z, $z, $z, $z, $z]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -756,24 +700,20 @@ if (isset($_GET['zf'])) {
     
         <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE (zone = '$zf' OR zone2 = '$zf' OR zone3 = '$zf' OR zone4 = '$zf' OR zone5 = '$zf' OR zone6 = '$zf' OR zone7 = '$zf' OR zone8 = '$zf' OR zone9 = '$zf') ORDER BY first, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY first, company", [$zf, $zf, $zf, $zf, $zf, $zf, $zf, $zf, $zf]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -816,24 +756,20 @@ if (isset($_GET['zl'])) {
 
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE (zone = '$zl' OR zone2 = '$zl' OR zone3 = '$zl' OR zone4 = '$zl' OR zone5 = '$zl' OR zone6 = '$zl' OR zone7 = '$zl' OR zone8 = '$zl' OR zone9 = '$zl') ORDER BY last, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY last, company", [$zl, $zl, $zl, $zl, $zl, $zl, $zl, $zl, $zl]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -876,24 +812,20 @@ if (isset($_GET['zc'])) {
 
         <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE (zone = '$zc' OR zone2 = '$zc' OR zone3 = '$zc' OR zone4 = '$zc' OR zone5 = '$zc' OR zone6 = '$zc' OR zone7 = '$zc' OR zone8 = '$zc' OR zone9 = '$zc') ORDER BY city, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY city, company", [$zc, $zc, $zc, $zc, $zc, $zc, $zc, $zc, $zc]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -936,24 +868,20 @@ if (isset($_GET['zs'])) {
     
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE (zone = '$zs' OR zone2 = '$zs' OR zone3 = '$zs' OR zone4 = '$zs' OR zone5 = '$zs' OR zone6 = '$zs' OR zone7 = '$zs' OR zone8 = '$zs' OR zone9 = '$zs') ORDER BY state, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY state, company", [$zs, $zs, $zs, $zs, $zs, $zs, $zs, $zs, $zs]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>
@@ -996,24 +924,20 @@ if (isset($_GET['zt'])) {
 
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE (zone = '$zt' OR zone2 = '$zt' OR zone3 = '$zt' OR zone4 = '$zt' OR zone5 = '$zt' OR zone6 = '$zt' OR zone7 = '$zt' OR zone8 = '$zt' OR zone9 = '$zt') ORDER BY type, company";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY type, company", [$zt, $zt, $zt, $zt, $zt, $zt, $zt, $zt, $zt]);
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $first2 = $selectusercheck_row['first'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $first2 = $contact['first'];
         $first = substr($first2, 0, 10);
-        $last2 = $selectusercheck_row['last'];
+        $last2 = $contact['last'];
         $last = substr($last2, 0, 10);
-        $city2 = $selectusercheck_row['city'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 10);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 10);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 16);
 
         echo "<div class='z'>

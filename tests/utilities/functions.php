@@ -24,7 +24,7 @@ function make($type, $attribs = [], $object = true)
 function create_new_category($attribs)
 {
     return override([
-        'name' => 'Test'
+        'name' => 'Test Category'
     ], $attribs);
 }
 
@@ -37,11 +37,11 @@ function create_new_category($attribs)
 function create_new_contact($attribs)
 {
     return override([
-        'first' => 'Test',
-        'last' => 'Tester',
+        'first' => 'Test First',
+        'last' => 'Test Last',
         'street' => '123 Test St.',
         'city' => 'Testville',
-        'state' => 'Test',
+        'state' => 'Test State',
         'zone' => '',
         'email' => 'test@example.org',
         'officephone' => '555-555-5555',
@@ -96,7 +96,7 @@ function create_new_project($attribs)
 function create_new_super($attribs)
 {
     return override([
-        'name' => 'Test',
+        'name' => 'Test Super',
         'phone' => '555-555-5555'
     ], $attribs);
 }
@@ -110,7 +110,7 @@ function create_new_super($attribs)
 function create_new_zone($attribs)
 {
     return override([
-        'name' => 'Test'
+        'name' => 'Test Zone'
     ], $attribs);
 }
 

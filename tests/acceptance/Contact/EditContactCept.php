@@ -12,6 +12,8 @@ $zone6 = $I->create('zone', ['name' => 'Test Zone 6']);
 $zone7 = $I->create('zone', ['name' => 'Test Zone 7']);
 $zone8 = $I->create('zone', ['name' => 'Test Zone 8']);
 $zone9 = $I->create('zone', ['name' => 'Test Zone 9']);
+$category1 = $I->create('category', ['name' => 'Test Category 1'], 'type');
+$category2 = $I->create('category', ['name' => 'Test Category 2'], 'type');
 $contact = $I->create('contact', [
     'zone' => $zone1->name,
     'zone2' => $zone2->name,
@@ -21,7 +23,8 @@ $contact = $I->create('contact', [
     'zone6' => $zone6->name,
     'zone7' => $zone7->name,
     'zone8' => $zone8->name,
-    'zone9' => $zone9->name
+    'zone9' => $zone9->name,
+    'type' => $category1->name
 ]);
 
 $I->amOnPage('/contact.php?view');
@@ -53,6 +56,7 @@ $I->seeOptionIsSelected(['name' => 'zone6'], $zone6->name);
 $I->seeOptionIsSelected(['name' => 'zone7'], $zone7->name);
 $I->seeOptionIsSelected(['name' => 'zone8'], $zone8->name);
 $I->seeOptionIsSelected(['name' => 'zone9'], $zone9->name);
+$I->seeOptionIsSelected(['name' => 'type'], $category1->name);
 
 $I->fillField(['id' => 'company'], $contact->company = 'New Company Name');
 $I->fillField(['id' => 'first'], $contact->first = 'New First');
@@ -74,6 +78,7 @@ $I->selectOption(['name' => 'zone6'], ['value' => $zone7->name]);
 $I->selectOption(['name' => 'zone7'], ['value' => $zone8->name]);
 $I->selectOption(['name' => 'zone8'], ['value' => $zone9->name]);
 $I->selectOption(['name' => 'zone9'], ['value' => $zone1->name]);
+$I->selectOption(['name' => 'type'], ['value' => $category2->name]);
 $I->click('UPDATE');
 $I->see('Updated!');
 
@@ -106,3 +111,4 @@ $I->seeOptionIsSelected(['name' => 'zone6'], $zone7->name);
 $I->seeOptionIsSelected(['name' => 'zone7'], $zone8->name);
 $I->seeOptionIsSelected(['name' => 'zone8'], $zone9->name);
 $I->seeOptionIsSelected(['name' => 'zone9'], $zone1->name);
+$I->seeOptionIsSelected(['name' => 'type'], $category2->name);

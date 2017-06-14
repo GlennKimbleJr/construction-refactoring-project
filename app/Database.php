@@ -50,6 +50,23 @@ class Database
     {
         return $this->prepare($query, $params)
             ->fetchAll(PDO::FETCH_ASSOC);
+    }    
+    /** 
+     * Returns array of the data. 
+     * Limits to first record returned.
+     * 
+     * @param  string $query
+     * @param  array  $params
+     * @return array
+     */
+    public function getFirst($query, $params = null)
+    {
+        $data = $this->prepare($query . ' LIMIT 1', $params)
+            ->fetchAll(PDO::FETCH_ASSOC);
+        
+        if (! count($data)) return $data;
+
+        return $data[0];
     }
 
     /**

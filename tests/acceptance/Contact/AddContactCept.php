@@ -4,6 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Add a new contact.');
 
 $contact = make('contact');
+$category = $I->create('category', [], 'type');
 $zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
 $zone3 = $I->create('zone', ['name' => 'Test Zone 3']);
@@ -38,6 +39,7 @@ $I->selectOption(['name' => 'zone6'], ['value' => $zone6->name]);
 $I->selectOption(['name' => 'zone7'], ['value' => $zone7->name]);
 $I->selectOption(['name' => 'zone8'], ['value' => $zone8->name]);
 $I->selectOption(['name' => 'zone9'], ['value' => $zone9->name]);
+$I->selectOption(['name' => 'type'], ['value' => $category->name]);
 $I->click('Create');
 $I->see('Contact Added!');
 
@@ -52,7 +54,7 @@ $I->seeInDatabase('contact', [
     'officephone' => $contact->officephone,
     'cellphone' => $contact->cellphone,
     'fax' => $contact->fax,
-    'type' => $contact->type,
+    'type' => $category->name,
     'company' => $contact->company,
     'zip' => $contact->zip,
     'zone2' => $zone2->name,
