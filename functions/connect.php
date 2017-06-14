@@ -1,6 +1,8 @@
 <?php
 
-error_reporting(0);
+require '../vendor/autoload.php';
+
+error_reporting(E_ALL);
 
 $date = date("Y-m-d"); 
 
@@ -13,3 +15,5 @@ $select_db = mysql_select_db('construction');
 if (! $select_db) {
     die("Database Selection Failed" . mysql_error());
 }
+
+$db = new App\Database('mysql:host=localhost;dbname=construction;', 'homestead', 'secret');

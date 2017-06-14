@@ -10,8 +10,8 @@ if (isset($_GET['delete'])) {
 
 if (isset($_GET['delyes'])) {
     $delid = $_GET['delyes'];
+
+    $db->setData('DELETE FROM type WHERE id = ?', [$delid]);
     
-    $delete_match = "DELETE FROM `type` WHERE id = '$delid'";
-    $delete_works = mysql_query( $delete_match, $connection );
     die('<h1>DELETED!</h1><br>');
 }

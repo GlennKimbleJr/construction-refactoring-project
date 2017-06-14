@@ -9,27 +9,20 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['name'])) {
         $id2 = $_POST['id2'];
         $name = $_POST['name'];
-        $name2 = mysql_real_escape_string($name);
+        $name2 = htmlspecialchars($name);
 
         // updates information in the database
-        $update_league = "UPDATE type SET name='$name2' WHERE id='$id2'";
-        $update_works = mysql_query($update_league);
-        if (! $update_works) {
+        $query = $db->setData('UPDATE type SET name = ? WHERE id = ?', [$name2, $id2]);
+        if (! $db->updated($query)) {
             die('<br><br>Update Error');
         } else {
             die('<br><br>Updated!');
         }
     }
 
-    $selectusercheck = "SELECT * FROM type WHERE id='$did'";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $Mid = $selectusercheck_row['id'];
-        $Mname = $selectusercheck_row['name'];
-    }
+    $selectusercheck_row = $db->getData('SELECT * FROM type WHERE id = ?', [$did]);
+    $Mid = $selectusercheck_row[0]['id'];
+    $Mname = $selectusercheck_row[0]['name'];
 
     ?>
 

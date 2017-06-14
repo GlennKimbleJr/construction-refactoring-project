@@ -10,9 +10,8 @@ if (isset($_GET['new'])) {
         $name = mysql_real_escape_string($name2);
 
         // inserts information into database
-        $query_startseason = "INSERT INTO `type` (name) VALUES ('$name')";
-        $result_startseason = mysql_query($query_startseason);
-        if ($result_startseason) {
+        $query = $db->setData('INSERT INTO `type` (name) VALUES (?)', [$name]);
+        if ($db->updated($query)) {
             die('<br><br>Created!');
         } else {
             die('<br><br>Error! Unable to create categories.');
