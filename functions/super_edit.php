@@ -11,9 +11,11 @@ if (isset($_GET['edit'])) {
         $phone = $_POST['phone'];
 
         // updates information in the database
-        $update_league = "UPDATE super SET name='$name2', phone='$phone' WHERE id='$id2'";
-        $update_works = mysql_query($update_league);
-        if (! $update_works) {
+        $query = $db->setData(
+            "UPDATE super SET name=?, phone=? WHERE id=?",
+            [$name2, $phone, $id2]
+        );
+        if (! $db->updated($query)) {
             die('<br><br>Update Error');
         } else {
             die('<br><br>Updated!');
@@ -22,17 +24,14 @@ if (isset($_GET['edit'])) {
 
     $did = $_GET['edit'];
 
-    $selectusercheck = "SELECT * FROM super WHERE id='$did'";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
+    $super = $db->getFirst("SELECT * FROM super WHERE id=?", [$did]);
+    if (! count($super)) {
+        die('Could not get data.');
     }
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $Mid = $selectusercheck_row['id'];
-        $Mname = $selectusercheck_row['name'];
-        $Mphone = $selectusercheck_row['phone'];
-    }
+    $Mid = $super['id'];
+    $Mname = $super['name'];
+    $Mphone = $super['phone'];
 
     ?>
 

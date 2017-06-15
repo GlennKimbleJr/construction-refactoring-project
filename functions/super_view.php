@@ -8,16 +8,12 @@ if (isset($_GET['view'])) {
         <div id='pagenation'>";
 
 
-    $selectusercheck = "SELECT * FROM super ORDER BY name";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $supers = $db->getData("SELECT * FROM super ORDER BY name");
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $name = $selectusercheck_row['name'];
-        $phone = $selectusercheck_row['phone'];
+    foreach ($supers as $super) {
+        $id = $super['id'];
+        $name = $super['name'];
+        $phone = $super['phone'];
 
         echo "<div class='z'><a href='?edit=$id'>$name</a> - $phone</div>";
     }

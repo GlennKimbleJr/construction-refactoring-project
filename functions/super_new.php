@@ -10,9 +10,8 @@ if (isset($_GET['new'])) {
         $phone = $_POST['phone'];
 
         // inserts information into database
-        $query_startseason = "INSERT INTO `super` (name, phone) VALUES ('$name', '$phone')";
-        $result_startseason = mysql_query($query_startseason);
-        if ($result_startseason) {
+        $query = $db->setData("INSERT INTO `super` (name, phone) VALUES (?, ?)", [$name, $phone]);
+        if ($db->updated($query)) {
             die('<br><br>Created!');
         } else {
             die('<br><br>Error! Unable to create super.');

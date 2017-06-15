@@ -12,8 +12,8 @@ if (isset($_GET['delete'])) {
 
 if (isset($_GET['delyes'])) {
     $delid = $_GET['delyes'];
-    $delete_match = "DELETE FROM `super` WHERE id = '$delid'";
-    $delete_works = mysql_query( $delete_match, $connection );
+
+    $db->setData("DELETE FROM `super` WHERE id = ?", [$delid]);
     
     die('<h1>DELETED!</h1><br>');
 }
