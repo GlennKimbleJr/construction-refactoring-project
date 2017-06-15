@@ -3,35 +3,26 @@
 // Starts Script
 if (isset($_GET['score'])) {
 
-    $selectusercheck = "SELECT * FROM contact";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact");
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $company = $selectusercheck_row['company'];
+    foreach ($contacts as $contact) {
 
-        $selectusercheck2 = "SELECT sum(score) FROM bid_contactors WHERE company = '$company' AND score != 'NA'";
-        $selectusercheck_works2 = mysql_query( $selectusercheck2, $connection );
-        if (! $selectusercheck_works2) {
-            die('Could not get data: ' . mysql_error());
-        }
+        $score = $db->getFirst(
+            "SELECT sum(score) as sum FROM bid_contactors WHERE company = ? AND score != '0'", 
+            [$contact['company']]
+        );
 
-        $selectusercheck2a = "SELECT * FROM bid_contactors WHERE company = '$company' AND score != 'NA'";
-        $selectusercheck_works2a = mysql_query( $selectusercheck2a, $connection );
-        if (! $selectusercheck_works2a) {
-            die('Could not get data: ' . mysql_error());
-        }
+        $scoredBidTotal = $db->getCount(
+            "SELECT NULL FROM bid_contactors WHERE company = ? AND score != '0'",
+            [$contact['company']]
+        );
 
-        $sum = mysql_fetch_array($selectusercheck_works2);
-        $count1 = mysql_num_rows($selectusercheck_works2a);
-        $sum2 = $sum[0];
-        $final = $sum2 / $count1;
+        $scoreAverage = $score['sum'] / $scoredBidTotal;
 
-        if ($sum2 != 0) {
-            $update_league = "UPDATE contact SET score_per='$final' WHERE company='$company'";
-            $update_works = mysql_query($update_league);
+        if ($score['sum']) {
+            $db->setData("UPDATE contact SET score_per=? WHERE company=?", 
+                [$scoreAverage, $contact['company']]
+            );
         }
     }
 
@@ -48,22 +39,18 @@ if (isset($_GET['score'])) {
                 <td align='center' width='10%'><font size='1'><b>score</b></font></td>
             </tr>";
 
-    $selectusercheck = "SELECT * FROM contact WHERE score_per != '' ORDER BY score_per";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $contacts = $db->getData("SELECT * FROM contact WHERE score_per != '0' ORDER BY score_per");
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $city2 = $selectusercheck_row['city'];
+    foreach ($contacts as $contact) {
+        $id = $contact['id'];
+        $city2 = $contact['city'];
         $city = substr($city2, 0, 18);
-        $state = $selectusercheck_row['state'];
-        $type2 = $selectusercheck_row['type'];
+        $state = $contact['state'];
+        $type2 = $contact['type'];
         $type = substr($type2, 0, 18);
-        $company2 = $selectusercheck_row['company'];
+        $company2 = $contact['company'];
         $company = substr($company2, 0, 18);
-        $score = $selectusercheck_row['score_per'];
+        $score = $contact['score_per'];
         
         echo "<div class='z'>
             <tr>
