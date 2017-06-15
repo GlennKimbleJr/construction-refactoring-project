@@ -11,9 +11,8 @@ if (isset($_GET['edit'])) {
         $name2 = mysql_real_escape_string($name);
 
         // updates information in the database
-        $update_league = "UPDATE zone SET name='$name2' WHERE id='$id2'";
-        $update_works = mysql_query($update_league);
-        if (! $update_works) {
+        $query = $db->setData("UPDATE zone SET name=? WHERE id=?", [$name2, $id2]);
+        if (! $db->updated($query)) {
             die('<br><br>Update Error');
         } else {
            die('<br><br>Updated!');
@@ -22,16 +21,13 @@ if (isset($_GET['edit'])) {
 
     $did = $_GET['edit'];
 
-    $selectusercheck = "SELECT * FROM zone WHERE id='$did'";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
+    $zone = $db->getFirst("SELECT * FROM zone WHERE id=?", [$did]);
+    if (! count($zone)) {
+        die('Could not get data.');
     }
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $Mid = $selectusercheck_row['id'];
-        $Mname = $selectusercheck_row['name'];
-    }
+    $Mid = $zone['id'];
+    $Mname = $zone['name'];
 
     ?>
 

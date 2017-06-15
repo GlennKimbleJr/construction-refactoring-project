@@ -6,12 +6,11 @@ if (isset($_GET['new'])) {
     // checks to see if posted
     if (isset($_POST['name'])) {
         $name2 = $_POST['name'];
-        $name = mysql_real_escape_string($name2);
+        $name = htmlspecialchars($name2);
 
         // inserts information into database
-        $query_startseason = "INSERT INTO `zone` (name) VALUES ('$name')";
-        $result_startseason = mysql_query($query_startseason);
-        if ($result_startseason) {
+        $query = $db->setData("INSERT INTO `zone` (name) VALUES (?)", [$name]);
+        if ($db->updated($query)) {
             die('<br><br>Created!');
         } else {
             die('<br><br>Error! Unable to create zone.');

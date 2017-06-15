@@ -13,8 +13,8 @@ if(isset($_GET['delete'])) {
 
 if (isset($_GET['delyes'])) {
     $delid = $_GET['delyes'];
-    $delete_match = "DELETE FROM `zone` WHERE id = '$delid'";
-    $delete_works = mysql_query( $delete_match, $connection );
+
+    $db->setData("DELETE FROM `zone` WHERE id = ?", [$delid]);
     
     die('<h1>DELETED!</h1><br>');
 }
