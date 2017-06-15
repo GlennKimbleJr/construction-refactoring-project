@@ -17,3 +17,7 @@ I wanted to take this old piece of junk, and step by step turn it into something
     - The next thing I want to improve is readability. I'll be going through all the files fixing the spacing/indentation and converting tabs to spaces.
 ## 2017.06.14
     - The script is using php's depricated mysql library. The next major change will be switching that over to PDO. I've setup an App\Database helper class as a wrapper around a PDO object that I'll be using.
+## 2017.06.15
+    - Finished removing depricated mysql extensions. 
+
+    - Going to start working on general refactoring; removing undeeded temporary variables, dry up code where possible, etc.

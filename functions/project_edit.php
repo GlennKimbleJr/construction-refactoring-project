@@ -7,7 +7,7 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['name'])) {
         $id2 = $_POST['id2'];
         $name = $_POST['name'];
-        $name2 = mysql_real_escape_string($name);
+        $name2 = htmlspecialchars($name);
         $due1 = $_POST['due1'];
         $due2 = $_POST['due2'];
         $due3 = $_POST['due3'];

@@ -6,7 +6,7 @@ if (isset($_GET['new'])) {
     // checks to see if posted
     if (isset($_POST['company'])) {
         $company2 = $_POST['company'];
-        $company = mysql_real_escape_string($company2);
+        $company = htmlspecialchars($company2);
         $first = $_POST['first'];
         $last = $_POST['last'];
         $street = $_POST['street'];

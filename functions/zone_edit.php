@@ -8,7 +8,7 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['name'])) {
         $id2 = $_POST['id2'];
         $name = $_POST['name'];
-        $name2 = mysql_real_escape_string($name);
+        $name2 = htmlspecialchars($name);
 
         // updates information in the database
         $query = $db->setData("UPDATE zone SET name=? WHERE id=?", [$name2, $id2]);

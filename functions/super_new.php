@@ -6,7 +6,7 @@ if (isset($_GET['new'])) {
     // checks to see if posted
     if (isset($_POST['name'])) {
         $name2 = $_POST['name'];
-        $name = mysql_real_escape_string($name2);
+        $name = htmlspecialchars($name2);
         $phone = $_POST['phone'];
 
         // inserts information into database

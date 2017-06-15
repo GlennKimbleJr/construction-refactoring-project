@@ -6,7 +6,7 @@ if (isset($_GET['new'])) {
     // checks to see if posted
     if (isset($_POST['name'])) {
         $name2 = $_POST['name'];
-        $name = mysql_real_escape_string($name2);
+        $name = htmlspecialchars($name2);
         $due1 = $_POST['due1'];
         $due2 = $_POST['due2'];
         $due3 = $_POST['due3'];

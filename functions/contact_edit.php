@@ -20,7 +20,7 @@ if (isset($_GET['edit'])) {
         $fax = $_POST['fax'];
         $type = $_POST['type'];
         $company2 = $_POST['company'];
-        $company = mysql_real_escape_string($company2);
+        $company = htmlspecialchars($company2);
         $zip = $_POST['zip'];
         $zone2 = $_POST['zone2'];
         $zone3 = $_POST['zone3'];
