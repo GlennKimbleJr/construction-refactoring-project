@@ -1,21 +1,16 @@
 <?php
 
-// Starts Script
-
+// Create a new category.
 if (isset($_GET['new'])) {
 
     // checks to see if posted
     if (isset($_POST['name'])) {
-        $name2 = $_POST['name'];
-        $name = htmlspecialchars($name2);
 
-        // inserts information into database
-        $query = $db->setData('INSERT INTO `type` (name) VALUES (?)', [$name]);
-        if ($db->updated($query)) {
-            die('<br><br>Created!');
-        } else {
-            die('<br><br>Error! Unable to create categories.');
-        }
+        $query = $db->setData('INSERT INTO `type` (name) VALUES (?)', 
+            [htmlspecialchars($_POST['name'])]
+        );
+        
+        die($db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create categories.');
     }
     ?>
 
@@ -23,7 +18,7 @@ if (isset($_GET['new'])) {
     <form action="" method="POST">
         <p>
             <label>Name: </label>
-            <input id="name" type="text" name="name" required placeholder="Joe Bob's Remodel" />
+            <input id="name" type="text" name="name" required placeholder="Category Name" />
         </p>
 
         <input class="btn register" type="submit" name="submit" value="Create" />

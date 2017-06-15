@@ -1,17 +1,22 @@
 <?php
 
-// Starts Script
+// Delete Category
 if (isset($_GET['delete'])) {
-    $did = $_GET['delete'];
+    $categoryId = intval($_GET['delete']);
 
-    echo "<h1>ARE YOU SURE?</h1><br>
-    <h2><a href='?delyes=$did'>YES</a> | <a href='?edit=$did'>NO</a></h2>";
+    echo "<h1>ARE YOU SURE?</h1>
+        <br>
+        <h2>
+            <a href='?delyes={$categoryId}'>YES</a> | 
+            <a href='?edit={$categoryId}'>NO</a>
+        </h2>";
 }
 
+// Confirm Delete Category
 if (isset($_GET['delyes'])) {
-    $delid = $_GET['delyes'];
+    $db->setData('DELETE FROM type WHERE id = ?', 
+        [intval($_GET['delyes'])]
+    );
 
-    $db->setData('DELETE FROM type WHERE id = ?', [$delid]);
-    
     die('<h1>DELETED!</h1><br>');
 }
