@@ -18,23 +18,22 @@ if (isset($_GET['new'])) {
         $planpass = $_POST['planpass'];
         $owner_name = $_POST['owner_name'];
         $owner_phone = $_POST['owner_phone'];
-        $super = $_POST['super'];
+        $super_name = '';
+        $super_phone = '';
 
-        $sql_selectleaguera = "SELECT * FROM super WHERE name = '$super'";
-        $works_selectleaguera = mysql_query( $sql_selectleaguera, $connection );
-        if (! $works_selectleaguera) {
-            die('Could not get data: ' . mysql_error());
-        }
-
-        while ($row_selectleaguera = mysql_fetch_array($works_selectleaguera, MYSQL_ASSOC)) {
-            $super_name = $row_selectleaguera['name'];
-            $super_phone = $row_selectleaguera['phone'];
+        if (! empty($_POST['super'])) {
+            $super = $db->getFirst("SELECT * FROM super WHERE name = ?", [$_POST['super']]);
+            $super_name = $super['name'];
+            $super_phone = $super['phone'];
         }
 
         // inserts information into database
-        $query_startseason = "INSERT INTO `project` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_name, super_phone) VALUES ('$name', '$due', '', '$zone', '$plans', '$location', '$planuser', '$planpass', '$owner_name', '$owner_phone', '$super_name', '$super_phone')";
-        $result_startseason = mysql_query($query_startseason);
-        if ($result_startseason) {
+        $query = $db->setData(
+            "INSERT INTO `project` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_name, super_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$name, $due, '', $zone, $plans, $location, $planuser, $planpass, $owner_name, $owner_phone, $super_name, $super_phone]
+        );
+        
+        if ($db->updated($query)) {
             die('<br><br>Project Created!');
         } else {
             die('<br><br>Error! Unable to create project.');
@@ -125,41 +124,24 @@ if (isset($_GET['new'])) {
         <p>
             <label>Zone: <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a></label><br>
             
-            <select name="zone">    
-            <?php 
-
-            $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-            $works_selectleague = mysql_query( $sql_selectleague, $connection );
-            if (! $works_selectleague) {
-                die('Could not get data: ' . mysql_error());
-            }
-
-            while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                $leaguename = $row_selectleague['name'];
-                echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-            }
-
-            ?>
+            <select name="zone">
+                <?php
+                $zones = $db->getData("SELECT * FROM zone ORDER BY name");
+                foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
         </p>
 
         <p>
             <label>Select Superintendent:</label><br>
             <select name="super">   
-                <option value=""></option>  
-                <?php 
-
-                $sql_selectleaguer = "SELECT * FROM super ORDER BY name";
-                $works_selectleaguer = mysql_query( $sql_selectleaguer, $connection );
-                if (! $works_selectleaguer) {
-                    die('Could not get data: ' . mysql_error());
-                }
-                
-                while ($row_selectleaguer = mysql_fetch_array($works_selectleaguer, MYSQL_ASSOC)) {
-                    $leaguenamer = $row_selectleaguer['name'];
-                    echo "<option value='" . $leaguenamer . "'>"; ?><?php echo "$leaguenamer";?><?php echo "</option>"; 
-                }
-                ?>
+                <option value=""></option>
+                <?php
+                $supers = $db->getData("SELECT * FROM super ORDER BY name");
+                foreach ($supers as $super) {
+                    echo "<option value='{$super['name']}'>{$super['name']}</option>";
+                } ?>
             </select>
         </p>
 

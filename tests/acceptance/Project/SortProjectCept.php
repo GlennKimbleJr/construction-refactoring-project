@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Sort projects by complete and incomplete.');

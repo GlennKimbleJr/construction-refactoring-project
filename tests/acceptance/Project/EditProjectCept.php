@@ -1,11 +1,17 @@
-<?php 
+<?php
 
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Edit a project\'s details');
 
+$super1 = $I->create('super', ['name' => 'Test Super 1']);
+$super2 = $I->create('super', ['name' => 'Test Super 2']);
 $zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
-$project = $I->create('project', ['zone' => $zone1->name]);
+$project = $I->create('project', [
+    'zone' => $zone1->name,
+    'super_name' => $super1->name,
+    'super_phone' => $super1->phone
+]);
 $existing_date = explode('-', $project->bidduedate);
 $month = [
     '01' => 'Jan',
@@ -38,6 +44,7 @@ $I->seeOptionIsSelected(['name' => 'due2'], $existing_date[2]);
 $I->seeInField(['id' => 'due3'], $existing_date[0]);
 $I->seeOptionIsSelected(['name' => 'zone'], $zone1->name);
 $I->seeInField(['id' => 'location'], $project->location);
+$I->seeOptionIsSelected(['name' => 'super'], $super1->name);
 
 $existing_date[0]++;
 $existing_date[1]++;
@@ -58,6 +65,7 @@ $I->selectOption(['name' => 'due2'], ['value' => $existing_date[2]]);
 $I->fillField(['id' => 'due3'], $existing_date[0]);
 $I->selectOption(['name' => 'zone'], ['value' => $zone2->name]);
 $I->fillField(['id' => 'location'], $project->location = 'New Location');
+$I->selectOption(['name' => 'super'], ['value' => $super2->name]);
 $I->click('Update');
 $I->see('Project Updated!');
 
@@ -77,3 +85,4 @@ $I->seeOptionIsSelected(['name' => 'due2'], $existing_date[2]);
 $I->seeInField(['id' => 'due3'], $existing_date[0]);
 $I->seeOptionIsSelected(['name' => 'zone'], $zone2->name);
 $I->seeInField(['id' => 'location'], $project->location);
+$I->seeOptionIsSelected(['name' => 'super'], $super2->name);

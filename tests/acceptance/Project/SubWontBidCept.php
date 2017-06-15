@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Mark a subcontractors as wont bid for a project.');
 

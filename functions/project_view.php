@@ -9,16 +9,15 @@ if (isset($_GET['view'])) {
 
     <div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM project ORDER BY bidduedate";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
+    $projects = $db->getData("SELECT * FROM project ORDER BY bidduedate");
+    if (! count($projects)) {
+        die('Could not get data.');
     }
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $name = $selectusercheck_row['name'];
-        $datedate = $selectusercheck_row['bidduedate'];
+    foreach ($projects as $project) {
+        $id = $project['id'];
+        $name = $project['name'];
+        $datedate = $project['bidduedate'];
 
         echo "<div class='z'>
             <a href='?details=$id'>$name</a> - $datedate | <a href='?edit=$id'>EDIT</a>
@@ -33,16 +32,15 @@ if (isset($_GET['open'])) {
     echo "<h3>View Open Projects - <a href='?view'><u>All Projects</u></a> | <a href='?closed'><u>Closed Only</u></a></h3>";
     echo "<div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM project WHERE completedate = '' ORDER BY bidduedate";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
+    $projects = $db->getData("SELECT * FROM project WHERE completedate = '' ORDER BY bidduedate");
+    if (! count($projects)) {
+        die('Could not get data.');
     }
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $name = $selectusercheck_row['name'];
-        $datedate = $selectusercheck_row['bidduedate'];
+    foreach ($projects as $project) {
+        $id = $project['id'];
+        $name = $project['name'];
+        $datedate = $project['bidduedate'];
 
         echo "<div class='z'>
             <a href='?details=$id'>$name</a> - $datedate | <a href='?edit=$id'>EDIT</a>
@@ -58,16 +56,15 @@ if (isset($_GET['closed'])) {
 
     echo "<div id='pagenation'>";
 
-    $selectusercheck = "SELECT * FROM project WHERE completedate != '' ORDER BY bidduedate";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
+    $projects = $db->getData("SELECT * FROM project WHERE completedate != '' ORDER BY bidduedate");
+    if (! count($projects)) {
+        die('Could not get data.');
     }
     
-    while( $selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $name = $selectusercheck_row['name'];
-        $datedate = $selectusercheck_row['bidduedate'];
+    foreach ($projects as $project) {
+        $id = $project['id'];
+        $name = $project['name'];
+        $datedate = $project['bidduedate'];
 
         echo "<div class='z'>
             <a href='?details=$id'>$name</a> - $datedate | <a href='?edit=$id'>EDIT</a>

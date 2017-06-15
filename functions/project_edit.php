@@ -19,23 +19,21 @@ if (isset($_GET['edit'])) {
         $planpass = $_POST['planpass'];
         $owner_name = $_POST['owner_name'];
         $owner_phone = $_POST['owner_phone'];
-        $super = $_POST['super'];
+        $super_name = '';
+        $super_phone = '';
 
-        $sql_selectleaguera = "SELECT * FROM super WHERE name = '$super'";
-        $works_selectleaguera = mysql_query( $sql_selectleaguera, $connection );
-        if(! $works_selectleaguera) {
-            die('Could not get data: ' . mysql_error());
+        if (! empty($_POST['super'])) {
+            $super = $db->getFirst("SELECT * FROM super WHERE name = ?", [$_POST['super']]);
+            $super_name = $super['name'];
+            $super_phone = $super['phone'];
         }
 
-        while ($row_selectleaguera = mysql_fetch_array($works_selectleaguera, MYSQL_ASSOC)) {
-            $super_name = $row_selectleaguera['name'];
-            $super_phone = $row_selectleaguera['phone'];
-        }
+        $query = $db->setData(
+            "UPDATE project SET name=?, bidduedate=?, zone=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_name=?, super_phone=? WHERE id=?",
+            [$name2, $due, $zone, $plans, $location, $planuser, $planpass, $owner_name, $owner_phone, $super_name, $super_phone, $id2]
+        );
 
-        // updates information in the database
-        $update_league = "UPDATE project SET name='$name2', bidduedate='$due', zone='$zone', plans='$plans', location='$location', planuser='$planuser', planpass='$planpass', owner_name='$owner_name', owner_phone='$owner_phone', super_name='$super_name', super_phone='$super_phone' WHERE id='$id2'";
-        $update_works = mysql_query($update_league);
-        if (! $update_works) {
+        if (! $db->updated($query)) {
             die('<br><br>Update Error');
         } else {
             die('<br><br>Project Updated!');
@@ -44,41 +42,38 @@ if (isset($_GET['edit'])) {
 
     $did = $_GET['edit'];
 
-    $selectusercheck = "SELECT * FROM project WHERE id='$did'";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
+    $project = $db->getFirst("SELECT * FROM project WHERE id=?", [$did]);
+    if (! count($project)) {
+        die('Could not get data.');
     }
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $Mid = $selectusercheck_row['id'];
-        $Mname = $selectusercheck_row['name'];
-        $Mdatedate = $selectusercheck_row['bidduedate'];
-        $Mcomplete = $selectusercheck_row['completedate'];
-        $Mzone = $selectusercheck_row['zone'];
-        $Mplans = $selectusercheck_row['plans'];
-        $Mlocation = $selectusercheck_row['location'];
-        $Mplanuser = $selectusercheck_row['planuser'];
-        $Mplanpass = $selectusercheck_row['planpass'];
-        $Mowner_name = $selectusercheck_row['owner_name'];
-        $Mowner_phone = $selectusercheck_row['owner_phone'];
-        $Msuper = $selectusercheck_row['super_name'];
-        $date1 = substr($Mdatedate, 5, -3);
-        $date2 = substr($Mdatedate, 8);
-        $date3 = substr($Mdatedate, 0, -6);
-        if ($date1 == "01") { $date4 = "Jan"; }
-        if ($date1 == "02") { $date4 = "Feb"; }
-        if ($date1 == "03") { $date4 = "Mar"; }
-        if ($date1 == "04") { $date4 = "Apr"; }
-        if ($date1 == "05") { $date4 = "May"; }
-        if ($date1 == "06") { $date4 = "Jun"; }
-        if ($date1 == "07") { $date4 = "Jul"; }
-        if ($date1 == "08") { $date4 = "Aug"; }
-        if ($date1 == "09") { $date4 = "Sep"; }
-        if ($date1 == "10") { $date4 = "Oct"; }
-        if ($date1 == "11") { $date4 = "Nov"; }
-        if ($date1 == "12") { $date4 = "Dec"; }
-    }
+    $Mid = $project['id'];
+    $Mname = $project['name'];
+    $Mdatedate = $project['bidduedate'];
+    $Mcomplete = $project['completedate'];
+    $Mzone = $project['zone'];
+    $Mplans = $project['plans'];
+    $Mlocation = $project['location'];
+    $Mplanuser = $project['planuser'];
+    $Mplanpass = $project['planpass'];
+    $Mowner_name = $project['owner_name'];
+    $Mowner_phone = $project['owner_phone'];
+    $Msuper = $project['super_name'];
+    $date1 = substr($Mdatedate, 5, -3);
+    $date2 = substr($Mdatedate, 8);
+    $date3 = substr($Mdatedate, 0, -6);
+    if ($date1 == "01") { $date4 = "Jan"; }
+    if ($date1 == "02") { $date4 = "Feb"; }
+    if ($date1 == "03") { $date4 = "Mar"; }
+    if ($date1 == "04") { $date4 = "Apr"; }
+    if ($date1 == "05") { $date4 = "May"; }
+    if ($date1 == "06") { $date4 = "Jun"; }
+    if ($date1 == "07") { $date4 = "Jul"; }
+    if ($date1 == "08") { $date4 = "Aug"; }
+    if ($date1 == "09") { $date4 = "Sep"; }
+    if ($date1 == "10") { $date4 = "Oct"; }
+    if ($date1 == "11") { $date4 = "Nov"; }
+    if ($date1 == "12") { $date4 = "Dec"; }
 
     ?>
 
@@ -171,18 +166,10 @@ if (isset($_GET['edit'])) {
             <select name="zone">
                 <option value="<?php echo"$Mzone"; ?>"><?php echo"$Mzone"; ?></option>  
                 <?php
-
-                $sql_selectleague = "SELECT * FROM zone ORDER BY name";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
-
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['name'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
-                }
-                ?>
+                $zones = $db->getData("SELECT * FROM zone ORDER BY name");
+                foreach ($zones as $zone) {
+                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                } ?>
             </select>
         </p>
 
@@ -192,18 +179,10 @@ if (isset($_GET['edit'])) {
                 <option value="<?php echo"$Msuper"; ?>"><?php echo"$Msuper"; ?></option>
                 <option value=""></option>  
                 <?php
-
-                $sql_selectleaguer = "SELECT * FROM super ORDER BY name";
-                $works_selectleaguer = mysql_query( $sql_selectleaguer, $connection );
-                if (! $works_selectleaguer) {
-                    die('Could not get data: ' . mysql_error());
-                }
-
-                while ($row_selectleaguer = mysql_fetch_array($works_selectleaguer, MYSQL_ASSOC)) {
-                    $leaguenamer = $row_selectleaguer['name'];
-                    echo "<option value='" . $leaguenamer . "'>"; ?><?php echo "$leaguenamer";?><?php echo "</option>"; 
-                }
-                ?>
+                $supers = $db->getData("SELECT * FROM super ORDER BY name");
+                foreach ($supers as $super) {
+                    echo "<option value='{$super['name']}'>{$super['name']}</option>";
+                } ?>
             </select>
         </p>
 

@@ -7,29 +7,22 @@ if (isset($_GET['choose'])) {
 
     echo "<b>[ <a href='?details=$did'>GO BACK</a> ]</b><br><br><b>CHOOSE A CATEGORY</b><br><br>";
 
-    $sql_selectleague = "SELECT * FROM type ORDER BY name";
-    $works_selectleague = mysql_query( $sql_selectleague, $connection );
-    if (! $works_selectleague) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $categories = $db->getData("SELECT * FROM type ORDER BY name");
     
-    while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-        $leaguename = $row_selectleague['name'];
+    foreach ($categories as $category) {
 
-        echo "<br><b><u><a href='?choose2=$did&c=$leaguename'>$leaguename</a></u></b><br>";
+        echo "<br><b><u><a href='?choose2={$did}&c={$category['name']}'>{$category['name']}</a></u></b><br>";
         
-        $selectusercheck3 = "SELECT * FROM bid_contactors WHERE project_id = '$did' AND category='$leaguename'";
-        $selectusercheck_works3 = mysql_query( $selectusercheck3, $connection );
-        if (! $selectusercheck_works3) {
-            die('Could not get data: ' . mysql_error());
-        }
+        $bidders = $db->getData(
+            "SELECT * FROM bid_contactors WHERE project_id = ? AND category = ?", 
+            [$did, $category['name']]
+        );
         
-        while ($selectusercheck_row3 = mysql_fetch_array($selectusercheck_works3, MYSQL_ASSOC)) {
-            $company3 = $selectusercheck_row3['company'];
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;- $company3<br>";
+        foreach ($bidders as $bid) {
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;- {$bid['company']}<br>";
         }
 
-        if (! $company3) { 
+        if (! count($bidders)) { 
             echo "&nbsp;&nbsp;&nbsp;&nbsp;- <i>none</i><br>"; 
         }
     }
@@ -40,16 +33,13 @@ if (isset($_GET['choose2'])) {
     $did = $_GET['choose2'];
     $c = $_GET['c'];
 
-    $selectusercheck = "SELECT * FROM project WHERE id = '$did'";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
+    $project = $db->getFirst("SELECT * FROM project WHERE id = ?", [$did]);
+     if (! count($project)) {
+       die('Could not get data');
     }
     
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $id = $selectusercheck_row['id'];
-        $zone = $selectusercheck_row['zone'];
-    }
+    $id = $project['id'];
+    $zone = $project['zone'];
 
     echo "<b>[ <a href='?choose=$did'>GO BACK</a> ]</b><br><br>
         <b>Choose a <u>$c</u> Sub-Contractor</b><br><br>
@@ -61,16 +51,13 @@ if (isset($_GET['choose2'])) {
             <p>
                 <select name='zone' required>";
                 
-                $sql_selectleague = "SELECT * FROM contact WHERE type = '$c' AND (zone = '$zone' OR zone2 = '$zone' OR zone3 = '$zone' OR zone4 = '$zone' OR zone5 = '$zone' OR zone6 = '$zone' OR zone7 = '$zone' OR zone8 = '$zone' OR zone9 = '$zone') ORDER BY company";
-                $works_selectleague = mysql_query( $sql_selectleague, $connection );
-                
-                if (! $works_selectleague) {
-                    die('Could not get data: ' . mysql_error());
-                }
+                $zoneContacts = $db->getData(
+                    "SELECT * FROM contact WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
+                    [$c, $zone, $zone, $zone, $zone, $zone, $zone, $zone, $zone, $zone]
+                );
             
-                while ($row_selectleague = mysql_fetch_array($works_selectleague, MYSQL_ASSOC)) {
-                    $leaguename = $row_selectleague['company'];
-                    echo "<option value='" . $leaguename . "'>"; ?><?php echo "$leaguename";?><?php echo "</option>"; 
+                foreach ($zoneContacts as $contact) {
+                    echo "<option value='{$contact['company']}'>{$contact['company']}</option>"; 
                 }
 
                 echo "</select>
@@ -82,42 +69,38 @@ if (isset($_GET['choose2'])) {
         <b>Sub-Contractors already selected:</b><br><br>";
 
 
-    $selectusercheck3 = "SELECT * FROM bid_contactors WHERE project_id = '$did' AND category='$c'";
-    $selectusercheck_works3 = mysql_query( $selectusercheck3, $connection );
-    if (! $selectusercheck_works3) {
-        die('Could not get data: ' . mysql_error());
-    }
+    $bidders = $db->getData(
+        "SELECT * FROM bid_contactors WHERE project_id = ? AND category=?",
+        [$did, $c]
+    );
     
-    while ($selectusercheck_row3 = mysql_fetch_array($selectusercheck_works3, MYSQL_ASSOC)) {
-        $company3 = $selectusercheck_row3['company'];
-        echo "- $company3<br>";
+    foreach ($bidders as $bidder) {
+        echo "- {$bidder['company']}<br>";
     }
 
-    if (! $company3) { 
+    if (! count($bidders)) { 
         echo "<i>none</i>"; 
     }
 }
 
 // checks to see if posted
 if (isset($_POST['zone'])) {
-    $zone = $_POST['zone'];
+    $companyName = $_POST['zone'];
     $did = $_POST['did'];
-    $c = $_POST['c'];
+    $categoryName = $_POST['c'];
 
-    $selectusercheck = "SELECT * FROM contact WHERE company = '$zone'";
-    $selectusercheck_works = mysql_query( $selectusercheck, $connection );
-    if (! $selectusercheck_works) {
-        die('Could not get data: ' . mysql_error());
-    }
-    
-    while ($selectusercheck_row = mysql_fetch_array($selectusercheck_works, MYSQL_ASSOC)) {
-        $email = $selectusercheck_row['email'];
+    $contact = $db->getFirst("SELECT * FROM contact WHERE company = ?", [$companyName]);
+    if (! count($contact)) {
+        die('Could not get data');
     }
 
     // inserts information into database
-    $query_startseason = "INSERT INTO `bid_contactors` (project_id, category, status, win, email, score, company) VALUES ('$did', '$c', '', '', '$email', 'NA', '$zone')";
-    $result_startseason = mysql_query($query_startseason);
-    if ($result_startseason) {
+    $query = $db->setData(
+        "INSERT INTO `bid_contactors` (project_id, category, status, win, email, score, company) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [$did, $categoryName, '', '', $contact['email'], 'NA', $companyName]
+    );
+
+    if ($db->updated($query)) {
         die('<br><br>Sucess!');
     } else {
         die('<br><br>Error!');

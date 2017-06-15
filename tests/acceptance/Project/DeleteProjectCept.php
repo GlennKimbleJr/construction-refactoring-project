@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an exiting project.');

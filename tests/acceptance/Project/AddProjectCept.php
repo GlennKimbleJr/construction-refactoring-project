@@ -4,6 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Add a new project.');
 
 $zone = $I->create('zone');
+$super = $I->create('super');
 $project = make('project');
 $project_date = explode('-', $project->bidduedate);
 
@@ -22,6 +23,7 @@ $I->selectOption(['name' => 'due2'], ['value' => $project_date[2]]);
 $I->fillField(['id' => 'due3'], $project_date[0]);
 $I->selectOption(['name' => 'zone'], ['value' => $zone->name]);
 $I->fillField(['id' => 'location'], $project->location);
+$I->selectOption(['name' => 'super'], ['value' => $super->name]);
 $I->click('Create');
 $I->see('Project Created!');
 
@@ -35,8 +37,8 @@ $I->seeInDatabase('project', [
     'planpass' => $project->planpass,
     'owner_name' => $project->owner_name,
     'owner_phone' => $project->owner_phone,
-    'super_name' => $project->super_name,
-    'super_phone' => $project->super_phone,
+    'super_name' => $super->name,
+    'super_phone' => $super->phone,
 ]);
 
 $I->click('VIEW LIST');
