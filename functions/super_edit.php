@@ -1,56 +1,46 @@
 <?php 
 
-// Starts Script
 if (isset($_GET['edit'])) {
 
     // checks to see if posted
     if (isset($_POST['name'])) {
-        $id2 = $_POST['id2'];
-        $name = $_POST['name'];
-        $name2 = htmlspecialchars($name);
-        $phone = $_POST['phone'];
 
-        // updates information in the database
         $query = $db->setData(
-            "UPDATE super SET name=?, phone=? WHERE id=?",
-            [$name2, $phone, $id2]
+            "UPDATE super SET name = ?, phone = ? WHERE id = ?",
+            [
+                htmlspecialchars(trim($_POST['name'])), 
+                trim($_POST['phone']), 
+                intval($_POST['id2'])
+            ]
         );
-        if (! $db->updated($query)) {
-            die('<br><br>Update Error');
-        } else {
-            die('<br><br>Updated!');
-        }
+
+        die($db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error');
     }
 
-    $did = $_GET['edit'];
+    $superId = intval($_GET['edit']);
 
-    $super = $db->getFirst("SELECT * FROM super WHERE id=?", [$did]);
+    $super = $db->getFirst("SELECT * FROM super WHERE id = ?", [$superId]);
     if (! count($super)) {
         die('Could not get data.');
     }
-    
-    $Mid = $super['id'];
-    $Mname = $super['name'];
-    $Mphone = $super['phone'];
-
     ?>
 
     <h3>
         EDIT Superintendent | 
-        [ <a href="?delete=<?php echo "$did"; ?>"><font color="red">DELETE</font></a> ]
+        [ <a href="?delete=<?=$superId;?>"><font color="red">DELETE</font></a> ]
     </h3>
 
     <form action="" method="POST">
-        <input id="id2" type="hidden" name="id2" required value="<?php echo"$did"; ?>" />
+        <input id="id2" type="hidden" name="id2" required value="<?=$superId;?>" />
 
         <p>
             <label>Name: </label>
-            <input id="name" type="text" name="name" required value="<?php echo"$Mname"; ?>" />
+            <input id="name" type="text" name="name" required value="<?=$super['name'];?>" />
         </p>
         
         <p>
             <label>Phone: </label>
-            <input id="phone" type="text" name="phone" required value="<?php echo"$Mphone"; ?>" />
+            <input id="phone" type="text" name="phone" required value="<?=$super['phone'];?>" />
         </p>
 
         <input class="btn register" type="submit" name="submit" value="Update" />

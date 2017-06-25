@@ -1,20 +1,14 @@
 <?php 
 
-// Starts Script
 if (isset($_GET['new'])) {
 
-    // checks to see if posted
     if (isset($_POST['name'])) {
-        $name2 = $_POST['name'];
-        $name = htmlspecialchars($name2);
 
-        // inserts information into database
-        $query = $db->setData("INSERT INTO `zone` (name) VALUES (?)", [$name]);
-        if ($db->updated($query)) {
-            die('<br><br>Created!');
-        } else {
-            die('<br><br>Error! Unable to create zone.');
-        }
+        $query = $db->setData("INSERT INTO `zone` (name) VALUES (?)", [
+            htmlspecialchars(trim($_POST['name']))
+        ]);
+
+        die($db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create zone.');
     }
     ?>
 

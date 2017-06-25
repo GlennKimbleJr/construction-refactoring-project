@@ -1,21 +1,15 @@
 <?php 
 
-// Starts Script
 if (isset($_GET['new'])) {
 
     // checks to see if posted
     if (isset($_POST['name'])) {
-        $name2 = $_POST['name'];
-        $name = htmlspecialchars($name2);
-        $phone = $_POST['phone'];
+        $query = $db->setData("INSERT INTO `super` (name, phone) VALUES (?, ?)", [
+            htmlspecialchars(trim($_POST['name'])), 
+            trim($_POST['phone'])
+        ]);
 
-        // inserts information into database
-        $query = $db->setData("INSERT INTO `super` (name, phone) VALUES (?, ?)", [$name, $phone]);
-        if ($db->updated($query)) {
-            die('<br><br>Created!');
-        } else {
-            die('<br><br>Error! Unable to create super.');
-        }
+        die($db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create super.');
     }
     ?>
 

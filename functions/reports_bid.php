@@ -1,6 +1,5 @@
 <?php 
 
-// Starts Script
 if (isset($_GET['bid'])) {
 
     $contacts = $db->getData("SELECT * FROM contact");
@@ -44,22 +43,27 @@ if (isset($_GET['bid'])) {
     $contacts = $db->getData("SELECT * FROM contact WHERE bid_per > 0 ORDER BY bid_per");
     
     foreach ($contacts as $contact) {
-        $id = $contact['id'];
-        $city2 = $contact['city'];
-        $city = substr($city2, 0, 18);
-        $state = $contact['state'];
-        $type2 = $contact['type'];
-        $type = substr($type2, 0, 18);
-        $company2 = $contact['company'];
-        $company = substr($company2, 0, 18);
-        $bid = $contact['bid_per'];     
         echo "<div class='z'>
             <tr>
-                <td align='center' width='35%'><font size='1'>$company</font></td>
-                <td align='center' width='15%'><font size='1'>$city</font></td>
-                <td align='center' width='10%'><font size='1'>$state</font></td>
-                <td align='center' width='30%'><font size='1'>$type</font></td>
-                <td align='center' width='10%'><font size='1'><b>$bid %</b></font></td>
+                <td align='center' width='35%'>
+                    <font size='1'>" . substr($contact['company'], 0, 18) . "</font>
+                </td>
+
+                <td align='center' width='15%'>
+                    <font size='1'>" . substr($contact['city'], 0, 18) . "</font>
+                </td>
+                
+                <td align='center' width='10%'>
+                    <font size='1'>{$contact['state']}</font>
+                </td>
+                
+                <td align='center' width='30%'>
+                    <font size='1'>" . substr($contact['type'], 0, 18) . "</font>
+                </td>
+                
+                <td align='center' width='10%'>
+                    <font size='1'><b>{$contact['bid_per']} %</b></font>
+                </td>
             </tr>
         </div>";
     }
