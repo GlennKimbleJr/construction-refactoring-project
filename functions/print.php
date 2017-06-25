@@ -23,17 +23,17 @@ if (isset($_GET['print'])) {
     </table>";
     
     $winners = $db->getData(
-        "SELECT * FROM bid_contactors WHERE project_id = ? AND win = ? ORDER BY category", 
+        "SELECT * FROM bidders WHERE project_id = ? AND win = ? ORDER BY category", 
         [intval($_GET['print']), 1]
     );
     
     foreach ($winners as $winner) {
-        $contact = $db->getFirst("SELECT * FROM contact WHERE company = ?", [$winner['company']]);
+        $contact = $db->getFirst("SELECT * FROM contact WHERE id = ?", [$winner['contact_id']]);
 
         echo "<table width='850' cellspacing='2' cellpadding='2' border='1'>
             <tr>
                 <td width='350'>{$winner['category']}</td>
-                <td width='250'><b>{$winner['company']}</b></td>
+                <td width='250'><b>{$contact['company']}</b></td>
                 <td width='125' align='center'>{$contact['officephone']}</td>
                 <td width='125' align='center'>{$contact['cellphone']}</td>
             </tr>

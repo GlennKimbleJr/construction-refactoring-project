@@ -2,26 +2,26 @@
 
 if (isset($_GET['bid'])) {
 
-    $contacts = $db->getData("SELECT * FROM contact");
+    $contacts = $db->getData("SELECT id FROM contact");
     
     foreach ($contacts as $contact) {
 
         $willBidCount = $db->getCount(
-            "SELECT null FROM bid_contactors WHERE company = ? AND status='will'",
-            [$contact['company']]
+            "SELECT null FROM bidders WHERE contact_id = ? AND status='will'",
+            [$contact['id']]
         );
 
         $wontBidCount = $db->getCount(
-            "SELECT null FROM bid_contactors WHERE company = ? AND status='wont'",
-            [$contact['company']]
+            "SELECT null FROM bidders WHERE contact_id = ? AND status='wont'",
+            [$contact['id']]
         );
 
         $totalBids = $willBidCount + $wontBidCount;
         $bidPercentage = ($willBidCount / $totalBids) * 100;
 
         if ($totalBids) {
-            $db->setData("UPDATE contact SET bid_per=? WHERE company=?", 
-                [$bidPercentage, $contact['company']]
+            $db->setData("UPDATE contact SET bid_per=? WHERE id=?", 
+                [$bidPercentage, $contact['id']]
             );
         }
     }

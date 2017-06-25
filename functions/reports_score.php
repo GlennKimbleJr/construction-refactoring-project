@@ -2,25 +2,25 @@
 
 if (isset($_GET['score'])) {
 
-    $contacts = $db->getData("SELECT * FROM contact");
+    $contacts = $db->getData("SELECT id FROM contact");
     
     foreach ($contacts as $contact) {
 
         $score = $db->getFirst(
-            "SELECT sum(score) as sum FROM bid_contactors WHERE company = ? AND score != '0'", 
-            [$contact['company']]
+            "SELECT sum(score) as sum FROM bidders WHERE contact_id = ? AND score != '0'", 
+            [$contact['id']]
         );
 
         $scoredBidTotal = $db->getCount(
-            "SELECT NULL FROM bid_contactors WHERE company = ? AND score != '0'",
-            [$contact['company']]
+            "SELECT NULL FROM bidders WHERE contact_id = ? AND score != '0'",
+            [$contact['id']]
         );
 
         $scoreAverage = $score['sum'] / $scoredBidTotal;
 
         if ($score['sum']) {
-            $db->setData("UPDATE contact SET score_per=? WHERE company=?", 
-                [$scoreAverage, $contact['company']]
+            $db->setData("UPDATE contact SET score_per = ? WHERE id = ?", 
+                [$scoreAverage, $contact['id']]
             );
         }
     }

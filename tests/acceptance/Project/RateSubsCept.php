@@ -30,53 +30,59 @@ $contact5 = $I->create('contact', [
     'type' => $category5->name
 ]);
 
+$contact1Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact1->company]);
+$contact2Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact2->company]);
+$contact3Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact3->company]);
+$contact4Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact4->company]);
+$contact5Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact5->company]);
+
 $project = $I->create('project');
 $projectId = $I->grabFromDatabase('project', 'id', ['name' => $project->name]);
 
-$I->create('bidder', [
+$I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category1->name,
     'status' => 'won',
     'win' => '1',
     'score' => 'NA',
-    'company' => $contact1->company
-], 'bid_contactors');
+    'contact_id' => $contact1Id
+]);
 
-$I->create('bidder', [
+$I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category2->name,
     'status' => 'won',
     'win' => '1',
     'score' => 'NA',
-    'company' => $contact2->company
-], 'bid_contactors');
+    'contact_id' => $contact2Id
+]);
 
-$I->create('bidder', [
+$I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category3->name,
     'status' => 'won',
     'win' => '1',
     'score' => 'NA',
-    'company' => $contact3->company
-], 'bid_contactors');
+    'contact_id' => $contact3Id
+]);
 
-$I->create('bidder', [
+$I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category4->name,
     'status' => 'won',
     'win' => '1',
     'score' => 'NA',
-    'company' => $contact4->company
-], 'bid_contactors');
+    'contact_id' => $contact4Id
+]);
 
-$I->create('bidder', [
+$I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category5->name,
     'status' => 'won',
     'win' => '1',
     'score' => 'NA',
-    'company' => $contact5->company
-], 'bid_contactors');
+    'contact_id' => $contact5Id
+]);
 
 $I->amOnPage('/project.php?open');
 $I->click($project->name);
@@ -85,8 +91,8 @@ $I->see($contact1->company);
 $I->click('SCORE');
 $I->click(['id'=>'happy']);
 $I->see('UPDATED');
-$I->seeInDatabase('bid_contactors', [
-    'company' => $contact1->company,
+$I->seeInDatabase('bidders', [
+    'contact_id' => $contact1Id,
     'score' => '5'
 ]);
 
@@ -95,8 +101,8 @@ $I->see($contact2->company);
 $I->click('SCORE');
 $I->click(['id'=>'good']);
 $I->see('UPDATED');
-$I->seeInDatabase('bid_contactors', [
-    'company' => $contact2->company,
+$I->seeInDatabase('bidders', [
+    'contact_id' => $contact2Id,
     'score' => '4'
 ]);
 
@@ -105,8 +111,8 @@ $I->see($contact3->company);
 $I->click('SCORE');
 $I->click(['id'=>'ok']);
 $I->see('UPDATED');
-$I->seeInDatabase('bid_contactors', [
-    'company' => $contact3->company,
+$I->seeInDatabase('bidders', [
+    'contact_id' => $contact3Id,
     'score' => '3'
 ]);
 
@@ -115,8 +121,8 @@ $I->see($contact4->company);
 $I->click('SCORE');
 $I->click(['id'=>'bad']);
 $I->see('UPDATED');
-$I->seeInDatabase('bid_contactors', [
-    'company' => $contact4->company,
+$I->seeInDatabase('bidders', [
+    'contact_id' => $contact4Id,
     'score' => '2'
 ]);
 
@@ -125,7 +131,7 @@ $I->see($contact5->company);
 $I->click('SCORE');
 $I->click(['id'=>'angry']);
 $I->see('UPDATED');
-$I->seeInDatabase('bid_contactors', [
-    'company' => $contact5->company,
+$I->seeInDatabase('bidders', [
+    'contact_id' => $contact5Id,
     'score' => '1'
 ]);

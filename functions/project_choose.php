@@ -12,7 +12,7 @@ if (isset($_GET['choose'])) {
         echo "<br><b><u><a href='?choose2={$projectId}&c={$category['name']}'>{$category['name']}</a></u></b><br>";
         
         $bidders = $db->getData(
-            "SELECT * FROM bid_contactors WHERE project_id = ? AND category = ?", 
+            "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category = ?", 
             [$projectId, $category['name']]
         );
         
@@ -47,7 +47,7 @@ if (isset($_GET['choose2'])) {
                 <select name='company' required>";
                 
                 $zoneContacts = $db->getData(
-                    "SELECT * FROM contact WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
+                    "SELECT id, company FROM contact WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
                     [
                         $categoryName, 
                         $project['zone'], $project['zone'], $project['zone'], 
@@ -57,7 +57,7 @@ if (isset($_GET['choose2'])) {
                 );
             
                 foreach ($zoneContacts as $contact) {
-                    echo "<option value='{$contact['company']}'>{$contact['company']}</option>"; 
+                    echo "<option value='{$contact['id']}'>{$contact['company']}</option>"; 
                 }
 
                 echo "</select>
@@ -70,7 +70,7 @@ if (isset($_GET['choose2'])) {
 
 
     $bidders = $db->getData(
-        "SELECT * FROM bid_contactors WHERE project_id = ? AND category=?",
+        "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category = ?",
         [$projectId, $categoryName]
     );
     
@@ -85,24 +85,24 @@ if (isset($_GET['choose2'])) {
 
 // checks to see if posted
 if (isset($_POST['company'])) {
-    $companyName = htmlspecialchars(trim($_POST['company']));
+    $contactId = intval($_POST['company']);
 
-    $contact = $db->getFirst("SELECT email FROM contact WHERE company = ?", [$companyName]);
+    $contact = $db->getFirst("SELECT email FROM contact WHERE id = ?", [$contactId]);
     if (! count($contact)) {
         die('Could not get data');
     }
 
     // inserts information into database
     $query = $db->setData(
-        "INSERT INTO `bid_contactors` (project_id, category, status, win, email, score, company) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO `bidders` (project_id, contact_id, category, status, win, email, score) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
             intval($_POST['did']), 
+            $contactId,
             htmlspecialchars(trim($_POST['c'])), 
             '', 
             '', 
             $contact['email'], 
             'NA', 
-            $companyName
         ]
     );
 

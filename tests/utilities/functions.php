@@ -120,15 +120,15 @@ function create_new_zone($attribs)
  * @param  array  isset($attribs  Anything you want to override the default data supplied.
  * @return array
  */
-function create_new_bidder($attribs)
+function create_new_bidders($attribs)
 {
     return override([
         'project_id' => 1,
+        'contact_id' => 1,
         'category' => 'Test Category',
         'status' => '',
         'win' => '',
         'score' => 'NA',
-        'company' => 'Test Company',
     ], $attribs);
 }
 

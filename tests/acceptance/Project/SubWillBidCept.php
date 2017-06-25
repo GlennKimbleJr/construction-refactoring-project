@@ -15,18 +15,22 @@ $contact2 = $I->create('contact', [
     'zone' => $zone->name,
     'type' => $category->name
 ]);
+
+$contact1Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact1->company]);
+$contact2Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact2->company]);
+
 $project = $I->create('project', ['zone' => $zone->name]);
 $projectId = $I->grabFromDatabase('project', 'id', ['name' => $project->name]);
-$bidder1 = $I->create('bidder', [
+$bidder1 = $I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category->name,
-    'company' => $contact1->company
-], 'bid_contactors');
-$bidder2 = $I->create('bidder', [
+    'contact_id' => $contact1Id
+]);
+$bidder2 = $I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category->name,
-    'company' => $contact2->company
-], 'bid_contactors');
+    'contact_id' => $contact2Id
+]);
 
 $I->amOnPage('/project.php?open');
 $I->see($project->name);
@@ -39,14 +43,14 @@ $I->click('GO BACK');
 $I->see("{$category->name} - {$contact1->company} | EMAIL BID INVITE | [ CHOOSE AS WINNER ]");
 $I->see("{$category->name} - {$contact2->company} | EMAIL BID INVITE | Set Status: will bid - won't bid");
 
-$I->seeInDatabase('bid_contactors', [
+$I->seeInDatabase('bidders', [
     'project_id' => $projectId,
     'status' => 'will',
-    'company' => $contact1->company
+    'contact_id' => $contact1Id
 ]);
 
-$I->seeInDatabase('bid_contactors', [
+$I->seeInDatabase('bidders', [
     'project_id' => $projectId,
     'status' => '',
-    'company' => $contact2->company
+    'contact_id' => $contact2Id
 ]);

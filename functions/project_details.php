@@ -15,18 +15,18 @@ if (isset($_GET['details'])) {
         <u>Date Completed:</u> ";
 
     if ($project['completedate'] == '') { 
-        echo "<font size='1'><a href='?complete=1&project=$projectId'><u><b>MARK AS COMPLETE</a></b></u></font><br><br>";
+        echo "<font size='1'><a href='?complete=1&project={$projectId}'><u><b>MARK AS COMPLETE</a></b></u></font><br><br>";
     } else { 
         echo $project['completedate'] . '<br><br>';
     }
 
-    echo "<b><u>[ <a href='print.php?print=$projectId&name={$project['name']}' target='_new'>CALL LOG</a> ]</u></b><br><br>
-        <b>[ <a href='?choose=$projectId'>CHOOSE SUB-CONTRACTORS TO BID</a> ]</b><br>
+    echo "<b><u>[ <a href='print.php?print={$projectId}&name={$project['name']}' target='_new'>CALL LOG</a> ]</u></b><br><br>
+        <b>[ <a href='?choose={$projectId}'>CHOOSE SUB-CONTRACTORS TO BID</a> ]</b><br>
         <b>Current:</b><br>
         <font size='1'>";
 
     $bidders = $db->getData(
-        "SELECT * FROM bid_contactors WHERE project_id = ? AND win = ? AND status != ?", 
+        "SELECT b.*, c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.win = ? AND b.status != ?", 
         [$projectId, '', 'wont']
     );
     
@@ -52,7 +52,7 @@ if (isset($_GET['details'])) {
     echo "<br><br><b>WINNING SUB CONTRACTORS</b>:";
 
     $winners = $db->getData(
-        "SELECT * FROM bid_contactors WHERE project_id = ? AND win = ?", 
+        "SELECT b.*, c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.win = ?", 
         [$projectId, '1']
     );
     
@@ -79,13 +79,13 @@ if (isset($_GET['status'])) {
     if ($status == 'yes') { 
         echo "<b>[ <a href='?details={$projectId}'>GO BACK</a> ]</b><br><br>Bid Status Updated!";
 
-        $db->setData("UPDATE bid_contactors SET status='will' WHERE id = ?", [$bidderId]);
+        $db->setData("UPDATE bidders SET status='will' WHERE id = ?", [$bidderId]);
     }
 
     if ($status == 'no') { 
         echo "<b>[ <a href='?details={$projectId}'>GO BACK</a> ]</b><br><br>Bid Status Updated!";
 
-        $db->setData("UPDATE bid_contactors SET status='wont' WHERE id = ?", [$bidderId]);
+        $db->setData("UPDATE bidders SET status='wont' WHERE id = ?", [$bidderId]);
     }
 }
 
@@ -105,10 +105,10 @@ if (isset($_GET['win2'])) {
 
     echo "<b> [ <a href='?details={$projectId}'>GO BACK</a> ]</b><br><h1>BID AWARDED!</h1>";
 
-    $db->setData("UPDATE bid_contactors SET win='1' WHERE id = ? AND project_id = ?", [$bidderId, $projectId]);
+    $db->setData("UPDATE bidders SET win='1' WHERE id = ? AND project_id = ?", [$bidderId, $projectId]);
 
     $db->setData(
-        "UPDATE bid_contactors SET win='0' WHERE id != ? AND project_id = ? AND category = ?", 
+        "UPDATE bidders SET win='0' WHERE id != ? AND project_id = ? AND category = ?", 
         [$bidderId, $projectId, htmlspecialchars(trim($_GET['category']))]
     );
 }
@@ -150,7 +150,7 @@ if (isset($_GET['score2'])) {
 
     echo "<b> [ <a href='?details=" . intval($_GET['project']) . "'>GO BACK</a> ]</b><br>";
     
-    $db->setData("UPDATE bid_contactors SET score= ? WHERE id = ?", [$rating, intval($_GET['bidder'])]);
+    $db->setData("UPDATE bidders SET score= ? WHERE id = ?", [$rating, intval($_GET['bidder'])]);
 
     echo "<br>UPDATED!";
 }
