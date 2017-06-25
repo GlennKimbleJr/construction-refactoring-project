@@ -87,21 +87,19 @@ if (isset($_GET['choose2'])) {
 if (isset($_POST['company'])) {
     $contactId = intval($_POST['company']);
 
-    $contact = $db->getFirst("SELECT email FROM contact WHERE id = ?", [$contactId]);
-    if (! count($contact)) {
+    if (! $db->getCount("SELECT null FROM contact WHERE id = ?", [$contactId])) {
         die('Could not get data');
     }
 
     // inserts information into database
     $query = $db->setData(
-        "INSERT INTO `bidders` (project_id, contact_id, category_id, status, win, email, score) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO `bidders` (project_id, contact_id, category_id, status, win, score) VALUES (?, ?, ?, ?, ?, ?)",
         [
             intval($_POST['did']), 
             $contactId,
             intval($_POST['c']), 
             '', 
             '', 
-            $contact['email'], 
             'NA', 
         ]
     );

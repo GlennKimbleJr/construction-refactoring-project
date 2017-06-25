@@ -14,7 +14,6 @@ class CreateBiddersTable extends AbstractMigration
               ->addColumn('category_id', 'integer')
               ->addColumn('status', 'string', ['null' => true])
               ->addColumn('win', 'string', ['null' => true])
-              ->addColumn('email', 'string', ['null' => true])
               ->addColumn('score', 'string', ['null' => true])
               ->save();
     }

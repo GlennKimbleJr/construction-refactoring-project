@@ -26,7 +26,7 @@ if (isset($_GET['details'])) {
         <font size='1'>";
 
     $bidders = $db->getData(
-        "SELECT b.*, c.company, cat.name as category_name, cat.id as category_id FROM bidders as b, contact as c, type as cat WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = cat.id AND b.win = ? AND b.status != ?", 
+        "SELECT b.*, c.company, c.email, cat.name as category_name, cat.id as category_id FROM bidders as b, contact as c, type as cat WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = cat.id AND b.win = ? AND b.status != ?", 
         [$projectId, '', 'wont']
     );
     
@@ -52,7 +52,7 @@ if (isset($_GET['details'])) {
     echo "<br><br><b>WINNING SUB CONTRACTORS</b>:";
 
     $winners = $db->getData(
-        "SELECT b.*, c.company, cat.name as category FROM bidders as b, contact as c, type as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ?", 
+        "SELECT b.*, c.company, c.email, cat.name as category FROM bidders as b, contact as c, type as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ?", 
         [$projectId, '1']
     );
     
