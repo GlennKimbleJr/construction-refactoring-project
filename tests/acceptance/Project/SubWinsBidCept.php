@@ -4,6 +4,8 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Mark a subcontractors as having won a bid for a project.');
 
 $category = $I->create('category', ['name' => 'Test Category'], 'type');
+$categoryId = $I->grabFromDatabase('type', 'id', ['name' => $category->name]);
+
 $zone = $I->create('zone', ['name' => 'Test Zone']);
 $contact1 = $I->create('contact', [
     'company' => 'Test Company 1',
@@ -23,13 +25,13 @@ $project = $I->create('project', ['zone' => $zone->name]);
 $projectId = $I->grabFromDatabase('project', 'id', ['name' => $project->name]);
 $bidder1 = $I->create('bidders', [
     'project_id' => $projectId,
-    'category' => $category->name,
+    'category_id' => $categoryId,
     'status' => 'will',
     'contact_id' => $contact1Id
 ]);
 $bidder2 = $I->create('bidders', [
     'project_id' => $projectId,
-    'category' => $category->name,
+    'category_id' => $categoryId,
     'status' => 'will',
     'contact_id' => $contact2Id
 ]);

@@ -26,20 +26,20 @@ if (isset($_GET['details'])) {
         <font size='1'>";
 
     $bidders = $db->getData(
-        "SELECT b.*, c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.win = ? AND b.status != ?", 
+        "SELECT b.*, c.company, cat.name as category_name, cat.id as category_id FROM bidders as b, contact as c, type as cat WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = cat.id AND b.win = ? AND b.status != ?", 
         [$projectId, '', 'wont']
     );
     
     foreach ($bidders as $bidder) {
 
         if ($bidder['status'] == 'will') {
-            echo "&nbsp;&nbsp;{$bidder['category']} - <b>{$bidder['company']}</b> | <a href='mailto:{$bidder['email']}?subject=Invitation to Bid&body=COMPANY NAME%0D%0A ADDRESS %0D%0A CITY STATE ZIP %0D%0APh. PHONE. Fax  FAX %0D%0Aemail:  EMAIL %0D%0A%0D%0AINVITATION TO BID%0D%0A%0D%0A{$bidder['company']}%0D%0A%0D%0APROJECT NAME: {$project['name']}%0D%0APROJECT LOCATION: {$project['location']}%0D%0ABID DATE: {$project['bidduedate']}%0D%0A%0D%0APlans and Specs%0D%0A {$project['plans']} %0D%0AUser: {$project['planuser']} | Pass: {$project['planpass']}%0D%0A%0D%0APlease return all bids by 12:00 PM of the date listed above by E-Mail or Fax.%0D%0A%0D%0A LIC NO LICENSE'>EMAIL BID INVITE</a> 
+            echo "&nbsp;&nbsp;{$bidder['category_name']} - <b>{$bidder['company']}</b> | <a href='mailto:{$bidder['email']}?subject=Invitation to Bid&body=COMPANY NAME%0D%0A ADDRESS %0D%0A CITY STATE ZIP %0D%0APh. PHONE. Fax  FAX %0D%0Aemail:  EMAIL %0D%0A%0D%0AINVITATION TO BID%0D%0A%0D%0A{$bidder['company']}%0D%0A%0D%0APROJECT NAME: {$project['name']}%0D%0APROJECT LOCATION: {$project['location']}%0D%0ABID DATE: {$project['bidduedate']}%0D%0A%0D%0APlans and Specs%0D%0A {$project['plans']} %0D%0AUser: {$project['planuser']} | Pass: {$project['planpass']}%0D%0A%0D%0APlease return all bids by 12:00 PM of the date listed above by E-Mail or Fax.%0D%0A%0D%0A LIC NO LICENSE'>EMAIL BID INVITE</a> 
 
-                | <b>[ <u><a href='?win=1&project={$projectId}&company={$bidder['company']}&category={$bidder['category']}&bidder={$bidder['id']}'>CHOOSE AS WINNER</a></u> ]</b><br>";
+                | <b>[ <u><a href='?win=1&project={$projectId}&company={$bidder['company']}&category={$bidder['category_id']}&bidder={$bidder['id']}'>CHOOSE AS WINNER</a></u> ]</b><br>";
         } 
 
         else {
-            echo "&nbsp;&nbsp;{$bidder['category']} - <b>{$bidder['company']}</b> | <a href='mailto:{$bidder['email']}?subject=Invitation to Bid&body=COMPANY NAME %0D%0A ADDRESS %0D%0A CITY STATE ZIP %0D%0APh. PHONE. Fax  FAX %0D%0Aemail:  EMAIL %0D%0A%0D%0AINVITATION TO BID%0D%0A%0D%0A{$bidder['company']}%0D%0A%0D%0APROJECT NAME: {$project['name']}%0D%0APROJECT LOCATION: {$project['location']}%0D%0ABID DATE: {$project['bidduedate']}%0D%0A%0D%0APlans and Specs%0D%0A {$project['plans']}%0D%0AUser: {$project['planuser']} | Pass: {$project['planpass']}%0D%0A%0D%0APlease return all bids by 12:00 PM of the date listed above by E-Mail or Fax.%0D%0A%0D%0A LIC NO LICSNE '>EMAIL BID INVITE</a> 
+            echo "&nbsp;&nbsp;{$bidder['category_name']} - <b>{$bidder['company']}</b> | <a href='mailto:{$bidder['email']}?subject=Invitation to Bid&body=COMPANY NAME %0D%0A ADDRESS %0D%0A CITY STATE ZIP %0D%0APh. PHONE. Fax  FAX %0D%0Aemail:  EMAIL %0D%0A%0D%0AINVITATION TO BID%0D%0A%0D%0A{$bidder['company']}%0D%0A%0D%0APROJECT NAME: {$project['name']}%0D%0APROJECT LOCATION: {$project['location']}%0D%0ABID DATE: {$project['bidduedate']}%0D%0A%0D%0APlans and Specs%0D%0A {$project['plans']}%0D%0AUser: {$project['planuser']} | Pass: {$project['planpass']}%0D%0A%0D%0APlease return all bids by 12:00 PM of the date listed above by E-Mail or Fax.%0D%0A%0D%0A LIC NO LICSNE '>EMAIL BID INVITE</a> 
 
                 | <b>Set Status:</b> <a href='?status=yes&id=$projectId&a={$bidder['id']}'>will bid</a> - <a href='?status=no&id=$projectId&a={$bidder['id']}'>won't bid</a><br>";
         }
@@ -52,7 +52,7 @@ if (isset($_GET['details'])) {
     echo "<br><br><b>WINNING SUB CONTRACTORS</b>:";
 
     $winners = $db->getData(
-        "SELECT b.*, c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.win = ?", 
+        "SELECT b.*, c.company, cat.name as category FROM bidders as b, contact as c, type as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ?", 
         [$projectId, '1']
     );
     
@@ -92,11 +92,12 @@ if (isset($_GET['status'])) {
 if (isset($_GET['win'])) {
     $projectId = intval($_GET['project']);
     $company = htmlspecialchars(trim($_GET['company']));
-    $category = htmlspecialchars(trim($_GET['category']));
     $bidderId = intval($_GET['bidder']);
 
-    echo "<h2>AWARD BID: <br>{$company}<br>{$category}<br><br>Are you sure?</h2>
-        <h3><a href='?win2=1&project={$projectId}&category={$category}&bidder={$bidderId}'>YES</a> | <a href='?details={$projectId}'>NO</a><h3>";
+    $category = $db->getFirst("SELECT * FROM type WHERE id = ?", [intval($_GET['category'])]);
+
+    echo "<h2>AWARD BID: <br>{$company}<br>{$category['name']}<br><br>Are you sure?</h2>
+        <h3><a href='?win2=1&project={$projectId}&category={$category['id']}&bidder={$bidderId}'>YES</a> | <a href='?details={$projectId}'>NO</a><h3>";
 }
 
 if (isset($_GET['win2'])) {
@@ -108,8 +109,8 @@ if (isset($_GET['win2'])) {
     $db->setData("UPDATE bidders SET win='1' WHERE id = ? AND project_id = ?", [$bidderId, $projectId]);
 
     $db->setData(
-        "UPDATE bidders SET win='0' WHERE id != ? AND project_id = ? AND category = ?", 
-        [$bidderId, $projectId, htmlspecialchars(trim($_GET['category']))]
+        "UPDATE bidders SET win='0' WHERE id != ? AND project_id = ? AND category_id = ?", 
+        [$bidderId, $projectId, intval($_GET['category'])]
     );
 }
 

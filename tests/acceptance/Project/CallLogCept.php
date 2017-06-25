@@ -4,6 +4,8 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('See winning subcontractors are on call log.');
 
 $category = $I->create('category', ['name' => 'Test Category'], 'type');
+$categoryId = $I->grabFromDatabase('type', 'id', ['name' => $category->name]);
+
 $zone = $I->create('zone', ['name' => 'Test Zone']);
 
 $contact1 = $I->create('contact', [
@@ -27,7 +29,7 @@ $projectId = $I->grabFromDatabase('project', 'id', ['name' => $project->name]);
 $bidder1 = $I->create('bidders', [
     'project_id' => $projectId,
     'contact_id' => $contact1Id,
-    'category' => $category->name,
+    'category_id' => $categoryId,
     'status' => 'won',
     'win' => 1,
 ]);
@@ -35,7 +37,7 @@ $bidder1 = $I->create('bidders', [
 $bidder2 = $I->create('bidders', [
     'project_id' => $projectId,
     'contact_id' => $contact2Id,
-    'category' => $category->name,
+    'category_id' => $categoryId,
     'status' => 'will',
     'win' => 0,
 ]);

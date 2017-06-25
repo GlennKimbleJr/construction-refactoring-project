@@ -11,7 +11,7 @@ class CreateBiddersTable extends AbstractMigration
         $table = $this->table('bidders')
               ->addColumn('project_id', 'integer')
               ->addColumn('contact_id', 'integer')
-              ->addColumn('category', 'string', ['null' => true])
+              ->addColumn('category_id', 'integer')
               ->addColumn('status', 'string', ['null' => true])
               ->addColumn('win', 'string', ['null' => true])
               ->addColumn('email', 'string', ['null' => true])

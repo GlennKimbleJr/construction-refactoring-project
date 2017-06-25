@@ -9,11 +9,11 @@ if (isset($_GET['choose'])) {
     
     foreach ($categories as $category) {
 
-        echo "<br><b><u><a href='?choose2={$projectId}&c={$category['name']}'>{$category['name']}</a></u></b><br>";
+        echo "<br><b><u><a href='?choose2={$projectId}&c={$category['id']}'>{$category['name']}</a></u></b><br>";
         
         $bidders = $db->getData(
-            "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category = ?", 
-            [$projectId, $category['name']]
+            "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?", 
+            [$projectId, $category['id']]
         );
         
         foreach ($bidders as $bid) {
@@ -29,7 +29,7 @@ if (isset($_GET['choose'])) {
 if (isset($_GET['choose2'])) {
 
     $projectId = intval($_GET['choose2']);
-    $categoryName = htmlspecialchars(trim($_GET['c']));
+    $category = $db->getFirst('SELECT * FROM type WHERE id = ?', [intval($_GET['c'])]);
 
     $project = $db->getFirst("SELECT * FROM project WHERE id = ?", [$projectId]);
      if (! count($project)) {
@@ -37,19 +37,19 @@ if (isset($_GET['choose2'])) {
     }
 
     echo "<b>[ <a href='?choose={$projectId}'>GO BACK</a> ]</b><br><br>
-        <b>Choose a <u>{$categoryName}</u> Sub-Contractor</b><br><br>
+        <b>Choose a <u>{$category['name']}</u> Sub-Contractor</b><br><br>
 
         <form action='' method='POST'>
 
             <input id='did' type='hidden' name='did' required value='{$projectId}' />
-            <input id='c' type='hidden' name='c' required value='{$categoryName}' />
+            <input id='c' type='hidden' name='c' required value='{$category['id']}' />
             <p>
                 <select name='company' required>";
                 
                 $zoneContacts = $db->getData(
                     "SELECT id, company FROM contact WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
                     [
-                        $categoryName, 
+                        $category['name'], 
                         $project['zone'], $project['zone'], $project['zone'], 
                         $project['zone'], $project['zone'], $project['zone'], 
                         $project['zone'], $project['zone'], $project['zone']
@@ -70,8 +70,8 @@ if (isset($_GET['choose2'])) {
 
 
     $bidders = $db->getData(
-        "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category = ?",
-        [$projectId, $categoryName]
+        "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?",
+        [$projectId, $category['id']]
     );
     
     foreach ($bidders as $bidder) {
@@ -94,11 +94,11 @@ if (isset($_POST['company'])) {
 
     // inserts information into database
     $query = $db->setData(
-        "INSERT INTO `bidders` (project_id, contact_id, category, status, win, email, score) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO `bidders` (project_id, contact_id, category_id, status, win, email, score) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
             intval($_POST['did']), 
             $contactId,
-            htmlspecialchars(trim($_POST['c'])), 
+            intval($_POST['c']), 
             '', 
             '', 
             $contact['email'], 

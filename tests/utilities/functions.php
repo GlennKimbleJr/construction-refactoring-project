@@ -125,7 +125,7 @@ function create_new_bidders($attribs)
     return override([
         'project_id' => 1,
         'contact_id' => 1,
-        'category' => 'Test Category',
+        'category_id' => 1,
         'status' => '',
         'win' => '',
         'score' => 'NA',

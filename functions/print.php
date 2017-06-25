@@ -23,7 +23,7 @@ if (isset($_GET['print'])) {
     </table>";
     
     $winners = $db->getData(
-        "SELECT * FROM bidders WHERE project_id = ? AND win = ? ORDER BY category", 
+        "SELECT * FROM bidders WHERE project_id = ? AND win = ? ORDER BY category_id", 
         [intval($_GET['print']), 1]
     );
     
