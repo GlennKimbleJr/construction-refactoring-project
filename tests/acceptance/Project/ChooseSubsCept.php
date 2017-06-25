@@ -35,7 +35,7 @@ $I->click($category->name);
 
 $I->canSeeInSource($zone1Contact->company);
 $I->cantSeeInSource($zone2Contact->company);
-$I->selectOption(['name' => 'zone'], ['value' => $zone1Contact->company]);
+$I->selectOption(['name' => 'company'], ['value' => $zone1Contact->company]);
 $I->click('Submit');
 $I->see('Sucess!');
 $I->click('GO BACK');

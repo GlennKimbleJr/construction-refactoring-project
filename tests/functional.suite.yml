@@ -11,9 +11,9 @@ modules:
         # add a framework module here
         - \Helper\Functional
         - Db:
-            dsn: 'mysql:host=127.0.0.1;dbname=construction;port=33060'
-            user: 'homestead'
-            password: 'secret'
+            dsn: 'mysql:host=127.0.0.1;dbname=construction;'
+            user: 'root'
+            password: ''
             dump: database.sql
             cleanup: true
             populate: true

@@ -8,12 +8,12 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://construction.dev/public
+            url: http://construction.dev/
         - \Helper\Acceptance
         - Db:
-            dsn: 'mysql:host=127.0.0.1;dbname=construction;port=33060'
-            user: 'homestead'
-            password: 'secret'
+            dsn: 'mysql:host=127.0.0.1;dbname=construction;'
+            user: 'root'
+            password: ''
             dump: database.sql
             cleanup: true
             populate: true

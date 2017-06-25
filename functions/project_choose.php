@@ -1,21 +1,19 @@
 <?php 
 
-// Starts Script
 if (isset($_GET['choose'])) {
+    $projectId = intval($_GET['choose']);
 
-    $did = $_GET['choose'];
-
-    echo "<b>[ <a href='?details=$did'>GO BACK</a> ]</b><br><br><b>CHOOSE A CATEGORY</b><br><br>";
+    echo "<b>[ <a href='?details={$projectId}'>GO BACK</a> ]</b><br><br><b>CHOOSE A CATEGORY</b><br><br>";
 
     $categories = $db->getData("SELECT * FROM type ORDER BY name");
     
     foreach ($categories as $category) {
 
-        echo "<br><b><u><a href='?choose2={$did}&c={$category['name']}'>{$category['name']}</a></u></b><br>";
+        echo "<br><b><u><a href='?choose2={$projectId}&c={$category['name']}'>{$category['name']}</a></u></b><br>";
         
         $bidders = $db->getData(
             "SELECT * FROM bid_contactors WHERE project_id = ? AND category = ?", 
-            [$did, $category['name']]
+            [$projectId, $category['name']]
         );
         
         foreach ($bidders as $bid) {
@@ -30,30 +28,32 @@ if (isset($_GET['choose'])) {
 
 if (isset($_GET['choose2'])) {
 
-    $did = $_GET['choose2'];
-    $c = $_GET['c'];
+    $projectId = intval($_GET['choose2']);
+    $categoryName = htmlspecialchars(trim($_GET['c']));
 
-    $project = $db->getFirst("SELECT * FROM project WHERE id = ?", [$did]);
+    $project = $db->getFirst("SELECT * FROM project WHERE id = ?", [$projectId]);
      if (! count($project)) {
        die('Could not get data');
     }
-    
-    $id = $project['id'];
-    $zone = $project['zone'];
 
-    echo "<b>[ <a href='?choose=$did'>GO BACK</a> ]</b><br><br>
-        <b>Choose a <u>$c</u> Sub-Contractor</b><br><br>
+    echo "<b>[ <a href='?choose={$projectId}'>GO BACK</a> ]</b><br><br>
+        <b>Choose a <u>{$categoryName}</u> Sub-Contractor</b><br><br>
 
         <form action='' method='POST'>
 
-            <input id='did' type='hidden' name='did' required value='$did' />
-            <input id='c' type='hidden' name='c' required value='$c' />
+            <input id='did' type='hidden' name='did' required value='{$projectId}' />
+            <input id='c' type='hidden' name='c' required value='{$categoryName}' />
             <p>
-                <select name='zone' required>";
+                <select name='company' required>";
                 
                 $zoneContacts = $db->getData(
                     "SELECT * FROM contact WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
-                    [$c, $zone, $zone, $zone, $zone, $zone, $zone, $zone, $zone, $zone]
+                    [
+                        $categoryName, 
+                        $project['zone'], $project['zone'], $project['zone'], 
+                        $project['zone'], $project['zone'], $project['zone'], 
+                        $project['zone'], $project['zone'], $project['zone']
+                    ]
                 );
             
                 foreach ($zoneContacts as $contact) {
@@ -71,7 +71,7 @@ if (isset($_GET['choose2'])) {
 
     $bidders = $db->getData(
         "SELECT * FROM bid_contactors WHERE project_id = ? AND category=?",
-        [$did, $c]
+        [$projectId, $categoryName]
     );
     
     foreach ($bidders as $bidder) {
@@ -84,12 +84,10 @@ if (isset($_GET['choose2'])) {
 }
 
 // checks to see if posted
-if (isset($_POST['zone'])) {
-    $companyName = $_POST['zone'];
-    $did = $_POST['did'];
-    $categoryName = $_POST['c'];
+if (isset($_POST['company'])) {
+    $companyName = htmlspecialchars(trim($_POST['company']));
 
-    $contact = $db->getFirst("SELECT * FROM contact WHERE company = ?", [$companyName]);
+    $contact = $db->getFirst("SELECT email FROM contact WHERE company = ?", [$companyName]);
     if (! count($contact)) {
         die('Could not get data');
     }
@@ -97,12 +95,16 @@ if (isset($_POST['zone'])) {
     // inserts information into database
     $query = $db->setData(
         "INSERT INTO `bid_contactors` (project_id, category, status, win, email, score, company) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        [$did, $categoryName, '', '', $contact['email'], 'NA', $companyName]
+        [
+            intval($_POST['did']), 
+            htmlspecialchars(trim($_POST['c'])), 
+            '', 
+            '', 
+            $contact['email'], 
+            'NA', 
+            $companyName
+        ]
     );
 
-    if ($db->updated($query)) {
-        die('<br><br>Sucess!');
-    } else {
-        die('<br><br>Error!');
-    }
+    die($db->updated($query) ? '<br><br>Sucess!' : '<br><br>Error!');
 }

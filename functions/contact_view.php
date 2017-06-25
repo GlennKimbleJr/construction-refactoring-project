@@ -40,7 +40,6 @@ function contact_view_template($contacts, $title = 'View All Contacts') {
         <div id='pagingControls'></div>";
 }
 
-// Starts Script
 if (isset($_GET['view'])) {
     $contacts = $db->getData("SELECT * FROM contact ORDER BY company");
     contact_view_template($contacts);

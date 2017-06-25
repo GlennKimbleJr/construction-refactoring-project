@@ -1,17 +1,16 @@
 <?php 
 
-// Starts Script
 if (isset($_GET['delete'])) {
-    $did = $_GET['delete'];
+    $projectId = intval($_GET['delete']);
 
     echo "<h1>ARE YOU SURE?</h1><br>
-        <h2><a href='?delyes=$did'>YES</a> | <a href='?edit=$did'>NO</a></h2>";
+        <h2><a href='?delyes={$projectId}'>YES</a> | <a href='?edit={$projectId}'>NO</a></h2>";
 }
 
 if (isset($_GET['delyes'])) {
-    $delid = $_GET['delyes'];
+    $projectId = intval($_GET['delyes']);
     
-    $db->setData("DELETE FROM `project` WHERE id = ?", [$delid]);
+    $db->setData("DELETE FROM `project` WHERE id = ?", [$projectId]);
     
     die('<h1>PROJECT DELETED!</h1><br>');
 }

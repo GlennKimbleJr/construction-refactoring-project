@@ -5,21 +5,6 @@ if (isset($_GET['new'])) {
 
     // checks to see if posted
     if (isset($_POST['name'])) {
-        $name2 = $_POST['name'];
-        $name = htmlspecialchars($name2);
-        $due1 = $_POST['due1'];
-        $due2 = $_POST['due2'];
-        $due3 = $_POST['due3'];
-        $due = "$due3-$due1-$due2";
-        $zone = $_POST['zone'];
-        $plans = $_POST['plans'];
-        $location = $_POST['location'];
-        $planuser = $_POST['planuser'];
-        $planpass = $_POST['planpass'];
-        $owner_name = $_POST['owner_name'];
-        $owner_phone = $_POST['owner_phone'];
-        $super_name = '';
-        $super_phone = '';
 
         if (! empty($_POST['super'])) {
             $super = $db->getFirst("SELECT * FROM super WHERE name = ?", [$_POST['super']]);
@@ -30,15 +15,27 @@ if (isset($_GET['new'])) {
         // inserts information into database
         $query = $db->setData(
             "INSERT INTO `project` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_name, super_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [$name, $due, '', $zone, $plans, $location, $planuser, $planpass, $owner_name, $owner_phone, $super_name, $super_phone]
+            [
+                htmlspecialchars(trim($_POST['name'])), 
+                trim($_POST['due3']) . '-' . trim($_POST['due1']) . '-' . trim($_POST['due2']), 
+                '', 
+                trim($_POST['zone']),
+                trim($_POST['plans']), 
+                trim($_POST['location']), 
+                trim($_POST['planuser']), 
+                trim($_POST['planpass']), 
+                trim($_POST['owner_name']), 
+                trim($_POST['owner_phone']), 
+                isset($super_name) ? $super_name : '', 
+                isset($super_phone) ? $super_phone : '', 
+            ]
         );
         
-        if ($db->updated($query)) {
-            die('<br><br>Project Created!');
-        } else {
-            die('<br><br>Error! Unable to create project.');
-        }
+        die($db->updated($query) ? '<br><br>Project Created!' : '<br><br>Error! Unable to create project.');
     }
+
+    $supers = $db->getData("SELECT * FROM super ORDER BY name");
+    $zones = $db->getData("SELECT * FROM zone ORDER BY name");
     ?>
 
     <h3>Start a New Project</h3>
@@ -125,9 +122,7 @@ if (isset($_GET['new'])) {
             <label>Zone: <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a></label><br>
             
             <select name="zone">
-                <?php
-                $zones = $db->getData("SELECT * FROM zone ORDER BY name");
-                foreach ($zones as $zone) {
+                <?php foreach ($zones as $zone) {
                     echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
                 } ?>
             </select>
@@ -137,9 +132,7 @@ if (isset($_GET['new'])) {
             <label>Select Superintendent:</label><br>
             <select name="super">   
                 <option value=""></option>
-                <?php
-                $supers = $db->getData("SELECT * FROM super ORDER BY name");
-                foreach ($supers as $super) {
+                <?php foreach ($supers as $super) {
                     echo "<option value='{$super['name']}'>{$super['name']}</option>";
                 } ?>
             </select>
