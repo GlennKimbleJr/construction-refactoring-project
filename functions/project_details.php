@@ -108,7 +108,7 @@ if (isset($_GET['win2'])) {
     $db->setData("UPDATE bid_contactors SET win='1' WHERE id = ? AND project_id = ?", [$bidderId, $projectId]);
 
     $db->setData(
-        "UPDATE bid_contactors SET win='0' WHERE id != ? AND project_id = ? & category = ?", 
+        "UPDATE bid_contactors SET win='0' WHERE id != ? AND project_id = ? AND category = ?", 
         [$bidderId, $projectId, htmlspecialchars(trim($_GET['category']))]
     );
 }
