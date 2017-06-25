@@ -14,6 +14,3 @@ modules:
             dsn: 'mysql:host=127.0.0.1;dbname=construction;'
             user: 'root'
             password: ''
-            dump: database.sql
-            cleanup: true
-            populate: true

@@ -25,3 +25,7 @@ I wanted to take this old piece of junk, and step by step turn it into something
     - Finished the previous mentioned refactoring and cleanup. Added some new tests along the way as I discovered additional behvior in the app.
 
     - The next thing I'll be working on is the database. There are a number of areas where one table is referencing another table by something like company name, as opposed to a foreign key, and there are no constraints on the table to prevent duplicate company names. To prevent unexpected behavior, I'll be refactoring to use foreign keys. 
+
+    - In order to help me get the ball rolling on refactoring the database I decided to pull in robmorgan/phinx so I could take advantage of database migrations. The first step here was to recreate the current tables (as is).
+
+    
