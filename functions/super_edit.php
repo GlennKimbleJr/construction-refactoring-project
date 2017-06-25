@@ -2,9 +2,7 @@
 
 if (isset($_GET['edit'])) {
 
-    // checks to see if posted
     if (isset($_POST['name'])) {
-
         $query = $db->setData(
             "UPDATE super SET name = ?, phone = ? WHERE id = ?",
             [
@@ -18,7 +16,6 @@ if (isset($_GET['edit'])) {
     }
 
     $superId = intval($_GET['edit']);
-
     $super = $db->getFirst("SELECT * FROM super WHERE id = ?", [$superId]);
     if (! count($super)) {
         die('Could not get data.');

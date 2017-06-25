@@ -1,14 +1,11 @@
-<?php
+<?php 
 
-// Edit a Contact
 if (isset($_GET['edit'])) {
 
-    // checks to see if posted
     if (isset($_POST['id2'])) {
 
         $query = $db->setData(
-            'UPDATE contact SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, zone = ?, type = ?, company = ?, zip = ?, zone2 = ?, zone3 = ?, zone4 = ?, zone5 = ?, zone6 = ?, zone7 = ?, zone8 = ?, zone9 = ? WHERE id = ?', 
-            [
+            'UPDATE contact SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, zone = ?, type = ?, company = ?, zip = ?, zone2 = ?, zone3 = ?, zone4 = ?, zone5 = ?, zone6 = ?, zone7 = ?, zone8 = ?, zone9 = ? WHERE id = ?', [
                 trim($_POST['first']), 
                 trim($_POST['last']), 
                 trim($_POST['street']), 
@@ -31,15 +28,14 @@ if (isset($_GET['edit'])) {
                 trim($_POST['zone8']),
                 trim($_POST['zone9']),
                 intval($_POST['id2'])
-            ]
-        );
+            ]);
 
         die($db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error');
     }
 
-    $contact = $db->getFirst('SELECT * FROM contact WHERE id = ?', 
-        [intval($_GET['edit'])]
-    );
+    $contact = $db->getFirst('SELECT * FROM contact WHERE id = ?', [
+        intval($_GET['edit'])
+    ]);
 
     if (empty($contact)) {
         die('Error: Unable to find data.');

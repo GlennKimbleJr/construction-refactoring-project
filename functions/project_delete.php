@@ -7,6 +7,7 @@ if (isset($_GET['delete'])) {
         <h2><a href='?delyes={$projectId}'>YES</a> | <a href='?edit={$projectId}'>NO</a></h2>";
 }
 
+// Confirm
 if (isset($_GET['delyes'])) {
     $projectId = intval($_GET['delyes']);
     

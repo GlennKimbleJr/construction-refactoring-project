@@ -1,6 +1,5 @@
-<?php
+<?php 
 
-// View Contact Details.
 if (isset($_GET['details'])) {
 
     $contact = $db->getFirst('SELECT * FROM contact WHERE id = ?', [$_GET['details']]);

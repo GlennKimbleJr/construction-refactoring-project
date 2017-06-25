@@ -2,7 +2,6 @@
 
 if (isset($_GET['edit'])) {
 
-    // checks to see if posted
     if (isset($_POST['name'])) {
 
         if (! empty($_POST['super'])) {

@@ -1,6 +1,5 @@
-<?php
+<?php 
 
-// Starts Script
 if (isset($_GET['view'])) {
 
     echo "<h3>View All Categories</h3><div id='pagenation'>";

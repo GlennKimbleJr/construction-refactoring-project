@@ -1,9 +1,7 @@
 <?php 
 
-// Starts Script
 if (isset($_GET['new'])) {
 
-    // checks to see if posted
     if (isset($_POST['name'])) {
 
         if (! empty($_POST['super'])) {
@@ -12,7 +10,6 @@ if (isset($_GET['new'])) {
             $super_phone = $super['phone'];
         }
 
-        // inserts information into database
         $query = $db->setData(
             "INSERT INTO `project` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_name, super_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [

@@ -1,14 +1,12 @@
-<?php
+<?php 
 
-// Create a new category.
 if (isset($_GET['new'])) {
 
-    // checks to see if posted
     if (isset($_POST['name'])) {
 
-        $query = $db->setData('INSERT INTO `type` (name) VALUES (?)', 
-            [htmlspecialchars($_POST['name'])]
-        );
+        $query = $db->setData('INSERT INTO `type` (name) VALUES (?)', [
+            htmlspecialchars($_POST['name'])
+        ]);
         
         die($db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create categories.');
     }

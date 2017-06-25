@@ -1,7 +1,6 @@
 <?php 
 
-function projectTemplate($projects)
-{
+function projectTemplate($projects) {
     if (! count($projects)) {
         return 'Could not get data.';
     }

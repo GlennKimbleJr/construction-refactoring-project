@@ -1,6 +1,5 @@
-<?php
+<?php 
 
-// Delete Category
 if (isset($_GET['delete'])) {
     $categoryId = intval($_GET['delete']);
 
@@ -12,11 +11,11 @@ if (isset($_GET['delete'])) {
         </h2>";
 }
 
-// Confirm Delete Category
+// Confirm
 if (isset($_GET['delyes'])) {
-    $db->setData('DELETE FROM type WHERE id = ?', 
-        [intval($_GET['delyes'])]
-    );
+    $db->setData('DELETE FROM type WHERE id = ?', [
+        intval($_GET['delyes'])
+    ]);
 
     die('<h1>DELETED!</h1><br>');
 }

@@ -2,7 +2,6 @@
 
 if (isset($_GET['new'])) {
 
-    // checks to see if posted
     if (isset($_POST['name'])) {
         $query = $db->setData("INSERT INTO `super` (name, phone) VALUES (?, ?)", [
             htmlspecialchars(trim($_POST['name'])), 

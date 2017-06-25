@@ -1,14 +1,11 @@
 <?php
 
-// Create a new contact.
 if (isset($_GET['new'])) {
 
-    // checks to see if posted
     if (isset($_POST['company'])) {
 
         $query = $db->setData(
-            "INSERT INTO `contact` (`first`, `last`, `street`, `city`, `state`, `zone`, `email`, `officephone`, `cellphone`, `fax`, `type`, `company`, `zip`, `zone2`, `zone3`, `zone4`, `zone5`, `zone6`, `zone7`, `zone8`, `zone9`, `score_per`, `bid_per`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-            [
+            "INSERT INTO `contact` (`first`, `last`, `street`, `city`, `state`, `zone`, `email`, `officephone`, `cellphone`, `fax`, `type`, `company`, `zip`, `zone2`, `zone3`, `zone4`, `zone5`, `zone6`, `zone7`, `zone8`, `zone9`, `score_per`, `bid_per`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
                 trim($_POST['first']), 
                 trim($_POST['last']), 
                 trim($_POST['street']), 
@@ -32,8 +29,7 @@ if (isset($_GET['new'])) {
                 trim($_POST['zone9']), 
                 '0', 
                 '0'
-            ]
-        );
+            ]);
 
         die($db->updated($query) ? '<br><br>Contact Added!' : '<br><br>Error! Unable to create contact.');
     }

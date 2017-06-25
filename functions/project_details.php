@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 if (isset($_GET['details'])) {
     $projectId = intval($_GET['details']);

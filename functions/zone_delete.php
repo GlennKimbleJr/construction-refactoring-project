@@ -7,6 +7,7 @@ if (isset($_GET['delete'])) {
         <h2><a href='?delyes={$did}'>YES</a> | <a href='?edit={$did}'>NO</a></h2>";
 }
 
+// Confirm
 if (isset($_GET['delyes'])) {
     $db->setData("DELETE FROM `zone` WHERE id = ?", [intval($_GET['delyes'])]);
     

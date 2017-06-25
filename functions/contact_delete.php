@@ -1,6 +1,5 @@
-<?php
+<?php 
 
-// Delete Contact
 if (isset($_GET['delete'])) {
     $contactId = intval($_GET['delete']);
 
@@ -12,11 +11,11 @@ if (isset($_GET['delete'])) {
         </h2>";
 }
 
-// Confirm Delete Contact
+// Confirm
 if (isset($_GET['delyes'])) {
-    $db->setData('DELETE FROM contact WHERE id = ?', 
-        [intval($_GET['delyes'])]
-    );
+    $db->setData('DELETE FROM contact WHERE id = ?', [
+        intval($_GET['delyes'])
+    ]);
 
     die('<h1>contact DELETED!</h1><br>');
 }

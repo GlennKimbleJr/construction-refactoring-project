@@ -1,6 +1,6 @@
 <?php 
 
-function contact_view_template($contacts, $title = 'View All Contacts') {
+function contactViewTemplate($contacts, $title = 'View All Contacts') {
     echo "<h3>{$title}</h3>";
 
     echo "<table width='100%' cellspacing='1' cellpadding='1' border='1'>
@@ -42,32 +42,32 @@ function contact_view_template($contacts, $title = 'View All Contacts') {
 
 if (isset($_GET['view'])) {
     $contacts = $db->getData("SELECT * FROM contact ORDER BY company");
-    contact_view_template($contacts);
+    contactViewTemplate($contacts);
 }
 
 if (isset($_GET['viewf'])) {
     $contacts = $db->getData("SELECT * FROM contact ORDER BY first, company");
-    contact_view_template($contacts, 'View All Contacts - Sort by FIRST');
+    contactViewTemplate($contacts, 'View All Contacts - Sort by FIRST');
 }
 
 if (isset($_GET['viewl'])) {
     $contacts = $db->getData("SELECT * FROM contact ORDER BY last, company");
-    contact_view_template($contacts, 'View All Contacts - Sort by LAST');
+    contactViewTemplate($contacts, 'View All Contacts - Sort by LAST');
 }
 
 if (isset($_GET['viewc'])) {
     $contacts = $db->getData("SELECT * FROM contact ORDER BY city, company");
-    contact_view_template($contacts, 'View All Contacts - Sort by CITY');
+    contactViewTemplate($contacts, 'View All Contacts - Sort by CITY');
 }
 
 if (isset($_GET['views'])) {
     $contacts = $db->getData("SELECT * FROM contact ORDER BY state, company");
-    contact_view_template($contacts, 'View All Contacts - Sort by STATE');
+    contactViewTemplate($contacts, 'View All Contacts - Sort by STATE');
 }
 
 if (isset($_GET['viewt'])) {
     $contacts = $db->getData("SELECT * FROM contact ORDER BY type, company");
-    contact_view_template($contacts, 'View All Contacts - Sort by TYPE');
+    contactViewTemplate($contacts, 'View All Contacts - Sort by TYPE');
 }
 
 if (isset($_GET['type'])) {
@@ -84,27 +84,27 @@ if (isset($_GET['type'])) {
 
 if (isset($_GET['t'])) {
     $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY company", [$_GET['t']]);
-    contact_view_template($contacts, "View Contacts - {$_GET['t']}");
+    contactViewTemplate($contacts, "View Contacts - {$_GET['t']}");
 }
 
 if (isset($_GET['tf'])) {
     $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY first, company", [$_GET['tf']]);
-    contact_view_template($contacts, "View Contacts - {$_GET['tf']}");
+    contactViewTemplate($contacts, "View Contacts - {$_GET['tf']}");
 }
 
 if (isset($_GET['tl'])) {
     $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY last, company", [$_GET['tl']]);
-    contact_view_template($contacts, "View Contacts - {$_GET['tl']}");
+    contactViewTemplate($contacts, "View Contacts - {$_GET['tl']}");
 }
 
 if (isset($_GET['tc'])) {
     $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY city, company", [$_GET['tc']]);
-    contact_view_template($contacts, "View Contacts - {$_GET['tc']}");
+    contactViewTemplate($contacts, "View Contacts - {$_GET['tc']}");
 }
 
 if (isset($_GET['ts'])) {
     $contacts = $db->getData("SELECT * FROM contact WHERE type = ? ORDER BY state, company", [$_GET['ts']]);
-    contact_view_template($contacts, "View Contacts - {$_GET['ts']}");
+    contactViewTemplate($contacts, "View Contacts - {$_GET['ts']}");
 }
 
 if (isset($_GET['zone'])) {
@@ -124,7 +124,7 @@ if (isset($_GET['z'])) {
 
     $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company", [$z, $z, $z, $z, $z, $z, $z, $z, $z]);
     
-    contact_view_template($contacts, "View Contacts - {$z}");
+    contactViewTemplate($contacts, "View Contacts - {$z}");
 }
 
 if (isset($_GET['zf'])) {
@@ -132,7 +132,7 @@ if (isset($_GET['zf'])) {
 
     $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY first, company", [$zf, $zf, $zf, $zf, $zf, $zf, $zf, $zf, $zf]);
 
-    contact_view_template($contacts, "View Contacts - {$zf}");
+    contactViewTemplate($contacts, "View Contacts - {$zf}");
 }
 
 if (isset($_GET['zl'])) {
@@ -140,7 +140,7 @@ if (isset($_GET['zl'])) {
 
     $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY last, company", [$zl, $zl, $zl, $zl, $zl, $zl, $zl, $zl, $zl]);
     
-    contact_view_template($contacts, "View Contacts - {$zl}");
+    contactViewTemplate($contacts, "View Contacts - {$zl}");
 }
 
 if (isset($_GET['zc'])) {
@@ -148,7 +148,7 @@ if (isset($_GET['zc'])) {
 
     $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY city, company", [$zc, $zc, $zc, $zc, $zc, $zc, $zc, $zc, $zc]);
     
-    contact_view_template($contacts, "View Contacts - {$zc}");
+    contactViewTemplate($contacts, "View Contacts - {$zc}");
 }
 
 if (isset($_GET['zs'])) {
@@ -156,7 +156,7 @@ if (isset($_GET['zs'])) {
 
     $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY state, company", [$zs, $zs, $zs, $zs, $zs, $zs, $zs, $zs, $zs]);
     
-    contact_view_template($contacts, "View Contacts - {$zs}");
+    contactViewTemplate($contacts, "View Contacts - {$zs}");
 }
 
 if (isset($_GET['zt'])) {
@@ -164,5 +164,5 @@ if (isset($_GET['zt'])) {
 
     $contacts = $db->getData("SELECT * FROM contact WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY type, company", [$zt, $zt, $zt, $zt, $zt, $zt, $zt, $zt, $zt]);
     
-    contact_view_template($contacts, "View Contacts - {$zt}");
+    contactViewTemplate($contacts, "View Contacts - {$zt}");
 }

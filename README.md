@@ -21,3 +21,7 @@ I wanted to take this old piece of junk, and step by step turn it into something
     - Finished removing depricated mysql extensions. 
 
     - Going to start working on general refactoring; removing undeeded temporary variables, dry up code where possible, etc.
+## 2017.06.25 
+    - Finished the previous mentioned refactoring and cleanup. Added some new tests along the way as I discovered additional behvior in the app.
+
+    - The next thing I'll be working on is the database. There are a number of areas where one table is referencing another table by something like company name, as opposed to a foreign key, and there are no constraints on the table to prevent duplicate company names. To prevent unexpected behavior, I'll be refactoring to use foreign keys. 
