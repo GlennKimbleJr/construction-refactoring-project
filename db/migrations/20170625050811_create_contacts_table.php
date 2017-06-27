@@ -6,9 +6,9 @@ class CreateContactsTable extends AbstractMigration
 {
     public function up()
     {
-        if ($this->hasTable('contact')) return;
+        if ($this->hasTable('contacts')) return;
 
-        $table = $this->table('contact');
+        $table = $this->table('contacts');
         $table->addColumn('first', 'string', ['null' => true])
               ->addColumn('last', 'string', ['null' => true])
               ->addColumn('street', 'string', ['null' => true])
@@ -37,8 +37,8 @@ class CreateContactsTable extends AbstractMigration
     
     public function down()
     {
-        if (! $this->hasTable('contact')) return;
+        if (! $this->hasTable('contacts')) return;
 
-        $this->dropTable('contact');
+        $this->dropTable('contacts');
     }
 }

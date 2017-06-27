@@ -2,7 +2,7 @@
 
 if (isset($_GET['details'])) {
 
-    $contact = $db->getFirst('SELECT * FROM contact WHERE id = ?', [$_GET['details']]);
+    $contact = $db->getFirst('SELECT * FROM contacts WHERE id = ?', [$_GET['details']]);
 
     if (empty($contact)) {
         die('Error: Unable to find data.');

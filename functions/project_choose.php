@@ -12,7 +12,7 @@ if (isset($_GET['choose'])) {
         echo "<br><b><u><a href='?choose2={$projectId}&c={$category['id']}'>{$category['name']}</a></u></b><br>";
         
         $bidders = $db->getData(
-            "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?", 
+            "SELECT c.company FROM bidders as b, contacts as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?", 
             [$projectId, $category['id']]
         );
         
@@ -47,7 +47,7 @@ if (isset($_GET['choose2'])) {
                 <select name='company' required>";
                 
                 $zoneContacts = $db->getData(
-                    "SELECT id, company FROM contact WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
+                    "SELECT id, company FROM contacts WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
                     [
                         $category['name'], 
                         $project['zone'], $project['zone'], $project['zone'], 
@@ -70,7 +70,7 @@ if (isset($_GET['choose2'])) {
 
 
     $bidders = $db->getData(
-        "SELECT c.company FROM bidders as b, contact as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?",
+        "SELECT c.company FROM bidders as b, contacts as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?",
         [$projectId, $category['id']]
     );
     
@@ -87,7 +87,7 @@ if (isset($_GET['choose2'])) {
 if (isset($_POST['company'])) {
     $contactId = intval($_POST['company']);
 
-    if (! $db->getCount("SELECT null FROM contact WHERE id = ?", [$contactId])) {
+    if (! $db->getCount("SELECT null FROM contacts WHERE id = ?", [$contactId])) {
         die('Could not get data');
     }
 

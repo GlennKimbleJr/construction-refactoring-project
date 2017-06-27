@@ -5,19 +5,19 @@ $I->wantTo('Mark a subcontractors as willing to bid a project.');
 
 $category = $I->create('category', ['name' => 'Test Category'], 'type');
 $zone = $I->create('zone', ['name' => 'Test Zone']);
-$contact1 = $I->create('contact', [
+$contact1 = $I->create('contacts', [
     'company' => 'Test Company 1',
     'zone' => $zone->name,
     'type' => $category->name
 ]);
-$contact2 = $I->create('contact', [
+$contact2 = $I->create('contacts', [
     'company' => 'Test Company 2',
     'zone' => $zone->name,
     'type' => $category->name
 ]);
 
-$contact1Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact1->company]);
-$contact2Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact2->company]);
+$contact1Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact1->company]);
+$contact2Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact2->company]);
 
 $project = $I->create('projects', ['zone' => $zone->name]);
 $projectId = $I->grabFromDatabase('projects', 'id', ['name' => $project->name]);

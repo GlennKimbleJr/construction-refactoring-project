@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an existing contact.');
 
-$contact = $I->create('contact');
+$contact = $I->create('contacts');
 
 $I->amOnPage('/contact.php?view');
 $I->see($contact->company);
@@ -25,7 +25,7 @@ $I->dontSee($contact->last);
 $I->dontSee($contact->city);
 $I->dontSee($contact->state);
 
-$I->dontSeeInDatabase('contact', [
+$I->dontSeeInDatabase('contacts', [
     'first' => $contact->first,
     'last' => $contact->last,
     'street' => $contact->street,

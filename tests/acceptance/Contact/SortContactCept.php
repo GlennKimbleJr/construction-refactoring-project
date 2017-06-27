@@ -5,7 +5,7 @@ $I->wantTo('Sort contacts by zones and categories.');
 
 $zone1 = $I->create('zone', ['name' => 'Zone 1']);
 $category1 = $I->create('category', ['name' => 'Category 1'], 'type');
-$contact1 = $I->create('contact', [
+$contact1 = $I->create('contacts', [
     'company' => 'Company 1',
     'zone' => $zone1->name,
     'type' => $category1->name
@@ -13,7 +13,7 @@ $contact1 = $I->create('contact', [
 
 $zone2 = $I->create('zone', ['name' => 'Zone 2']);
 $category2 = $I->create('category', ['name' => 'Category 2'], 'type');
-$contact2 = $I->create('contact', [
+$contact2 = $I->create('contacts', [
     'company' => 'Company 2',
     'zone' => $zone2->name,
     'type' => $category2->name

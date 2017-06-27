@@ -28,7 +28,7 @@ if (isset($_GET['print'])) {
     );
     
     foreach ($winners as $winner) {
-        $contact = $db->getFirst("SELECT * FROM contact WHERE id = ?", [$winner['contact_id']]);
+        $contact = $db->getFirst("SELECT * FROM contacts WHERE id = ?", [$winner['contact_id']]);
 
         echo "<table width='850' cellspacing='2' cellpadding='2' border='1'>
             <tr>

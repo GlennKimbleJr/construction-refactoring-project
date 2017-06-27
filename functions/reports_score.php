@@ -2,7 +2,7 @@
 
 if (isset($_GET['score'])) {
 
-    $contacts = $db->getData("SELECT id FROM contact");
+    $contacts = $db->getData("SELECT id FROM contacts");
     
     foreach ($contacts as $contact) {
 
@@ -19,7 +19,7 @@ if (isset($_GET['score'])) {
         $scoreAverage = $score['sum'] / $scoredBidTotal;
 
         if ($score['sum']) {
-            $db->setData("UPDATE contact SET score_per = ? WHERE id = ?", 
+            $db->setData("UPDATE contacts SET score_per = ? WHERE id = ?", 
                 [$scoreAverage, $contact['id']]
             );
         }
@@ -38,7 +38,7 @@ if (isset($_GET['score'])) {
                 <td align='center' width='10%'><font size='1'><b>score</b></font></td>
             </tr>";
 
-    $contacts = $db->getData("SELECT * FROM contact WHERE score_per != '0' ORDER BY score_per");
+    $contacts = $db->getData("SELECT * FROM contacts WHERE score_per != '0' ORDER BY score_per");
     
     foreach ($contacts as $contact) {
         echo "<div class='z'>

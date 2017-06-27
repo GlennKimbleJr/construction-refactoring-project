@@ -5,7 +5,7 @@ if (isset($_GET['new'])) {
     if (isset($_POST['company'])) {
 
         $query = $db->setData(
-            "INSERT INTO `contact` (`first`, `last`, `street`, `city`, `state`, `zone`, `email`, `officephone`, `cellphone`, `fax`, `type`, `company`, `zip`, `zone2`, `zone3`, `zone4`, `zone5`, `zone6`, `zone7`, `zone8`, `zone9`, `score_per`, `bid_per`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+            "INSERT INTO `contacts` (`first`, `last`, `street`, `city`, `state`, `zone`, `email`, `officephone`, `cellphone`, `fax`, `type`, `company`, `zip`, `zone2`, `zone3`, `zone4`, `zone5`, `zone6`, `zone7`, `zone8`, `zone9`, `score_per`, `bid_per`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
                 trim($_POST['first']), 
                 trim($_POST['last']), 
                 trim($_POST['street']), 

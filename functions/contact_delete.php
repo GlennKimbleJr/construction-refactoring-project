@@ -13,7 +13,7 @@ if (isset($_GET['delete'])) {
 
 // Confirm
 if (isset($_GET['delyes'])) {
-    $db->setData('DELETE FROM contact WHERE id = ?', [
+    $db->setData('DELETE FROM contacts WHERE id = ?', [
         intval($_GET['delyes'])
     ]);
 

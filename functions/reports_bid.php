@@ -2,7 +2,7 @@
 
 if (isset($_GET['bid'])) {
 
-    $contacts = $db->getData("SELECT id FROM contact");
+    $contacts = $db->getData("SELECT id FROM contacts");
     
     foreach ($contacts as $contact) {
 
@@ -20,7 +20,7 @@ if (isset($_GET['bid'])) {
         $bidPercentage = ($willBidCount / $totalBids) * 100;
 
         if ($totalBids) {
-            $db->setData("UPDATE contact SET bid_per=? WHERE id=?", 
+            $db->setData("UPDATE contacts SET bid_per=? WHERE id=?", 
                 [$bidPercentage, $contact['id']]
             );
         }
@@ -40,7 +40,7 @@ if (isset($_GET['bid'])) {
             </tr>";
 
 
-    $contacts = $db->getData("SELECT * FROM contact WHERE bid_per > 0 ORDER BY bid_per");
+    $contacts = $db->getData("SELECT * FROM contacts WHERE bid_per > 0 ORDER BY bid_per");
     
     foreach ($contacts as $contact) {
         echo "<div class='z'>

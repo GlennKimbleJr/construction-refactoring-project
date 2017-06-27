@@ -34,7 +34,7 @@ function create_new_category($attribs)
  * @param  array  $attribs  Anything you want to override the default data supplied.
  * @return array
  */
-function create_new_contact($attribs)
+function create_new_contacts($attribs)
 {
     return override([
         'first' => 'Test First',

@@ -5,7 +5,7 @@ $I->wantTo('Mark a subcontractors as wont bid for a project.');
 
 $category = $I->create('category', ['name' => 'Test Category'], 'type');
 $zone = $I->create('zone', ['name' => 'Test Zone']);
-$contact = $I->create('contact', [
+$contact = $I->create('contacts', [
     'company' => 'Test Company',
     'zone' => $zone->name,
     'type' => $category->name

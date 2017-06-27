@@ -13,7 +13,7 @@ $zone6 = $I->create('zone', ['name' => 'Test Zone 6']);
 $zone7 = $I->create('zone', ['name' => 'Test Zone 7']);
 $zone8 = $I->create('zone', ['name' => 'Test Zone 8']);
 $zone9 = $I->create('zone', ['name' => 'Test Zone 9']);
-$contact = $I->create('contact', [
+$contact = $I->create('contacts', [
     'type' => $category->name,
     'zone' => $zone1->name,
     'zone2' => $zone2->name,

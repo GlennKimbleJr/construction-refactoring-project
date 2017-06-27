@@ -5,7 +5,7 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['id2'])) {
 
         $query = $db->setData(
-            'UPDATE contact SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, zone = ?, type = ?, company = ?, zip = ?, zone2 = ?, zone3 = ?, zone4 = ?, zone5 = ?, zone6 = ?, zone7 = ?, zone8 = ?, zone9 = ? WHERE id = ?', [
+            'UPDATE contacts SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, zone = ?, type = ?, company = ?, zip = ?, zone2 = ?, zone3 = ?, zone4 = ?, zone5 = ?, zone6 = ?, zone7 = ?, zone8 = ?, zone9 = ? WHERE id = ?', [
                 trim($_POST['first']), 
                 trim($_POST['last']), 
                 trim($_POST['street']), 
@@ -33,7 +33,7 @@ if (isset($_GET['edit'])) {
         die($db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error');
     }
 
-    $contact = $db->getFirst('SELECT * FROM contact WHERE id = ?', [
+    $contact = $db->getFirst('SELECT * FROM contacts WHERE id = ?', [
         intval($_GET['edit'])
     ]);
 

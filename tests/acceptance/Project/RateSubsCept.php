@@ -9,32 +9,32 @@ $category3 = $I->create('category', ['name' => 'Test Category 3'], 'type');
 $category4 = $I->create('category', ['name' => 'Test Category 4'], 'type');
 $category5 = $I->create('category', ['name' => 'Test Category 5'], 'type');
 
-$contact1 = $I->create('contact', [
+$contact1 = $I->create('contacts', [
     'company' => 'Test Company 1',
     'type' => $category1->name
 ]);
-$contact2 = $I->create('contact', [
+$contact2 = $I->create('contacts', [
     'company' => 'Test Company 2',
     'type' => $category2->name
 ]);
-$contact3 = $I->create('contact', [
+$contact3 = $I->create('contacts', [
     'company' => 'Test Company 3',
     'type' => $category3->name
 ]);
-$contact4 = $I->create('contact', [
+$contact4 = $I->create('contacts', [
     'company' => 'Test Company 4',
     'type' => $category4->name
 ]);
-$contact5 = $I->create('contact', [
+$contact5 = $I->create('contacts', [
     'company' => 'Test Company 5',
     'type' => $category5->name
 ]);
 
-$contact1Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact1->company]);
-$contact2Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact2->company]);
-$contact3Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact3->company]);
-$contact4Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact4->company]);
-$contact5Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact5->company]);
+$contact1Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact1->company]);
+$contact2Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact2->company]);
+$contact3Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact3->company]);
+$contact4Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact4->company]);
+$contact5Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact5->company]);
 
 $project = $I->create('projects');
 $projectId = $I->grabFromDatabase('projects', 'id', ['name' => $project->name]);

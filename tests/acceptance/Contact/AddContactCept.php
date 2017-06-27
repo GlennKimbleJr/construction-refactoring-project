@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Add a new contact.');
 
-$contact = make('contact');
+$contact = make('contacts');
 $category = $I->create('category', [], 'type');
 $zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
@@ -43,7 +43,7 @@ $I->selectOption(['name' => 'type'], ['value' => $category->name]);
 $I->click('Create');
 $I->see('Contact Added!');
 
-$I->seeInDatabase('contact', [
+$I->seeInDatabase('contacts', [
     'first' => $contact->first,
     'last' => $contact->last,
     'street' => $contact->street,
