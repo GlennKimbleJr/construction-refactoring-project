@@ -7,7 +7,7 @@ $super1 = $I->create('super', ['name' => 'Test Super 1']);
 $super2 = $I->create('super', ['name' => 'Test Super 2']);
 $zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
-$project = $I->create('project', [
+$project = $I->create('projects', [
     'zone' => $zone1->name,
     'super_name' => $super1->name,
     'super_phone' => $super1->phone

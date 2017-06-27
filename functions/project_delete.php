@@ -11,7 +11,7 @@ if (isset($_GET['delete'])) {
 if (isset($_GET['delyes'])) {
     $projectId = intval($_GET['delyes']);
     
-    $db->setData("DELETE FROM `project` WHERE id = ?", [$projectId]);
+    $db->setData("DELETE FROM `projects` WHERE id = ?", [$projectId]);
     
     die('<h1>PROJECT DELETED!</h1><br>');
 }

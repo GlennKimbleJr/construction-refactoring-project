@@ -3,8 +3,8 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('mark projects as complete and see the option to do that dissapears afterwards.');
 
-$project = $I->create('project');
-$I->seeInDatabase('project', [
+$project = $I->create('projects');
+$I->seeInDatabase('projects', [
     'name' => $project->name,
     'completedate' => ''
 ]);
@@ -18,7 +18,7 @@ $I->click('MARK AS COMPLETE');
 $I->click('YES');
 $I->see('PROJECT COMPLETED!');
 
-$I->seeInDatabase('project', [
+$I->seeInDatabase('projects', [
     'name' => $project->name,
     'completedate' => date("Y-m-d")
 ]);

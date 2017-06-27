@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an exiting project.');
 
-$project = $I->create('project');
+$project = $I->create('projects');
 
 $I->amOnPage('/project.php?open');
 $I->see("{$project->name} - {$project->bidduedate}");
@@ -16,7 +16,7 @@ $I->see('DELETED!');
 $I->click('VIEW LIST');
 $I->dontSee("{$project->name} - {$project->bidduedate}");
 
-$I->dontSeeInDatabase('project', [
+$I->dontSeeInDatabase('projects', [
     'name' => $project->name,
     'bidduedate' => $project->bidduedate,
     'completedate' => $project->completedate,

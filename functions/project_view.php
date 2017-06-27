@@ -28,7 +28,7 @@ if (isset($_GET['view'])) {
     </h3>";
 
     echo projectTemplate(
-        $db->getData("SELECT * FROM project ORDER BY bidduedate")
+        $db->getData("SELECT * FROM projects ORDER BY bidduedate")
     );
 }
 
@@ -36,7 +36,7 @@ if (isset($_GET['open'])) {
     echo "<h3>View Open Projects - <a href='?view'><u>All Projects</u></a> | <a href='?closed'><u>Closed Only</u></a></h3>";
     
     echo projectTemplate(
-        $db->getData("SELECT * FROM project WHERE completedate = '' ORDER BY bidduedate")
+        $db->getData("SELECT * FROM projects WHERE completedate = '' ORDER BY bidduedate")
     );
 }
 
@@ -44,6 +44,6 @@ if (isset($_GET['closed'])) {
     echo "<h3>View Closed Projects - <a href='?view'><u>All Projects</u></a> | <a href='?open'><u>Open Only</u></a></h3>";
 
     echo projectTemplate(
-        $db->getData("SELECT * FROM project WHERE completedate != '' ORDER BY bidduedate")
+        $db->getData("SELECT * FROM projects WHERE completedate != '' ORDER BY bidduedate")
     );
 }

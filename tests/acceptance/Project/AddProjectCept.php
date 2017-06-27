@@ -5,7 +5,7 @@ $I->wantTo('Add a new project.');
 
 $zone = $I->create('zone');
 $super = $I->create('super');
-$project = make('project');
+$project = make('projects');
 $project_date = explode('-', $project->bidduedate);
 
 $I->amOnPage('/project.php');
@@ -27,7 +27,7 @@ $I->selectOption(['name' => 'super'], ['value' => $super->name]);
 $I->click('Create');
 $I->see('Project Created!');
 
-$I->seeInDatabase('project', [
+$I->seeInDatabase('projects', [
     'name' => $project->name,
     'bidduedate' => $project->bidduedate,
     'completedate' => $project->completedate,

@@ -11,7 +11,7 @@ if (isset($_GET['new'])) {
         }
 
         $query = $db->setData(
-            "INSERT INTO `project` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_name, super_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO `projects` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_name, super_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
                 htmlspecialchars(trim($_POST['name'])), 
                 trim($_POST['due3']) . '-' . trim($_POST['due1']) . '-' . trim($_POST['due2']), 

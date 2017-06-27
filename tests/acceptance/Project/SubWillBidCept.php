@@ -19,8 +19,8 @@ $contact2 = $I->create('contact', [
 $contact1Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact1->company]);
 $contact2Id = $I->grabFromDatabase('contact', 'id', ['company' => $contact2->company]);
 
-$project = $I->create('project', ['zone' => $zone->name]);
-$projectId = $I->grabFromDatabase('project', 'id', ['name' => $project->name]);
+$project = $I->create('projects', ['zone' => $zone->name]);
+$projectId = $I->grabFromDatabase('projects', 'id', ['name' => $project->name]);
 $bidder1 = $I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category->name,

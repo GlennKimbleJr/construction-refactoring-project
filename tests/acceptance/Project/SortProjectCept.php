@@ -3,12 +3,12 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Sort projects by complete and incomplete.');
 
-$completedProject = $I->create('project', [
+$completedProject = $I->create('projects', [
     'name' => 'Complete Project 1',
     'completedate' => '2017-01-01',
 ]);
 
-$incompletedProject = $I->create('project', [
+$incompletedProject = $I->create('projects', [
     'name' => 'Incomplete Project 2',
     'completedate' => '',
 ]);

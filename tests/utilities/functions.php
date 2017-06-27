@@ -69,7 +69,7 @@ function create_new_contact($attribs)
  * @param  array  isset($attribs  Anything you want to override the default data supplied.
  * @return array
  */
-function create_new_project($attribs)
+function create_new_projects($attribs)
 {
     return override([
         'name' => 'Test Project',

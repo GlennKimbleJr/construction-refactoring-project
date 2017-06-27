@@ -31,7 +31,7 @@ if (isset($_GET['choose2'])) {
     $projectId = intval($_GET['choose2']);
     $category = $db->getFirst('SELECT * FROM type WHERE id = ?', [intval($_GET['c'])]);
 
-    $project = $db->getFirst("SELECT * FROM project WHERE id = ?", [$projectId]);
+    $project = $db->getFirst("SELECT * FROM projects WHERE id = ?", [$projectId]);
      if (! count($project)) {
        die('Could not get data');
     }

@@ -11,7 +11,7 @@ if (isset($_GET['edit'])) {
         }
 
         $query = $db->setData(
-            "UPDATE project SET name=?, bidduedate=?, zone=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_name=?, super_phone=? WHERE id=?",
+            "UPDATE projects SET name=?, bidduedate=?, zone=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_name=?, super_phone=? WHERE id=?",
             [
                 htmlspecialchars(trim($_POST['name'])),
                 trim($_POST['due3']) . '-' . trim($_POST['due1']) . '-' . trim($_POST['due2']), 
@@ -33,7 +33,7 @@ if (isset($_GET['edit'])) {
 
     $projectId = intval($_GET['project']);
 
-    $project = $db->getFirst("SELECT * FROM project WHERE id=?", [$projectId]);
+    $project = $db->getFirst("SELECT * FROM projects WHERE id=?", [$projectId]);
     if (! count($project)) {
         die('Could not get data.');
     }

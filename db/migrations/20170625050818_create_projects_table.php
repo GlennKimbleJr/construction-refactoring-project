@@ -6,10 +6,10 @@ class CreateProjectsTable extends AbstractMigration
 {
     public function up()
     {
-        if ($this->hasTable('project')) return;
+        if ($this->hasTable('projects')) return;
 
-        $table = $this->table('project');
-        $table->addColumn('name', 'string', ['null' => true])
+        $table = $this->table('projects')
+              ->addColumn('name', 'string', ['null' => true])
               ->addColumn('bidduedate', 'string', ['null' => true])
               ->addColumn('completedate', 'string', ['null' => true])
               ->addColumn('zone', 'string', ['null' => true])
@@ -26,8 +26,8 @@ class CreateProjectsTable extends AbstractMigration
 
     public function down()
     {
-        if (! $this->hasTable('project')) return;
+        if (! $this->hasTable('projects')) return;
 
-        $this->dropTable('project');
+        $this->dropTable('projects');
     }
 }

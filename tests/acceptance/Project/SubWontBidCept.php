@@ -10,8 +10,8 @@ $contact = $I->create('contact', [
     'zone' => $zone->name,
     'type' => $category->name
 ]);
-$project = $I->create('project', ['zone' => $zone->name]);
-$projectId = $I->grabFromDatabase('project', 'id', ['name' => $project->name]);
+$project = $I->create('projects', ['zone' => $zone->name]);
+$projectId = $I->grabFromDatabase('projects', 'id', ['name' => $project->name]);
 $bidder = $I->create('bidders', [
     'project_id' => $projectId,
     'category' => $category->name,

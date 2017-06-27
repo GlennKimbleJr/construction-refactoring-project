@@ -19,7 +19,7 @@ $zone2Contact = $I->create('contact', [
     'type' => $category->name
 ]);
 
-$zone1Project = $I->create('project', ['zone' => $zone1->name]);
+$zone1Project = $I->create('projects', ['zone' => $zone1->name]);
 
 $I->amOnPage('/project.php?open');
 $I->see($zone1Project->name);

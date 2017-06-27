@@ -3,7 +3,7 @@
 if (isset($_GET['details'])) {
     $projectId = intval($_GET['details']);
 
-    $project = $db->getFirst("SELECT * FROM project WHERE id = ?", [$projectId]);
+    $project = $db->getFirst("SELECT * FROM projects WHERE id = ?", [$projectId]);
     if (! count($project)) {
         die('Could not get data.');
     }
@@ -169,5 +169,5 @@ if (isset($_GET['complete2'])) {
     echo "<b> [ <a href='?details={$projectId}'>GO BACK</a> ]</b><br>
         <h1>PROJECT COMPLETED!</h1>";
 
-    $db->setData("UPDATE project SET completedate = ? WHERE id = ?", [$date, $projectId]);
+    $db->setData("UPDATE projects SET completedate = ? WHERE id = ?", [$date, $projectId]);
 }

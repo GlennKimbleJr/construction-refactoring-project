@@ -1,7 +1,7 @@
 <?php 
 
 if (isset($_GET['print'])) {
-    $project = $db->getFirst("SELECT * FROM project WHERE id = ?", [intval($_GET['print'])]);
+    $project = $db->getFirst("SELECT * FROM projects WHERE id = ?", [intval($_GET['print'])]);
     
     if (! count($project)) {
        die('Could not get data');
