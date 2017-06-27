@@ -6,7 +6,7 @@ if (isset($_GET['view'])) {
 
         <div id='pagenation'>";
 
-    $zones = $db->getData("SELECT * FROM zone ORDER BY name");
+    $zones = $db->getData("SELECT * FROM zones ORDER BY name");
     foreach ($zones as $zone) {
         echo "<div class='z'><a href='?edit={$zone['id']}'>{$zone['name']}</a></div>";
     }

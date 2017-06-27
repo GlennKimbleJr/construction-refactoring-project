@@ -107,7 +107,7 @@ function create_new_supers($attribs)
  * @param  array  isset($attribs  Anything you want to override the default data supplied.
  * @return array
  */
-function create_new_zone($attribs)
+function create_new_zones($attribs)
 {
     return override([
         'name' => 'Test Zone'

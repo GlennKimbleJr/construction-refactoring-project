@@ -5,14 +5,14 @@ $I->wantTo('Add subcontractors to my project.');
 
 $category = $I->create('categories', ['name' => 'Category Test']);
 
-$zone1 = $I->create('zone', ['name' => 'Zone 1']);
+$zone1 = $I->create('zones', ['name' => 'Zone 1']);
 $zone1Contact = $I->create('contacts', [
     'company' => 'Company 1',
     'zone' => $zone1->name,
     'type' => $category->name
 ]);
 
-$zone2 = $I->create('zone', ['name' => 'Zone 2']);
+$zone2 = $I->create('zones', ['name' => 'Zone 2']);
 $zone2Contact = $I->create('contacts', [
     'company' => 'Company 2',
     'zone' => $zone2->name,

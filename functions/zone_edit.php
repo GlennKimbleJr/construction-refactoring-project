@@ -3,7 +3,7 @@
 if (isset($_GET['edit'])) {
 
     if (isset($_POST['name'])) {
-        $query = $db->setData("UPDATE zone SET name = ? WHERE id = ?", [
+        $query = $db->setData("UPDATE zones SET name = ? WHERE id = ?", [
             htmlspecialchars(trim($_POST['name'])), 
             intval($_POST['id2'])
         ]);
@@ -13,7 +13,7 @@ if (isset($_GET['edit'])) {
 
     $zoneId = intval($_GET['edit']);
 
-    $zone = $db->getFirst("SELECT name FROM zone WHERE id = ?", [$zoneId]);
+    $zone = $db->getFirst("SELECT name FROM zones WHERE id = ?", [$zoneId]);
     if (! count($zone)) {
         die('Could not get data.');
     }

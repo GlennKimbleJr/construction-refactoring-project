@@ -5,15 +5,15 @@ $I->wantTo('Add a new contact.');
 
 $contact = make('contacts');
 $category = $I->create('categories');
-$zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
-$zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
-$zone3 = $I->create('zone', ['name' => 'Test Zone 3']);
-$zone4 = $I->create('zone', ['name' => 'Test Zone 4']);
-$zone5 = $I->create('zone', ['name' => 'Test Zone 5']);
-$zone6 = $I->create('zone', ['name' => 'Test Zone 6']);
-$zone7 = $I->create('zone', ['name' => 'Test Zone 7']);
-$zone8 = $I->create('zone', ['name' => 'Test Zone 8']);
-$zone9 = $I->create('zone', ['name' => 'Test Zone 9']);
+$zone1 = $I->create('zones', ['name' => 'Test Zone 1']);
+$zone2 = $I->create('zones', ['name' => 'Test Zone 2']);
+$zone3 = $I->create('zones', ['name' => 'Test Zone 3']);
+$zone4 = $I->create('zones', ['name' => 'Test Zone 4']);
+$zone5 = $I->create('zones', ['name' => 'Test Zone 5']);
+$zone6 = $I->create('zones', ['name' => 'Test Zone 6']);
+$zone7 = $I->create('zones', ['name' => 'Test Zone 7']);
+$zone8 = $I->create('zones', ['name' => 'Test Zone 8']);
+$zone9 = $I->create('zones', ['name' => 'Test Zone 9']);
 
 $I->amOnPage('/contact.php');
 $I->click('+ ADD NEW');

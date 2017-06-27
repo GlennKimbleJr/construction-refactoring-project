@@ -152,7 +152,7 @@ if (isset($_GET['edit'])) {
             <select name="zone">
                 <option value="<?=$project['zone'];?>"><?=$project['zone'];?></option>  
                 <?php
-                $zones = $db->getData("SELECT * FROM zone ORDER BY name");
+                $zones = $db->getData("SELECT * FROM zones ORDER BY name");
                 foreach ($zones as $zone) {
                     echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
                 } ?>

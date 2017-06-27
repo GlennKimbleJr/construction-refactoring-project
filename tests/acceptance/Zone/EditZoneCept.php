@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Edit a zone\'s details');
 
-$zone = $I->create('zone');
+$zone = $I->create('zones');
 
 $I->amOnPage('/zone.php?view');
 $I->see($zone->name);

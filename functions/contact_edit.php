@@ -41,7 +41,7 @@ if (isset($_GET['edit'])) {
         die('Error: Unable to find data.');
     }
 
-    $zones = $db->getData('SELECT * FROM zone ORDER BY name');
+    $zones = $db->getData('SELECT * FROM zones ORDER BY name');
     $categories = $db->getData('SELECT * FROM categories ORDER BY name');
 
     ?>

@@ -32,7 +32,7 @@ if (isset($_GET['new'])) {
     }
 
     $supers = $db->getData("SELECT * FROM supers ORDER BY name");
-    $zones = $db->getData("SELECT * FROM zone ORDER BY name");
+    $zones = $db->getData("SELECT * FROM zones ORDER BY name");
     ?>
 
     <h3>Start a New Project</h3>

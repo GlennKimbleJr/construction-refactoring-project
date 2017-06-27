@@ -34,7 +34,7 @@ if (isset($_GET['new'])) {
         die($db->updated($query) ? '<br><br>Contact Added!' : '<br><br>Error! Unable to create contact.');
     }
 
-    $zones = $db->getData('SELECT * FROM zone ORDER BY name');
+    $zones = $db->getData('SELECT * FROM zones ORDER BY name');
     $categories = $db->getData('SELECT * FROM categories ORDER BY name');
     ?>
 

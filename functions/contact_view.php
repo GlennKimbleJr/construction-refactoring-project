@@ -110,7 +110,7 @@ if (isset($_GET['ts'])) {
 if (isset($_GET['zone'])) {
     echo "<h3>SELECT A ZONE</h3>";
 
-    $contacts = $db->getData("SELECT * FROM zone ORDER BY name");
+    $contacts = $db->getData("SELECT * FROM zones ORDER BY name");
     
     foreach ($contacts as $contact) {
         $name = $contact['name'];

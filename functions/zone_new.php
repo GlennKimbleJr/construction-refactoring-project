@@ -4,7 +4,7 @@ if (isset($_GET['new'])) {
 
     if (isset($_POST['name'])) {
 
-        $query = $db->setData("INSERT INTO `zone` (name) VALUES (?)", [
+        $query = $db->setData("INSERT INTO `zones` (name) VALUES (?)", [
             htmlspecialchars(trim($_POST['name']))
         ]);
 

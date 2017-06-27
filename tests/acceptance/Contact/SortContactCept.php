@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Sort contacts by zones and categories.');
 
-$zone1 = $I->create('zone', ['name' => 'Zone 1']);
+$zone1 = $I->create('zones', ['name' => 'Zone 1']);
 $category1 = $I->create('categories', ['name' => 'Category 1']);
 $contact1 = $I->create('contacts', [
     'company' => 'Company 1',
@@ -11,7 +11,7 @@ $contact1 = $I->create('contacts', [
     'type' => $category1->name
 ]);
 
-$zone2 = $I->create('zone', ['name' => 'Zone 2']);
+$zone2 = $I->create('zones', ['name' => 'Zone 2']);
 $category2 = $I->create('categories', ['name' => 'Category 2']);
 $contact2 = $I->create('contacts', [
     'company' => 'Company 2',

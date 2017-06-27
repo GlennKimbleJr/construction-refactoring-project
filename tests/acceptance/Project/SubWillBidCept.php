@@ -4,7 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Mark a subcontractors as willing to bid a project.');
 
 $category = $I->create('categories', ['name' => 'Test Category']);
-$zone = $I->create('zone', ['name' => 'Test Zone']);
+$zone = $I->create('zones', ['name' => 'Test Zone']);
 $contact1 = $I->create('contacts', [
     'company' => 'Test Company 1',
     'zone' => $zone->name,

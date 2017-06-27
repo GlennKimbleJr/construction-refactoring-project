@@ -6,7 +6,7 @@ $I->wantTo('See winning subcontractors are on call log.');
 $category = $I->create('categories', ['name' => 'Test Category']);
 $categoryId = $I->grabFromDatabase('categories', 'id', ['name' => $category->name]);
 
-$zone = $I->create('zone', ['name' => 'Test Zone']);
+$zone = $I->create('zones', ['name' => 'Test Zone']);
 
 $contact1 = $I->create('contacts', [
     'company' => 'Test Company 1',

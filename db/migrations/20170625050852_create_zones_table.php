@@ -6,17 +6,17 @@ class CreateZonesTable extends AbstractMigration
 {
     public function up()
     {
-        if ($this->hasTable('zone')) return;
+        if ($this->hasTable('zones')) return;
 
-        $table = $this->table('zone');
+        $table = $this->table('zones');
         $table->addColumn('name', 'string', ['null' => true])
               ->save();
     }
 
     public function down()
     {
-        if (! $this->hasTable('zone')) return;
+        if (! $this->hasTable('zones')) return;
 
-        $this->dropTable('zone');
+        $this->dropTable('zones');
     }
 }
