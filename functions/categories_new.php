@@ -4,7 +4,7 @@ if (isset($_GET['new'])) {
 
     if (isset($_POST['name'])) {
 
-        $query = $db->setData('INSERT INTO `type` (name) VALUES (?)', [
+        $query = $db->setData('INSERT INTO `categories` (name) VALUES (?)', [
             htmlspecialchars($_POST['name'])
         ]);
         

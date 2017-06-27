@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Edit a contact\'s details');
 
-$category = $I->create('category', ['name' => 'Test Category'], 'type');
+$category = $I->create('categories', ['name' => 'Test Category']);
 $zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
 $zone3 = $I->create('zone', ['name' => 'Test Zone 3']);

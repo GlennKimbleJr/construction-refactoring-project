@@ -7,13 +7,13 @@ $I->amOnPage('/categories.php');
 $I->click('+ ADD NEW');
 $I->see('Start a New Category');
 
-$category = make('category');
+$category = make('categories');
 
 $I->fillField(['id' => 'name'], $category->name);
 $I->click('Create');
 $I->see('Created!');
 
-$I->seeInDatabase('type', [
+$I->seeInDatabase('categories', [
     'name' => $category->name
 ]);
 

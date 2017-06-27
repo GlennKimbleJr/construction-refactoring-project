@@ -73,7 +73,7 @@ if (isset($_GET['viewt'])) {
 if (isset($_GET['type'])) {
     echo "<h3>SELECT A TYPE</h3>";
 
-    $contacts = $db->getData("SELECT * FROM type ORDER BY name");
+    $contacts = $db->getData("SELECT * FROM categories ORDER BY name");
     
     foreach ($contacts as $contact) {
         $name = $contact['name'];

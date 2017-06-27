@@ -13,7 +13,7 @@ if (isset($_GET['delete'])) {
 
 // Confirm
 if (isset($_GET['delyes'])) {
-    $db->setData('DELETE FROM type WHERE id = ?', [
+    $db->setData('DELETE FROM categories WHERE id = ?', [
         intval($_GET['delyes'])
     ]);
 

@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Edit a categories details');
 
-$category = $I->create('category', [], 'type');
+$category = $I->create('categories');
 
 $I->amOnPage('/categories.php?view');
 $I->see($category->name);

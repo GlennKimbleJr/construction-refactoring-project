@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an exiting category.');
 
-$category = $I->create('category', [], 'type');
+$category = $I->create('categories');
 
 $I->amOnPage('/categories.php?view');
 $I->see($category->name);
@@ -18,6 +18,6 @@ $I->see('DELETED!');
 $I->click('VIEW LIST');
 $I->dontSee($category->name);
 
-$I->dontSeeInDatabase('type', [
+$I->dontSeeInDatabase('categories', [
     'name' => $category->name
 ]);

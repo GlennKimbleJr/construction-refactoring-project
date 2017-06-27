@@ -21,7 +21,7 @@ function make($type, $attribs = [], $object = true)
  * @param  array  $attribs  Anything you want to override the default data supplied.
  * @return array
  */
-function create_new_category($attribs)
+function create_new_categories($attribs)
 {
     return override([
         'name' => 'Test Category'

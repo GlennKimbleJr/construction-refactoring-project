@@ -5,7 +5,7 @@ if (isset($_GET['choose'])) {
 
     echo "<b>[ <a href='?details={$projectId}'>GO BACK</a> ]</b><br><br><b>CHOOSE A CATEGORY</b><br><br>";
 
-    $categories = $db->getData("SELECT * FROM type ORDER BY name");
+    $categories = $db->getData("SELECT * FROM categories ORDER BY name");
     
     foreach ($categories as $category) {
 
@@ -29,7 +29,7 @@ if (isset($_GET['choose'])) {
 if (isset($_GET['choose2'])) {
 
     $projectId = intval($_GET['choose2']);
-    $category = $db->getFirst('SELECT * FROM type WHERE id = ?', [intval($_GET['c'])]);
+    $category = $db->getFirst('SELECT * FROM categories WHERE id = ?', [intval($_GET['c'])]);
 
     $project = $db->getFirst("SELECT * FROM projects WHERE id = ?", [$projectId]);
      if (! count($project)) {

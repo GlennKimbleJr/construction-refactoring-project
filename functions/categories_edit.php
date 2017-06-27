@@ -2,14 +2,14 @@
 
 if (isset($_GET['edit'])) {
 
-    $category = $db->getFirst('SELECT * FROM type WHERE id = ?', [intval($_GET['edit'])]);
+    $category = $db->getFirst('SELECT * FROM categories WHERE id = ?', [intval($_GET['edit'])]);
 
     if (empty($category)) {
         die('Error: Unable to find data.');
     }
 
     if (isset($_POST['name'])) {
-        $query = $db->setData('UPDATE type SET name = ? WHERE id = ?', [
+        $query = $db->setData('UPDATE categories SET name = ? WHERE id = ?', [
             htmlspecialchars(trim($_POST['name'])), 
             intval($_POST['id2'])
         ]);

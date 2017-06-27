@@ -26,7 +26,7 @@ if (isset($_GET['details'])) {
         <font size='1'>";
 
     $bidders = $db->getData(
-        "SELECT b.*, c.company, c.email, cat.name as category_name, cat.id as category_id FROM bidders as b, contacts as c, type as cat WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = cat.id AND b.win = ? AND b.status != ?", 
+        "SELECT b.*, c.company, c.email, cat.name as category_name, cat.id as category_id FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = cat.id AND b.win = ? AND b.status != ?", 
         [$projectId, '', 'wont']
     );
     
@@ -52,7 +52,7 @@ if (isset($_GET['details'])) {
     echo "<br><br><b>WINNING SUB CONTRACTORS</b>:";
 
     $winners = $db->getData(
-        "SELECT b.*, c.company, c.email, cat.name as category FROM bidders as b, contacts as c, type as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ?", 
+        "SELECT b.*, c.company, c.email, cat.name as category FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ?", 
         [$projectId, '1']
     );
     
@@ -94,7 +94,7 @@ if (isset($_GET['win'])) {
     $company = htmlspecialchars(trim($_GET['company']));
     $bidderId = intval($_GET['bidder']);
 
-    $category = $db->getFirst("SELECT * FROM type WHERE id = ?", [intval($_GET['category'])]);
+    $category = $db->getFirst("SELECT * FROM categories WHERE id = ?", [intval($_GET['category'])]);
 
     echo "<h2>AWARD BID: <br>{$company}<br>{$category['name']}<br><br>Are you sure?</h2>
         <h3><a href='?win2=1&project={$projectId}&category={$category['id']}&bidder={$bidderId}'>YES</a> | <a href='?details={$projectId}'>NO</a><h3>";

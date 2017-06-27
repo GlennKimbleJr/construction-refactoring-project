@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Add subcontractors to my project.');
 
-$category = $I->create('category', ['name' => 'Category Test'], 'type');
+$category = $I->create('categories', ['name' => 'Category Test']);
 
 $zone1 = $I->create('zone', ['name' => 'Zone 1']);
 $zone1Contact = $I->create('contacts', [

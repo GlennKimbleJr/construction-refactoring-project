@@ -4,7 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Add a new contact.');
 
 $contact = make('contacts');
-$category = $I->create('category', [], 'type');
+$category = $I->create('categories');
 $zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
 $zone3 = $I->create('zone', ['name' => 'Test Zone 3']);

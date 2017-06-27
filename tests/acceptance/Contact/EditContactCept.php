@@ -12,8 +12,8 @@ $zone6 = $I->create('zone', ['name' => 'Test Zone 6']);
 $zone7 = $I->create('zone', ['name' => 'Test Zone 7']);
 $zone8 = $I->create('zone', ['name' => 'Test Zone 8']);
 $zone9 = $I->create('zone', ['name' => 'Test Zone 9']);
-$category1 = $I->create('category', ['name' => 'Test Category 1'], 'type');
-$category2 = $I->create('category', ['name' => 'Test Category 2'], 'type');
+$category1 = $I->create('categories', ['name' => 'Test Category 1']);
+$category2 = $I->create('categories', ['name' => 'Test Category 2']);
 $contact = $I->create('contacts', [
     'zone' => $zone1->name,
     'zone2' => $zone2->name,

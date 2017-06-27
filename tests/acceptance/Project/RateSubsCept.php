@@ -3,11 +3,11 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Rate a winning subcontractor\'s preformance.');
 
-$category1 = $I->create('category', ['name' => 'Test Category 1'], 'type');
-$category2 = $I->create('category', ['name' => 'Test Category 2'], 'type');
-$category3 = $I->create('category', ['name' => 'Test Category 3'], 'type');
-$category4 = $I->create('category', ['name' => 'Test Category 4'], 'type');
-$category5 = $I->create('category', ['name' => 'Test Category 5'], 'type');
+$category1 = $I->create('categories', ['name' => 'Test Category 1']);
+$category2 = $I->create('categories', ['name' => 'Test Category 2']);
+$category3 = $I->create('categories', ['name' => 'Test Category 3']);
+$category4 = $I->create('categories', ['name' => 'Test Category 4']);
+$category5 = $I->create('categories', ['name' => 'Test Category 5']);
 
 $contact1 = $I->create('contacts', [
     'company' => 'Test Company 1',

@@ -27,5 +27,5 @@ I wanted to take this old piece of junk, and step by step turn it into something
     - The next thing I'll be working on is the database. There are a number of areas where one table is referencing another table by something like company name, as opposed to a foreign key, and there are no constraints on the table to prevent duplicate company names. To prevent unexpected behavior, I'll be refactoring to use foreign keys. 
 
     - In order to help me get the ball rolling on refactoring the database I decided to pull in robmorgan/phinx so I could take advantage of database migrations. The first step here was to recreate the current tables (as is).
-
-    
+## 2017.06.27
+    - I'm really starting to appreciate my test suite with this recent series of refactoring. I'm modifying tables and columns in the database and without being able to run my test after every change and get immediate feedback on what broke and where I'd be trying to finde a needle in a haystack.

@@ -3,8 +3,8 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('See winning subcontractors are on call log.');
 
-$category = $I->create('category', ['name' => 'Test Category'], 'type');
-$categoryId = $I->grabFromDatabase('type', 'id', ['name' => $category->name]);
+$category = $I->create('categories', ['name' => 'Test Category']);
+$categoryId = $I->grabFromDatabase('categories', 'id', ['name' => $category->name]);
 
 $zone = $I->create('zone', ['name' => 'Test Zone']);
 

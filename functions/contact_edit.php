@@ -42,7 +42,7 @@ if (isset($_GET['edit'])) {
     }
 
     $zones = $db->getData('SELECT * FROM zone ORDER BY name');
-    $categories = $db->getData('SELECT * FROM type ORDER BY name');
+    $categories = $db->getData('SELECT * FROM categories ORDER BY name');
 
     ?>
 
