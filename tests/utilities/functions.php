@@ -82,8 +82,7 @@ function create_new_projects($attribs)
         'planpass' => 'secret',
         'owner_name' => 'Test Name',
         'owner_phone' => '555-555-5555',
-        'super_name' => '',
-        'super_phone' => '',
+        'super_id' => 1,
     ], $attribs);
 }
 

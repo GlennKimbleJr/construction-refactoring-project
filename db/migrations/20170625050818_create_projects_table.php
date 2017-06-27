@@ -19,8 +19,7 @@ class CreateProjectsTable extends AbstractMigration
               ->addColumn('planpass', 'string', ['null' => true])
               ->addColumn('owner_name', 'string', ['null' => true])
               ->addColumn('owner_phone', 'string', ['null' => true])
-              ->addColumn('super_name', 'string', ['null' => true])
-              ->addColumn('super_phone', 'string', ['null' => true])
+              ->addColumn('super_id', 'integer')
               ->save();
     }
 

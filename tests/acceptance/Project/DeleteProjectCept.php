@@ -27,6 +27,5 @@ $I->dontSeeInDatabase('projects', [
     'planpass' => $project->planpass,
     'owner_name' => $project->owner_name,
     'owner_phone' => $project->owner_phone,
-    'super_name' => $project->super_name,
-    'super_phone' => $project->super_phone
+    'super_id' => $project->super_id
 ]);

@@ -4,14 +4,8 @@ if (isset($_GET['edit'])) {
 
     if (isset($_POST['name'])) {
 
-        if (! empty($_POST['super'])) {
-            $super = $db->getFirst("SELECT * FROM supers WHERE name = ?", [trim($_POST['super'])]);
-            $super_name = $super['name'];
-            $super_phone = $super['phone'];
-        }
-
         $query = $db->setData(
-            "UPDATE projects SET name=?, bidduedate=?, zone=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_name=?, super_phone=? WHERE id=?",
+            "UPDATE projects SET name=?, bidduedate=?, zone=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_id=? WHERE id=?",
             [
                 htmlspecialchars(trim($_POST['name'])),
                 trim($_POST['due3']) . '-' . trim($_POST['due1']) . '-' . trim($_POST['due2']), 
@@ -22,8 +16,7 @@ if (isset($_GET['edit'])) {
                 trim($_POST['planpass']), 
                 trim($_POST['owner_name']), 
                 trim($_POST['owner_phone']), 
-                isset($super_name) ? $super_name : '', 
-                isset($super_phone) ? $super_phone : '', 
+                intval($_POST['super']),
                 intval($_POST['id2'])
             ]
         );
@@ -162,12 +155,12 @@ if (isset($_GET['edit'])) {
         <p>
             <label>Select Superintendent:</label><br>
             <select name="super">
-                <option value="<?=$project['super_name'];?>"><?=$project['super_name'];?></option>
-                <option value=""></option>  
                 <?php
-                $supers = $db->getData("SELECT * FROM supers ORDER BY name");
+                $supers = $db->getData("SELECT id, name FROM supers ORDER BY name");
                 foreach ($supers as $super) {
-                    echo "<option value='{$super['name']}'>{$super['name']}</option>";
+                    echo "<option value='{$super['id']}'";
+                    if ($project['super_id'] == $super['id']) echo ' selected';
+                    echo ">{$super['name']}</option>";
                 } ?>
             </select>
         </p>

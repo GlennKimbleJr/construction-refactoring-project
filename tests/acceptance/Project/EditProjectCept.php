@@ -5,12 +5,15 @@ $I->wantTo('Edit a project\'s details');
 
 $super1 = $I->create('supers', ['name' => 'Test Super 1']);
 $super2 = $I->create('supers', ['name' => 'Test Super 2']);
+
+$super1Id = $I->grabFromDatabase('supers', 'id', ['name' => $super1->name]);
+$super2Id = $I->grabFromDatabase('supers', 'id', ['name' => $super2->name]);
+
 $zone1 = $I->create('zones', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zones', ['name' => 'Test Zone 2']);
 $project = $I->create('projects', [
     'zone' => $zone1->name,
-    'super_name' => $super1->name,
-    'super_phone' => $super1->phone
+    'super_id' => $super1Id
 ]);
 $existing_date = explode('-', $project->bidduedate);
 $month = [
@@ -65,7 +68,7 @@ $I->selectOption(['name' => 'due2'], ['value' => $existing_date[2]]);
 $I->fillField(['id' => 'due3'], $existing_date[0]);
 $I->selectOption(['name' => 'zone'], ['value' => $zone2->name]);
 $I->fillField(['id' => 'location'], $project->location = 'New Location');
-$I->selectOption(['name' => 'super'], ['value' => $super2->name]);
+$I->selectOption(['name' => 'super'], ['value' => $super2Id]);
 $I->click('Update');
 $I->see('Project Updated!');
 

@@ -4,14 +4,8 @@ if (isset($_GET['new'])) {
 
     if (isset($_POST['name'])) {
 
-        if (! empty($_POST['super'])) {
-            $super = $db->getFirst("SELECT * FROM supers WHERE name = ?", [$_POST['super']]);
-            $super_name = $super['name'];
-            $super_phone = $super['phone'];
-        }
-
         $query = $db->setData(
-            "INSERT INTO `projects` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_name, super_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO `projects` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
                 htmlspecialchars(trim($_POST['name'])), 
                 trim($_POST['due3']) . '-' . trim($_POST['due1']) . '-' . trim($_POST['due2']), 
@@ -23,8 +17,7 @@ if (isset($_GET['new'])) {
                 trim($_POST['planpass']), 
                 trim($_POST['owner_name']), 
                 trim($_POST['owner_phone']), 
-                isset($super_name) ? $super_name : '', 
-                isset($super_phone) ? $super_phone : '', 
+                intval($_POST['super']), 
             ]
         );
         
@@ -130,7 +123,7 @@ if (isset($_GET['new'])) {
             <select name="super">   
                 <option value=""></option>
                 <?php foreach ($supers as $super) {
-                    echo "<option value='{$super['name']}'>{$super['name']}</option>";
+                    echo "<option value='{$super['id']}'>{$super['name']}</option>";
                 } ?>
             </select>
         </p>

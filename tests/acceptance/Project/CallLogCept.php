@@ -23,7 +23,10 @@ $contact2 = $I->create('contacts', [
 $contact1Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact1->company]);
 $contact2Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact2->company]);
 
-$project = $I->create('projects', ['zone' => $zone->name]);
+$super = $I->create('supers');
+$superId = $I->grabFromDatabase('supers', 'id', ['name' => $super->name]);
+
+$project = $I->create('projects', ['zone' => $zone->name, 'super_id' => $superId]);
 $projectId = $I->grabFromDatabase('projects', 'id', ['name' => $project->name]);
 
 $bidder1 = $I->create('bidders', [
@@ -49,3 +52,6 @@ $I->click($project->name);
 $I->click('CALL LOG');
 $I->see($contact1->company);
 $I->dontSee($contact2->company);
+
+$I->see($super->name);
+$I->see($super->phone);
