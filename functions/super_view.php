@@ -6,7 +6,7 @@ if (isset($_GET['view'])) {
         
         <div id='pagenation'>";
 
-    $supers = $db->getData("SELECT * FROM super ORDER BY name");
+    $supers = $db->getData("SELECT * FROM supers ORDER BY name");
     foreach ($supers as $super) {
         echo "<div class='z'><a href='?edit={$super['id']}'>{$super['name']}</a> - {$super['phone']}</div>";
     }

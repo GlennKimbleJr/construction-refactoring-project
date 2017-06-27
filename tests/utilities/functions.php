@@ -93,7 +93,7 @@ function create_new_projects($attribs)
  * @param  array  isset($attribs  Anything you want to override the default data supplied.
  * @return array
  */
-function create_new_super($attribs)
+function create_new_supers($attribs)
 {
     return override([
         'name' => 'Test Super',

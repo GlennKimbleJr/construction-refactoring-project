@@ -3,7 +3,7 @@
 if (isset($_GET['new'])) {
 
     if (isset($_POST['name'])) {
-        $query = $db->setData("INSERT INTO `super` (name, phone) VALUES (?, ?)", [
+        $query = $db->setData("INSERT INTO `supers` (name, phone) VALUES (?, ?)", [
             htmlspecialchars(trim($_POST['name'])), 
             trim($_POST['phone'])
         ]);

@@ -3,8 +3,8 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Edit a project\'s details');
 
-$super1 = $I->create('super', ['name' => 'Test Super 1']);
-$super2 = $I->create('super', ['name' => 'Test Super 2']);
+$super1 = $I->create('supers', ['name' => 'Test Super 1']);
+$super2 = $I->create('supers', ['name' => 'Test Super 2']);
 $zone1 = $I->create('zone', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zone', ['name' => 'Test Zone 2']);
 $project = $I->create('projects', [

@@ -5,7 +5,7 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['name'])) {
 
         if (! empty($_POST['super'])) {
-            $super = $db->getFirst("SELECT * FROM super WHERE name = ?", [trim($_POST['super'])]);
+            $super = $db->getFirst("SELECT * FROM supers WHERE name = ?", [trim($_POST['super'])]);
             $super_name = $super['name'];
             $super_phone = $super['phone'];
         }
@@ -165,7 +165,7 @@ if (isset($_GET['edit'])) {
                 <option value="<?=$project['super_name'];?>"><?=$project['super_name'];?></option>
                 <option value=""></option>  
                 <?php
-                $supers = $db->getData("SELECT * FROM super ORDER BY name");
+                $supers = $db->getData("SELECT * FROM supers ORDER BY name");
                 foreach ($supers as $super) {
                     echo "<option value='{$super['name']}'>{$super['name']}</option>";
                 } ?>

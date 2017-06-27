@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an exiting superintendant.');
 
-$super = $I->create('super');
+$super = $I->create('supers');
 
 $I->amOnPage('/super.php?view');
 $I->see($super->name);
@@ -17,7 +17,7 @@ $I->click('VIEW LIST');
 $I->dontSee($super->name);
 $I->dontSee($super->phone);
 
-$I->dontSeeInDatabase('super', [
+$I->dontSeeInDatabase('supers', [
     'name' => $super->name,
     'phone' => $super->phone
 ]);

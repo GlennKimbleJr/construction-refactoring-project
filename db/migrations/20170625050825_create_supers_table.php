@@ -6,9 +6,9 @@ class CreateSupersTable extends AbstractMigration
 {
     public function up()
     {
-        if ($this->hasTable('super')) return;
+        if ($this->hasTable('supers')) return;
 
-        $table = $this->table('super');
+        $table = $this->table('supers');
         $table->addColumn('name', 'string', ['null' => true])
               ->addColumn('phone', 'string', ['null' => true])
               ->save();
@@ -16,8 +16,8 @@ class CreateSupersTable extends AbstractMigration
 
     public function down()
     {
-        if (! $this->hasTable('super')) return;
+        if (! $this->hasTable('supers')) return;
 
-        $this->dropTable('super');
+        $this->dropTable('supers');
     }
 }

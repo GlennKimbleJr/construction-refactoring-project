@@ -9,7 +9,7 @@ if (isset($_GET['delete'])) {
 
 // Confirm
 if (isset($_GET['delyes'])) {
-    $db->setData("DELETE FROM `super` WHERE id = ?", [intval($_GET['delyes'])]);
+    $db->setData("DELETE FROM `supers` WHERE id = ?", [intval($_GET['delyes'])]);
     
     die('<h1>DELETED!</h1><br>');
 }

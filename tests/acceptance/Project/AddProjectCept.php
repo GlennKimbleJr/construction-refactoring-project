@@ -4,7 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Add a new project.');
 
 $zone = $I->create('zone');
-$super = $I->create('super');
+$super = $I->create('supers');
 $project = make('projects');
 $project_date = explode('-', $project->bidduedate);
 

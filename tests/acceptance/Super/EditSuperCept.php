@@ -3,7 +3,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Edit a super intendants\'s details');
 
-$super = $I->create('super');
+$super = $I->create('supers');
 
 $I->amOnPage('/super.php?view');
 $I->see($super->name);

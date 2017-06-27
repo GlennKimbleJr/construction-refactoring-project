@@ -5,7 +5,7 @@ if (isset($_GET['new'])) {
     if (isset($_POST['name'])) {
 
         if (! empty($_POST['super'])) {
-            $super = $db->getFirst("SELECT * FROM super WHERE name = ?", [$_POST['super']]);
+            $super = $db->getFirst("SELECT * FROM supers WHERE name = ?", [$_POST['super']]);
             $super_name = $super['name'];
             $super_phone = $super['phone'];
         }
@@ -31,7 +31,7 @@ if (isset($_GET['new'])) {
         die($db->updated($query) ? '<br><br>Project Created!' : '<br><br>Error! Unable to create project.');
     }
 
-    $supers = $db->getData("SELECT * FROM super ORDER BY name");
+    $supers = $db->getData("SELECT * FROM supers ORDER BY name");
     $zones = $db->getData("SELECT * FROM zone ORDER BY name");
     ?>
 

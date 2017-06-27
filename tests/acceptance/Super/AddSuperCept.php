@@ -7,14 +7,14 @@ $I->amOnPage('/super.php');
 $I->click('+ ADD NEW');
 $I->see('Add New Superintendent');
 
-$super = make('super');
+$super = make('supers');
 
 $I->fillField(['id' => 'name'], $super->name);
 $I->fillField(['id' => 'phone'], $super->phone);
 $I->click('Add');
 $I->see('Created!');
 
-$I->seeInDatabase('super', [
+$I->seeInDatabase('supers', [
     'name' => $super->name, 
     'phone' => $super->phone
 ]);
