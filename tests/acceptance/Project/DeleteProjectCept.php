@@ -4,9 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an exiting project.');
 
 $zone = $I->create('zones', ['name' => 'Test Zone 1']);
-$zoneId = $I->grabFromDatabase('zones', 'id', ['name' => $zone->name]);
-
-$project = $I->create('projects', ['zone_id' => $zoneId]);
+$project = $I->create('projects', ['zone_id' => $zone->id]);
 
 $I->amOnPage('/project.php?open');
 $I->see("{$project->name} - {$project->bidduedate}");

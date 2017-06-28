@@ -4,7 +4,6 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('See a subcontractors average score change after being rated.');
 
 $contact = $I->create('contacts');
-$contactId = $I->grabFromDatabase('contacts', 'id', ['company' => $contact->company]);
 $I->amOnPage('/reports.php?score');
 $I->dontsee($contact->company);
 $I->seeInDatabase('contacts', [
@@ -13,7 +12,7 @@ $I->seeInDatabase('contacts', [
 ]);
 
 $I->create('bidders', [
-    'contact_id' => $contactId,
+    'contact_id' => $contact->id,
     'score' => '5'
 ]);
 $I->click('SCORE');
@@ -25,7 +24,7 @@ $I->seeInDatabase('contacts', [
 ]);
 
 $I->create('bidders', [
-    'contact_id' => $contactId,
+    'contact_id' => $contact->id,
     'score' => '1'
 ]);
 $I->click('SCORE');

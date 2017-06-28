@@ -4,8 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an existing contact.');
 
 $category = $I->create('categories');
-$categoryId = $I->grabFromDatabase('categories', 'id', ['name' => $category->name]);
-$contact = $I->create('contacts', ['category_id' => $categoryId]);
+$contact = $I->create('contacts', ['category_id' => $category->id]);
 
 $I->amOnPage('/contact.php?view');
 $I->see($contact->company);

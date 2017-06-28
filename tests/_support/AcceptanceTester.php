@@ -25,7 +25,9 @@ class AcceptanceTester extends \Codeception\Actor
     */
    public function create($type, $attribs = [], $table = null)
    {
-        $this->haveInDatabase($table ?? $type, $record = make($type, $attribs, false));
+        $id = $this->haveInDatabase($table ?? $type, $record = make($type, $attribs, false));
+        
+        $record['id'] = $id;
 
         return (object) $record;
    }

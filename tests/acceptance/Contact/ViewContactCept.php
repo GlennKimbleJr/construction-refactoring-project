@@ -15,56 +15,45 @@ $zone7 = $I->create('zones', ['name' => 'Test Zone 7']);
 $zone8 = $I->create('zones', ['name' => 'Test Zone 8']);
 $zone9 = $I->create('zones', ['name' => 'Test Zone 9']);
 
-$zone1Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone1->name]);
-$zone2Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone2->name]);
-$zone3Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone3->name]);
-$zone4Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone4->name]);
-$zone5Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone5->name]);
-$zone6Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone6->name]);
-$zone7Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone7->name]);
-$zone8Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone8->name]);
-$zone9Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone9->name]);
-
 $contact = $I->create('contacts', [
     'type' => $category->name,
 ]);
-$contactId = $I->grabFromDatabase('contacts', 'id', ['company' => $contact->company]);
 
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone1Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone1->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone2Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone2->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone3Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone3->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone4Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone4->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone5Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone5->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone6Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone6->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone7Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone7->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone8Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone8->id
 ]);
 $I->create('contacts_zones', [
-    'contact_id' => $contactId,
-    'zone_id' => $zone9Id
+    'contact_id' => $contact->id,
+    'zone_id' => $zone9->id
 ]);
 
 $I->amOnPage('/contact.php?view');

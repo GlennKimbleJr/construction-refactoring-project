@@ -4,31 +4,25 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Sort contacts by zones and categories.');
 
 $category1 = $I->create('categories', ['name' => 'Category 1']);
-$category1Id = $I->grabFromDatabase('categories', 'id', ['name' => $category1->name]);
 $zone1 = $I->create('zones', ['name' => 'Zone 1']);
-$zone1Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone1->name]);
 $contact1 = $I->create('contacts', [
     'company' => 'Company 1',
-    'category_id' => $category1Id
+    'category_id' => $category1->id
 ]);
-$contact1Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact1->company]);
 $I->create('contacts_zones', [
-    'contact_id' => $contact1Id,
-    'zone_id' => $zone1Id
+    'contact_id' => $contact1->id,
+    'zone_id' => $zone1->id
 ]);
 
 $category2 = $I->create('categories', ['name' => 'Category 2']);
-$category2Id = $I->grabFromDatabase('categories', 'id', ['name' => $category2->name]);
 $zone2 = $I->create('zones', ['name' => 'Zone 2']);
-$zone2Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone2->name]);
 $contact2 = $I->create('contacts', [
     'company' => 'Company 2',
-    'category_id' => $category2Id
+    'category_id' => $category2->id
 ]);
-$contact2Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact2->company]);
 $I->create('contacts_zones', [
-    'contact_id' => $contact2Id,
-    'zone_id' => $zone2Id
+    'contact_id' => $contact2->id,
+    'zone_id' => $zone2->id
 ]);
 
 $I->amOnPage('/contact.php?view');

@@ -4,36 +4,32 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Mark a subcontractors as having won a bid for a project.');
 
 $category = $I->create('categories', ['name' => 'Test Category']);
-$categoryId = $I->grabFromDatabase('categories', 'id', ['name' => $category->name]);
-
 $zone = $I->create('zones', ['name' => 'Test Zone']);
+$project = $I->create('projects', ['zone_id' => $zone->id]);
+
 $contact1 = $I->create('contacts', [
     'company' => 'Test Company 1',
     'zone' => $zone->name,
-    'type' => $category->name
+    'cat' => $category->name
 ]);
+
 $contact2 = $I->create('contacts', [
     'company' => 'Test Company 2',
     'zone' => $zone->name,
     'type' => $category->name
 ]);
 
-$contact1Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact1->company]);
-$contact2Id = $I->grabFromDatabase('contacts', 'id', ['company' => $contact2->company]);
-
-$project = $I->create('projects', ['zone' => $zone->name]);
-$projectId = $I->grabFromDatabase('projects', 'id', ['name' => $project->name]);
 $bidder1 = $I->create('bidders', [
-    'project_id' => $projectId,
-    'category_id' => $categoryId,
+    'project_id' => $project->id,
+    'category_id' => $category->id,
     'status' => 'will',
-    'contact_id' => $contact1Id
+    'contact_id' => $contact1->id
 ]);
 $bidder2 = $I->create('bidders', [
-    'project_id' => $projectId,
-    'category_id' => $categoryId,
+    'project_id' => $project->id,
+    'category_id' => $category->id,
     'status' => 'will',
-    'contact_id' => $contact2Id
+    'contact_id' => $contact2->id
 ]);
 
 $I->amOnPage('/project.php?open');
@@ -54,15 +50,15 @@ $I->see($contact1->company);
 $I->dontSee($contact2->company);
 
 $I->seeInDatabase('bidders', [
-    'project_id' => $projectId,
+    'project_id' => $project->id,
     'status' => 'will',
     'win' => '1',
-    'contact_id' => $contact1Id
+    'contact_id' => $contact1->id
 ]);
 
 $I->seeInDatabase('bidders', [
-    'project_id' => $projectId,
+    'project_id' => $project->id,
     'status' => 'will',
     'win' => '0',
-    'contact_id' => $contact2Id
+    'contact_id' => $contact2->id
 ]);

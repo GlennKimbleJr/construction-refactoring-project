@@ -4,17 +4,14 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Mark a subcontractors as wont bid for a project.');
 
 $category = $I->create('categories', ['name' => 'Test Category']);
-$zone = $I->create('zones', ['name' => 'Test Zone']);
 $contact = $I->create('contacts', [
     'company' => 'Test Company',
-    'zone' => $zone->name,
-    'type' => $category->name
+    'category_id' => $category->id
 ]);
-$project = $I->create('projects', ['zone' => $zone->name]);
-$projectId = $I->grabFromDatabase('projects', 'id', ['name' => $project->name]);
+$project = $I->create('projects');
 $bidder = $I->create('bidders', [
-    'project_id' => $projectId,
-    'category' => $category->name,
+    'project_id' => $project->id,
+    'category_id' => $category->id,
     'company' => $contact->company
 ]);
 
@@ -28,6 +25,6 @@ $I->click('GO BACK');
 $I->dontSee($contact->company);
 
 $I->seeInDatabase('bidders', [
-    'project_id' => $projectId,
+    'project_id' => $project->id,
     'status' => 'wont'
 ]);

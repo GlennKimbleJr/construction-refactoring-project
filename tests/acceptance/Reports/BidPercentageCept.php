@@ -4,7 +4,6 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('See a subcontractors bid percentage change after accepting and declining bids.');
 
 $contact = $I->create('contacts');
-$contactId = $I->grabFromDatabase('contacts', 'id', ['company' => $contact->company]);
 
 $I->amOnPage('/reports.php?bid');
 $I->dontsee($contact->company);
@@ -15,7 +14,7 @@ $I->seeInDatabase('contacts', [
 
 $I->create('bidders', [
     'status' => 'will',
-    'contact_id' => $contactId
+    'contact_id' => $contact->id
 ]);
 $I->click('BID');
 $I->see($contact->company);
@@ -27,7 +26,7 @@ $I->seeInDatabase('contacts', [
 
 $I->create('bidders', [
     'status' => 'wont',
-    'contact_id' => $contactId
+    'contact_id' => $contact->id
 ]);
 $I->click('BID');
 $I->see($contact->company);
