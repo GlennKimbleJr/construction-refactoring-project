@@ -11,7 +11,7 @@ class ProjectCest
         $this->category = $I->create('categories');
 
         $this->project = $I->create('projects', [
-            'zone' => $this->zone1->name, 
+            'zone_id' => $this->zone1->id, 
             'super_id' => $this->super->id
         ]);
     }
@@ -170,7 +170,7 @@ class ProjectCest
 
         $zone1Contact = $I->create('contacts', [
             'company' => 'Company 1',
-            'type' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $I->create('contacts_zones', [
@@ -180,7 +180,7 @@ class ProjectCest
 
         $zone2Contact = $I->create('contacts', [
             'company' => 'Company 2',
-            'type' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $I->create('contacts_zones', [
@@ -219,25 +219,23 @@ class ProjectCest
     {
         $contact1 = $I->create('contacts', [
             'company' => 'Test Company 1',
-            'zone' => $this->zone1->name,
-            'type' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $contact2 = $I->create('contacts', [
             'company' => 'Test Company 2',
-            'zone' => $this->zone1->name,
-            'type' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $bidder1 = $I->create('bidders', [
             'project_id' => $this->project->id,
-            'category' => $this->category->name,
+            'category_id' => $this->category->id,
             'contact_id' => $contact1->id
         ]);
 
         $bidder2 = $I->create('bidders', [
             'project_id' => $this->project->id,
-            'category' => $this->category->name,
+            'category_id' => $this->category->id,
             'contact_id' => $contact2->id
         ]);
 
@@ -275,7 +273,7 @@ class ProjectCest
         $bidder = $I->create('bidders', [
             'project_id' => $this->project->id,
             'category_id' => $this->category->id,
-            'company' => $contact->company
+            'contact_id' => $contact->id
         ]);
 
         $I->amOnPage('/project.php?open');
@@ -297,14 +295,12 @@ class ProjectCest
     {
         $contact1 = $I->create('contacts', [
             'company' => 'Test Company 1',
-            'zone' => $this->zone1->name,
-            'cat' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $contact2 = $I->create('contacts', [
             'company' => 'Test Company 2',
-            'zone' => $this->zone1->name,
-            'type' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $bidder1 = $I->create('bidders', [
@@ -358,14 +354,12 @@ class ProjectCest
 
         $contact1 = $I->create('contacts', [
             'company' => 'Test Company 1',
-            'zone' => $this->zone1->name,
-            'type' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $contact2 = $I->create('contacts', [
             'company' => 'Test Company 2',
-            'zone' => $this->zone1->name,
-            'type' => $this->category->name
+            'category_id' => $this->category->id
         ]);
 
         $bidder1 = $I->create('bidders', [
@@ -431,7 +425,7 @@ class ProjectCest
 
         $I->create('bidders', [
             'project_id' => $this->project->id,
-            'category' => $category1->name,
+            'category_id' => $category1->id,
             'status' => 'won',
             'win' => '1',
             'score' => 'NA',
@@ -440,7 +434,7 @@ class ProjectCest
 
         $I->create('bidders', [
             'project_id' => $this->project->id,
-            'category' => $category2->name,
+            'category_id' => $category2->id,
             'status' => 'won',
             'win' => '1',
             'score' => 'NA',
@@ -449,7 +443,7 @@ class ProjectCest
 
         $I->create('bidders', [
             'project_id' => $this->project->id,
-            'category' => $category3->name,
+            'category_id' => $category3->id,
             'status' => 'won',
             'win' => '1',
             'score' => 'NA',
@@ -458,7 +452,7 @@ class ProjectCest
 
         $I->create('bidders', [
             'project_id' => $this->project->id,
-            'category' => $category4->name,
+            'category_id' => $category4->id,
             'status' => 'won',
             'win' => '1',
             'score' => 'NA',
@@ -467,7 +461,7 @@ class ProjectCest
 
         $I->create('bidders', [
             'project_id' => $this->project->id,
-            'category' => $category5->name,
+            'category_id' => $category5->id,
             'status' => 'won',
             'win' => '1',
             'score' => 'NA',

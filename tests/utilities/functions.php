@@ -23,8 +23,10 @@ function make($type, $attribs = [], $object = true)
  */
 function create_new_categories($attribs)
 {
+    $faker = Faker\Factory::create();
+
     return override([
-        'name' => 'Test Category'
+        'name' => $faker->slug(2, false)
     ], $attribs);
 }
 
@@ -36,18 +38,20 @@ function create_new_categories($attribs)
  */
 function create_new_contacts($attribs)
 {
+    $faker = Faker\Factory::create();
+
     return override([
-        'company' => 'Test Company',
-        'first' => 'Test First',
-        'last' => 'Test Last',
-        'street' => '123 Test St.',
-        'city' => 'Testville',
-        'state' => 'Test State',
-        'zip' => '11111',
-        'email' => 'test@example.org',
-        'officephone' => '555-555-5555',
-        'cellphone' => '555-555-5556',
-        'fax' => '555-555-5557',
+        'company' => $faker->company,
+        'first' => $faker->firstName,
+        'last' => $faker->lastName,
+        'street' => $faker->streetAddress,
+        'city' => $faker->city,
+        'state' => $faker->state,
+        'zip' => $faker->postcode,
+        'email' => $faker->email,
+        'officephone' => $faker->phoneNumber,
+        'cellphone' => $faker->phoneNumber,
+        'fax' => $faker->phoneNumber,
         'category_id' => 1,
         'score_per' => '0',
         'bid_per' => '0'
@@ -76,17 +80,19 @@ function create_new_contacts_zones($attribs)
  */
 function create_new_projects($attribs)
 {
+    $faker = Faker\Factory::create();
+
     return override([
-        'name' => 'Test Project',
-        'bidduedate' => '2017-01-31',
+        'name' => $faker->sentence(2),
+        'bidduedate' => date('Y-m-d', (time() + (60*60*24*7))),
         'completedate' => '',
         'zone_id' => 1,
-        'plans' => 'test_directory',
-        'location' => 'test, location',
-        'planuser' => 'test_user',
-        'planpass' => 'secret',
-        'owner_name' => 'Test Name',
-        'owner_phone' => '555-555-5555',
+        'plans' => $faker->slug(2, false),
+        'location' => $faker->address,
+        'planuser' => $faker->userName,
+        'planpass' => $faker->slug(3),
+        'owner_name' => $faker->name,
+        'owner_phone' => $faker->phoneNumber,
         'super_id' => 1,
     ], $attribs);
 }
@@ -99,9 +105,11 @@ function create_new_projects($attribs)
  */
 function create_new_supers($attribs)
 {
+    $faker = Faker\Factory::create();
+
     return override([
-        'name' => 'Test Super',
-        'phone' => '555-555-5555'
+        'name' => $faker->name,
+        'phone' => $faker->phoneNumber
     ], $attribs);
 }
 
@@ -113,8 +121,10 @@ function create_new_supers($attribs)
  */
 function create_new_zones($attribs)
 {
+    $faker = Faker\Factory::create();
+
     return override([
-        'name' => 'Test Zone'
+        'name' => $faker->slug(2, false)
     ], $attribs);
 }
 
@@ -146,9 +156,7 @@ function create_new_bidders($attribs)
 function override($defaults, $overrides)
 {
     foreach( $overrides as $key => $value ) {
-        if (isset($defaults[$key])) {
-            $defaults[$key] = $value;
-        }
+        $defaults[$key] = $value;
     }
 
     return $defaults;

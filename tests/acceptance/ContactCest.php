@@ -4,18 +4,18 @@ class ContactCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $this->zone1 = $I->create('zones', ['name' => 'Test Zone 1']);
-        $this->zone2 = $I->create('zones', ['name' => 'Test Zone 2']);
-        $this->zone3 = $I->create('zones', ['name' => 'Test Zone 3']);
-        $this->zone4 = $I->create('zones', ['name' => 'Test Zone 4']);
-        $this->zone5 = $I->create('zones', ['name' => 'Test Zone 5']);
-        $this->zone6 = $I->create('zones', ['name' => 'Test Zone 6']);
-        $this->zone7 = $I->create('zones', ['name' => 'Test Zone 7']);
-        $this->zone8 = $I->create('zones', ['name' => 'Test Zone 8']);
-        $this->zone9 = $I->create('zones', ['name' => 'Test Zone 9']);
+        $this->zone1 = $I->create('zones');
+        $this->zone2 = $I->create('zones');
+        $this->zone3 = $I->create('zones');
+        $this->zone4 = $I->create('zones');
+        $this->zone5 = $I->create('zones');
+        $this->zone6 = $I->create('zones');
+        $this->zone7 = $I->create('zones');
+        $this->zone8 = $I->create('zones');
+        $this->zone9 = $I->create('zones');
 
-        $this->category1 = $I->create('categories', ['name' => 'Test Category 1']);
-        $this->category2 = $I->create('categories', ['name' => 'Test Category 2']);
+        $this->category1 = $I->create('categories');
+        $this->category2 = $I->create('categories');
 
         $this->contact = $I->create('contacts', ['category_id' => $this->category1->id]);
     }
@@ -140,7 +140,7 @@ class ContactCest
         $I->fillField(['id' => 'street'], $this->contact->street = 'New Street');
         $I->fillField(['id' => 'city'], $this->contact->city = 'New City');
         $I->fillField(['id' => 'state'], $this->contact->state = 'New State');
-        $I->fillField(['id' => 'zip'], $this->contact->zip = $this->contact->zip + 1);
+        $I->fillField(['id' => 'zip'], $this->contact->zip = 'new-zip-code');
         $I->fillField(['id' => 'email'], $this->contact->email = 'NewEmail@example.org');
         $I->fillField(['id' => 'officephone'], $this->contact->officephone = '111-111-1111');
         $I->fillField(['id' => 'cellphone'], $this->contact->cellphone = '111-111-1112');

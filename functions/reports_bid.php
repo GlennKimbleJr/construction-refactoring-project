@@ -46,11 +46,11 @@ if (isset($_GET['bid'])) {
         echo "<div class='z'>
             <tr>
                 <td align='center' width='35%'>
-                    <font size='1'>" . substr($contact['company'], 0, 18) . "</font>
+                    <font size='1'>{$contact['company']}</font>
                 </td>
 
                 <td align='center' width='15%'>
-                    <font size='1'>" . substr($contact['city'], 0, 18) . "</font>
+                    <font size='1'>{$contact['city']}</font>
                 </td>
                 
                 <td align='center' width='10%'>
@@ -58,7 +58,7 @@ if (isset($_GET['bid'])) {
                 </td>
                 
                 <td align='center' width='30%'>
-                    <font size='1'>" . substr($contact['type'], 0, 18) . "</font>
+                    <font size='1'>{$contact['type']}</font>
                 </td>
                 
                 <td align='center' width='10%'>
