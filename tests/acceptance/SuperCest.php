@@ -2,75 +2,65 @@
 
 class SuperCest
 {
+    public function _before(AcceptanceTester $I)
+    {
+        $this->super = $I->create('supers');
+    }
+
     public function addANewSuperintendent(AcceptanceTester $I)
     {
         $I->amOnPage('/super.php');
+        $I->dontSee('Test Name - 555-555-5555');
+
         $I->click('+ ADD NEW');
         $I->see('Add New Superintendent');
-
-        $super = make('supers');
-
-        $I->fillField(['id' => 'name'], $super->name);
-        $I->fillField(['id' => 'phone'], $super->phone);
+        $I->fillField(['id' => 'name'], 'Test Name');
+        $I->fillField(['id' => 'phone'], '555-555-5555');
         $I->click('Add');
         $I->see('Created!');
 
-        $I->seeInDatabase('supers', [
-            'name' => $super->name, 
-            'phone' => $super->phone
-        ]);
-
         $I->click('VIEW LIST');
-        $I->see("{$super->name} - {$super->phone}");
+        $I->see('Test Name - 555-555-5555');
     }
 
     public function editASuperintendentsDetails(AcceptanceTester $I)
     {
-        $super = $I->create('supers');
-
         $I->amOnPage('/super.php?view');
-        $I->see($super->name);
-        $I->see($super->phone);
-        $I->click($super->name);
+        $I->see($this->super->name);
+        $I->see($this->super->phone);
 
+        $I->click($this->super->name);
         $I->see('EDIT Superintendent');
-        $I->seeInField(['id' => 'name'], $super->name);
-        $I->seeInField(['id' => 'phone'], $super->phone);
-
-        $I->fillField(['id' => 'name'], $super->name = 'New Name');
-        $I->fillField(['id' => 'phone'], $super->phone = '111-111-1111');
+        $I->seeInField(['id' => 'name'], $this->super->name);
+        $I->seeInField(['id' => 'phone'], $this->super->phone);
+        $I->fillField(['id' => 'name'], 'Updated Super Name');
+        $I->fillField(['id' => 'phone'], '111-111-1111');
         $I->click('Update');
         $I->see('Updated!');
 
         $I->click('VIEW LIST');
-        $I->see($super->name);
-        $I->see($super->phone);
-        $I->click($super->name);
-
-        $I->see('EDIT Superintendent');
-        $I->seeInField(['id' => 'name'], $super->name);
-        $I->seeInField(['id' => 'phone'], $super->phone);
+        $I->see('Updated Super Name');
+        $I->see('111-111-1111');
     }
 
     public function deleteAnExistingSuperintedent(AcceptanceTester $I)
     {
-        $super = $I->create('supers');
-
         $I->amOnPage('/super.php?view');
-        $I->see($super->name);
-        $I->see($super->phone);
-        $I->click($super->name);
+        $I->see($this->super->name);
+        $I->see($this->super->phone);
+
+        $I->click($this->super->name);
         $I->see('EDIT');
         $I->click('DELETE');
         $I->click('YES');
         $I->see('DELETED!');
-        $I->click('VIEW LIST');
-        $I->dontSee($super->name);
-        $I->dontSee($super->phone);
 
+        $I->click('VIEW LIST');
+        $I->dontSee($this->super->name);
+        $I->dontSee($this->super->phone);
         $I->dontSeeInDatabase('supers', [
-            'name' => $super->name,
-            'phone' => $super->phone
+            'name' => $this->super->name,
+            'phone' => $this->super->phone
         ]);
     }
 }

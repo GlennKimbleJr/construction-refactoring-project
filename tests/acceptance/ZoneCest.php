@@ -2,65 +2,57 @@
 
 class ZoneCest
 {
+    public function _before(AcceptanceTester $I)
+    {
+        $this->zone = $I->create('zones');
+    }
+
     public function addANewZone(AcceptanceTester $I)
     {
         $I->amOnPage('/zone.php');
+        $I->dontSee('Test Zone');
+
         $I->click('+ ADD NEW');
         $I->see('Start a New Zone');
-
-        $zone = make('zones');
-
-        $I->fillField(['id' => 'name'], $zone->name);
+        $I->fillField(['id' => 'name'], 'Test Zone');
         $I->click('Create');
         $I->see('Created!');
 
-        $I->seeInDatabase('zones', [
-            'name' => $zone->name
-        ]);
-
         $I->click('VIEW LIST');
-        $I->see($zone->name);
+        $I->see('Test Zone');
     }
 
     public function editAZonesDetails(AcceptanceTester $I)
     {
-        $zone = $I->create('zones');
-
         $I->amOnPage('/zone.php?view');
-        $I->see($zone->name);
-        $I->click($zone->name);
+        $I->see($this->zone->name);
 
+        $I->click($this->zone->name);
         $I->see('EDIT');
-        $I->seeInField(['id' => 'name'], $zone->name);
-
-        $I->fillField(['id' => 'name'], $zone->name = 'New Name');
+        $I->seeInField(['id' => 'name'], $this->zone->name);
+        $I->fillField(['id' => 'name'], 'New Zone Name');
         $I->click('Update');
         $I->see('Updated!');
 
         $I->click('VIEW LIST');
-        $I->see($zone->name);
-        $I->click($zone->name);
-
-        $I->see('EDIT');
-        $I->seeInField(['id' => 'name'], $zone->name);
+        $I->see('New Zone Name');
     }
 
     public function deleteAExistingZone(AcceptanceTester $I)
     {
-        $zone = $I->create('zones');
-
         $I->amOnPage('/zone.php?view');
-        $I->see($zone->name);
-        $I->click($zone->name);
+        $I->see($this->zone->name);
+
+        $I->click($this->zone->name);
         $I->see('EDIT');
         $I->click('DELETE');
         $I->click('YES');
         $I->see('DELETED!');
-        $I->click('VIEW LIST');
-        $I->dontSee($zone->name);
 
+        $I->click('VIEW LIST');
+        $I->dontSee($this->zone->name);
         $I->dontSeeInDatabase('zones', [
-            'name' => $zone->name
+            'name' => $this->zone->name
         ]);
     }
 }
