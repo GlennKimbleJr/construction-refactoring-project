@@ -10,16 +10,16 @@ class CreateProjectsTable extends AbstractMigration
 
         $table = $this->table('projects')
               ->addColumn('name', 'string', ['null' => true])
-              ->addColumn('bidduedate', 'string', ['null' => true])
-              ->addColumn('completedate', 'string', ['null' => true])
-              ->addColumn('zone', 'string', ['null' => true])
-              ->addColumn('plans', 'string', ['null' => true])
               ->addColumn('location', 'string', ['null' => true])
+              ->addColumn('plans', 'string', ['null' => true])
               ->addColumn('planuser', 'string', ['null' => true])
               ->addColumn('planpass', 'string', ['null' => true])
               ->addColumn('owner_name', 'string', ['null' => true])
               ->addColumn('owner_phone', 'string', ['null' => true])
               ->addColumn('super_id', 'integer')
+              ->addColumn('zone_id', 'integer')
+              ->addColumn('bidduedate', 'string', ['null' => true])
+              ->addColumn('completedate', 'string', ['null' => true])
               ->save();
     }
 

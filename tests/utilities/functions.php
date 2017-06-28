@@ -75,7 +75,7 @@ function create_new_projects($attribs)
         'name' => 'Test Project',
         'bidduedate' => '2017-01-31',
         'completedate' => '',
-        'zone' => '',
+        'zone_id' => 1,
         'plans' => 'test_directory',
         'location' => 'test, location',
         'planuser' => 'test_user',

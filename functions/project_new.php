@@ -5,12 +5,12 @@ if (isset($_GET['new'])) {
     if (isset($_POST['name'])) {
 
         $query = $db->setData(
-            "INSERT INTO `projects` (name, bidduedate, completedate, zone, plans, location, planuser, planpass, owner_name, owner_phone, super_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO `projects` (name, bidduedate, completedate, zone_id, plans, location, planuser, planpass, owner_name, owner_phone, super_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
                 htmlspecialchars(trim($_POST['name'])), 
                 trim($_POST['due3']) . '-' . trim($_POST['due1']) . '-' . trim($_POST['due2']), 
                 '', 
-                trim($_POST['zone']),
+                intval($_POST['zone']),
                 trim($_POST['plans']), 
                 trim($_POST['location']), 
                 trim($_POST['planuser']), 
@@ -113,7 +113,7 @@ if (isset($_GET['new'])) {
             
             <select name="zone">
                 <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                    echo "<option value='{$zone['id']}'>{$zone['name']}</option>";
                 } ?>
             </select>
         </p>

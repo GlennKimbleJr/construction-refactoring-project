@@ -11,8 +11,12 @@ $super2Id = $I->grabFromDatabase('supers', 'id', ['name' => $super2->name]);
 
 $zone1 = $I->create('zones', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zones', ['name' => 'Test Zone 2']);
+
+$zone1Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone1->name]);
+$zone2Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone2->name]);
+
 $project = $I->create('projects', [
-    'zone' => $zone1->name,
+    'zone_id' => $zone1Id,
     'super_id' => $super1Id
 ]);
 $existing_date = explode('-', $project->bidduedate);
@@ -66,7 +70,7 @@ $I->fillField(['id' => 'owner_phone'], $project->owner_phone = 'New phone');
 $I->selectOption(['name' => 'due1'], ['value' => $existing_date[1]]);
 $I->selectOption(['name' => 'due2'], ['value' => $existing_date[2]]);
 $I->fillField(['id' => 'due3'], $existing_date[0]);
-$I->selectOption(['name' => 'zone'], ['value' => $zone2->name]);
+$I->selectOption(['name' => 'zone'], ['value' => $zone2Id]);
 $I->fillField(['id' => 'location'], $project->location = 'New Location');
 $I->selectOption(['name' => 'super'], ['value' => $super2Id]);
 $I->click('Update');

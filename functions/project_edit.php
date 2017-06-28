@@ -5,11 +5,11 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['name'])) {
 
         $query = $db->setData(
-            "UPDATE projects SET name=?, bidduedate=?, zone=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_id=? WHERE id=?",
+            "UPDATE projects SET name=?, bidduedate=?, zone_id=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_id=? WHERE id=?",
             [
                 htmlspecialchars(trim($_POST['name'])),
                 trim($_POST['due3']) . '-' . trim($_POST['due1']) . '-' . trim($_POST['due2']), 
-                trim($_POST['zone']),
+                intval($_POST['zone']),
                 trim($_POST['plans']), 
                 trim($_POST['location']), 
                 trim($_POST['planuser']), 
@@ -26,7 +26,7 @@ if (isset($_GET['edit'])) {
 
     $projectId = intval($_GET['project']);
 
-    $project = $db->getFirst("SELECT * FROM projects WHERE id=?", [$projectId]);
+    $project = $db->getFirst("SELECT p.*, z.name as zone_name FROM projects as p, zones as z WHERE p.zone_id = z.id AND p.id=?", [$projectId]);
     if (! count($project)) {
         die('Could not get data.');
     }
@@ -143,11 +143,11 @@ if (isset($_GET['edit'])) {
             <label>Zone: <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a></label><br>
         
             <select name="zone">
-                <option value="<?=$project['zone'];?>"><?=$project['zone'];?></option>  
+                <option value="<?=$project['zone_id'];?>"><?=$project['zone_name'];?></option>  
                 <?php
                 $zones = $db->getData("SELECT * FROM zones ORDER BY name");
                 foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
+                    echo "<option value='{$zone['id']}'>{$zone['name']}</option>";
                 } ?>
             </select>
         </p>
