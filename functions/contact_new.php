@@ -5,7 +5,7 @@ if (isset($_GET['new'])) {
     if (isset($_POST['company'])) {
 
         $query = $db->setData(
-            "INSERT INTO `contacts` (`first`, `last`, `street`, `city`, `state`, `email`, `officephone`, `cellphone`, `fax`, `type`, `company`, `zip`, `score_per`, `bid_per`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+            "INSERT INTO `contacts` (`first`, `last`, `street`, `city`, `state`, `email`, `officephone`, `cellphone`, `fax`, `category_id`, `company`, `zip`, `score_per`, `bid_per`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
                 trim($_POST['first']), 
                 trim($_POST['last']), 
                 trim($_POST['street']), 
@@ -15,7 +15,7 @@ if (isset($_GET['new'])) {
                 trim($_POST['officephone']), 
                 trim($_POST['cellphone']), 
                 trim($_POST['fax']), 
-                trim($_POST['type']), 
+                intval($_POST['type']), 
                 htmlspecialchars($_POST['company']), 
                 trim($_POST['zip']), 
                 '0', 
@@ -103,7 +103,7 @@ if (isset($_GET['new'])) {
             <label>Category: </label>
             <select name="type">    
                 <?php foreach ($categories as $cat) {
-                    echo "<option value='{$cat['name']}'>{$cat['name']}</option>";
+                    echo "<option value='{$cat['id']}'>{$cat['name']}</option>";
                 } ?>
             </select>
         </p>

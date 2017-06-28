@@ -5,6 +5,7 @@ $I->wantTo('Add a new contact.');
 
 $contact = make('contacts');
 $category = $I->create('categories');
+$categoryId = $I->grabFromDatabase('categories', 'id', ['name' => $category->name]);
 
 $zone1 = $I->create('zones', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zones', ['name' => 'Test Zone 2']);
@@ -50,7 +51,7 @@ $I->checkOption(['id' => 'zone_' . $zone6Id]);
 $I->checkOption(['id' => 'zone_' . $zone7Id]);
 $I->checkOption(['id' => 'zone_' . $zone8Id]);
 $I->checkOption(['id' => 'zone_' . $zone9Id]);
-$I->selectOption(['name' => 'type'], ['value' => $category->name]);
+$I->selectOption(['name' => 'type'], ['value' => $categoryId]);
 $I->click('Create');
 $I->see('Contact Added!');
 
@@ -64,7 +65,7 @@ $I->seeInDatabase('contacts', [
     'officephone' => $contact->officephone,
     'cellphone' => $contact->cellphone,
     'fax' => $contact->fax,
-    'type' => $category->name,
+    'category_id' => $categoryId,
     'company' => $contact->company,
     'zip' => $contact->zip,
     'score_per' => $contact->score_per,

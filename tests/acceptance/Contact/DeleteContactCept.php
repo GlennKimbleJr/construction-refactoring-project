@@ -3,7 +3,9 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('Delete an existing contact.');
 
-$contact = $I->create('contacts');
+$category = $I->create('categories');
+$categoryId = $I->grabFromDatabase('categories', 'id', ['name' => $category->name]);
+$contact = $I->create('contacts', ['category_id' => $categoryId]);
 
 $I->amOnPage('/contact.php?view');
 $I->see($contact->company);
@@ -35,7 +37,7 @@ $I->dontSeeInDatabase('contacts', [
     'officephone' => $contact->officephone,
     'cellphone' => $contact->cellphone,
     'fax' => $contact->fax,
-    'type' => $contact->type,
+    'category_id' => $contact->category_id,
     'company' => $contact->company,
     'zip' => $contact->zip,
     'score_per' => $contact->score_per,

@@ -47,9 +47,9 @@ if (isset($_GET['choose2'])) {
                 <select name='company' required>";
                 
                 $zoneContacts = $db->getData(
-                    "SELECT c.id, c.company FROM contacts as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.type = ? AND cz.zone_id = ? ORDER BY c.company",
+                    "SELECT c.id, c.company FROM contacts as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.category_id = ? AND cz.zone_id = ? ORDER BY c.company",
                     [
-                        $category['name'], 
+                        $category['id'], 
                         $project['zone_id']
                     ]
                 );

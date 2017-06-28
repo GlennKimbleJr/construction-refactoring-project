@@ -5,7 +5,7 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['id2'])) {
 
         $query = $db->setData(
-            'UPDATE contacts SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, type = ?, company = ?, zip = ? WHERE id = ?', [
+            'UPDATE contacts SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, category_id = ?, company = ?, zip = ? WHERE id = ?', [
                 trim($_POST['first']), 
                 trim($_POST['last']), 
                 trim($_POST['street']), 
@@ -15,7 +15,7 @@ if (isset($_GET['edit'])) {
                 trim($_POST['officephone']), 
                 trim($_POST['cellphone']), 
                 trim($_POST['fax']), 
-                trim($_POST['type']), 
+                intval($_POST['type']), 
                 htmlspecialchars($_POST['company']), 
                 trim($_POST['zip']), 
                 intval($_POST['id2'])
@@ -117,9 +117,10 @@ if (isset($_GET['edit'])) {
         <p>
             <label>Category: </label>
             <select name="type">
-                <option value="<?= $contact['type'] ?>"><?= $contact['type'] ?></option>
                 <?php foreach ($categories as $cat) {
-                    echo "<option value='{$cat['name']}'>{$cat['name']}</option>";
+                    echo "<option value='{$cat['id']}'";
+                    if ($cat['id'] == $contact['category_id']) echo " selected";
+                    echo ">{$cat['name']}</option>";
                 } ?>
             </select>
         </p>

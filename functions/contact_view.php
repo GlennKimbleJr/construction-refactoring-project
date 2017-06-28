@@ -41,32 +41,32 @@ function contactViewTemplate($contacts, $title = 'View All Contacts') {
 }
 
 if (isset($_GET['view'])) {
-    $contacts = $db->getData("SELECT * FROM contacts ORDER BY company");
+    $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE cat.id = c.category_id ORDER BY c.company");
     contactViewTemplate($contacts);
 }
 
 if (isset($_GET['viewf'])) {
-    $contacts = $db->getData("SELECT * FROM contacts ORDER BY first, company");
+        $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE cat.id = c.category_id ORDER BY c.first, c.company");
     contactViewTemplate($contacts, 'View All Contacts - Sort by FIRST');
 }
 
 if (isset($_GET['viewl'])) {
-    $contacts = $db->getData("SELECT * FROM contacts ORDER BY last, company");
+        $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE cat.id = c.category_id ORDER BY c.last, c.company");
     contactViewTemplate($contacts, 'View All Contacts - Sort by LAST');
 }
 
 if (isset($_GET['viewc'])) {
-    $contacts = $db->getData("SELECT * FROM contacts ORDER BY city, company");
+        $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE cat.id = c.category_id ORDER BY c.city, c.company");
     contactViewTemplate($contacts, 'View All Contacts - Sort by CITY');
 }
 
 if (isset($_GET['views'])) {
-    $contacts = $db->getData("SELECT * FROM contacts ORDER BY state, company");
+        $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE cat.id = c.category_id ORDER BY c.state, c.company");
     contactViewTemplate($contacts, 'View All Contacts - Sort by STATE');
 }
 
 if (isset($_GET['viewt'])) {
-    $contacts = $db->getData("SELECT * FROM contacts ORDER BY type, company");
+        $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE cat.id = c.category_id ORDER BY type, c.company");
     contactViewTemplate($contacts, 'View All Contacts - Sort by TYPE');
 }
 
@@ -76,35 +76,48 @@ if (isset($_GET['type'])) {
     $contacts = $db->getData("SELECT * FROM categories ORDER BY name");
     
     foreach ($contacts as $contact) {
-        $name = $contact['name'];
-
-        echo "<A href='?t=$name'>$name</a><br>";
+        echo "<A href='?t={$contact['id']}'>{$contact['name']}</a><br>";
     }
 }
 
 if (isset($_GET['t'])) {
-    $contacts = $db->getData("SELECT * FROM contacts WHERE type = ? ORDER BY company", [$_GET['t']]);
-    contactViewTemplate($contacts, "View Contacts - {$_GET['t']}");
+    $type = $db->getFirst("SELECT name FROM categories WHERE id = ?", [intval($_GET['t'])]);
+
+    $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.category_id = ? ORDER BY c.company", [intval($_GET['t'])]);
+    
+    contactViewTemplate($contacts, "View Contacts - {$type['name']}");
 }
 
 if (isset($_GET['tf'])) {
-    $contacts = $db->getData("SELECT * FROM contacts WHERE type = ? ORDER BY first, company", [$_GET['tf']]);
-    contactViewTemplate($contacts, "View Contacts - {$_GET['tf']}");
+    $type = $db->getFirst("SELECT name FROM categories WHERE id = ?", [intval($_GET['tf'])]);
+
+    $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.category_id = ? ORDER BY c.first, c.company", [intval($_GET['tf'])]);
+    
+    contactViewTemplate($contacts, "View Contacts - {$type['name']}");
 }
 
 if (isset($_GET['tl'])) {
-    $contacts = $db->getData("SELECT * FROM contacts WHERE type = ? ORDER BY last, company", [$_GET['tl']]);
-    contactViewTemplate($contacts, "View Contacts - {$_GET['tl']}");
+    $type = $db->getFirst("SELECT name FROM categories WHERE id = ?", [intval($_GET['tl'])]);
+
+    $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.category_id = ? ORDER BY c.last, c.company", [intval($_GET['tl'])]);
+    
+    contactViewTemplate($contacts, "View Contacts - {$type['name']}");
 }
 
 if (isset($_GET['tc'])) {
-    $contacts = $db->getData("SELECT * FROM contacts WHERE type = ? ORDER BY city, company", [$_GET['tc']]);
-    contactViewTemplate($contacts, "View Contacts - {$_GET['tc']}");
+    $type = $db->getFirst("SELECT name FROM categories WHERE id = ?", [intval($_GET['tc'])]);
+
+    $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.category_id = ? ORDER BY c.city, c.company", [intval($_GET['tc'])]);
+    
+    contactViewTemplate($contacts, "View Contacts - {$type['name']}");
 }
 
 if (isset($_GET['ts'])) {
-    $contacts = $db->getData("SELECT * FROM contacts WHERE type = ? ORDER BY state, company", [$_GET['ts']]);
-    contactViewTemplate($contacts, "View Contacts - {$_GET['ts']}");
+    $type = $db->getFirst("SELECT name FROM categories WHERE id = ?", [intval($_GET['ts'])]);
+
+    $contacts = $db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.category_id = ? ORDER BY c.state, c.company", [intval($_GET['ts'])]);
+    
+    contactViewTemplate($contacts, "View Contacts - {$type['name']}");
 }
 
 if (isset($_GET['zone'])) {

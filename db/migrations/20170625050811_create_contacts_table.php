@@ -20,7 +20,7 @@ class CreateContactsTable extends AbstractMigration
               ->addColumn('officephone', 'string', ['null' => true])
               ->addColumn('cellphone', 'string', ['null' => true])
               ->addColumn('fax', 'string', ['null' => true])
-              ->addColumn('type', 'string', ['null' => true])
+              ->addColumn('category_id', 'string', ['null' => true])
               ->addColumn('score_per', 'string', ['null' => true])
               ->addColumn('bid_per', 'string', ['null' => true])
               ->save();

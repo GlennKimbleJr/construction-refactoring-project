@@ -37,18 +37,18 @@ function create_new_categories($attribs)
 function create_new_contacts($attribs)
 {
     return override([
+        'company' => 'Test Company',
         'first' => 'Test First',
         'last' => 'Test Last',
         'street' => '123 Test St.',
         'city' => 'Testville',
         'state' => 'Test State',
+        'zip' => '11111',
         'email' => 'test@example.org',
         'officephone' => '555-555-5555',
         'cellphone' => '555-555-5556',
         'fax' => '555-555-5557',
-        'type' => '',
-        'company' => 'Test Company',
-        'zip' => '11111',
+        'category_id' => 1,
         'score_per' => '0',
         'bid_per' => '0'
     ], $attribs);

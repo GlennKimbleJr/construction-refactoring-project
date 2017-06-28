@@ -2,7 +2,7 @@
 
 if (isset($_GET['details'])) {
 
-    $contact = $db->getFirst('SELECT * FROM contacts WHERE id = ?', [$_GET['details']]);
+    $contact = $db->getFirst('SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.id = ?', [$_GET['details']]);
     $contactZones = $db->getData('SELECT * FROM contacts_zones as cz, zones as z WHERE cz.zone_id = z.id AND cz.contact_id = ?', [$_GET['details']]);
 
     if (empty($contact)) {

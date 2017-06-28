@@ -25,8 +25,12 @@ $zone9Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone9->name]);
 
 $category1 = $I->create('categories', ['name' => 'Test Category 1']);
 $category2 = $I->create('categories', ['name' => 'Test Category 2']);
+
+$category1Id = $I->grabFromDatabase('categories', 'id', ['name' => $category1->name]);
+$category2Id = $I->grabFromDatabase('categories', 'id', ['name' => $category2->name]);
+
 $contact = $I->create('contacts', [
-    'type' => $category1->name
+    'category_id' => $category1Id
 ]);
 
 $contactId = $I->grabFromDatabase('contacts', 'id', ['company' => $contact->company]);
@@ -112,7 +116,7 @@ $I->fillField(['id' => 'cellphone'], $contact->cellphone = '111-111-1112');
 $I->fillField(['id' => 'fax'], $contact->fax = '111-111-1113');
 $I->uncheckOption(['id' => 'zone_' . $zone2Id]);
 $I->uncheckOption(['id' => 'zone_' . $zone5Id]);
-$I->selectOption(['name' => 'type'], ['value' => $category2->name]);
+$I->selectOption(['name' => 'type'], ['value' => $category2Id]);
 $I->click('UPDATE');
 $I->see('Updated!');
 
