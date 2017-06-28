@@ -12,19 +12,60 @@ $zone6 = $I->create('zones', ['name' => 'Test Zone 6']);
 $zone7 = $I->create('zones', ['name' => 'Test Zone 7']);
 $zone8 = $I->create('zones', ['name' => 'Test Zone 8']);
 $zone9 = $I->create('zones', ['name' => 'Test Zone 9']);
+
+$zone1Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone1->name]);
+$zone2Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone2->name]);
+$zone3Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone3->name]);
+$zone4Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone4->name]);
+$zone5Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone5->name]);
+$zone6Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone6->name]);
+$zone7Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone7->name]);
+$zone8Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone8->name]);
+$zone9Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone9->name]);
+
 $category1 = $I->create('categories', ['name' => 'Test Category 1']);
 $category2 = $I->create('categories', ['name' => 'Test Category 2']);
 $contact = $I->create('contacts', [
-    'zone' => $zone1->name,
-    'zone2' => $zone2->name,
-    'zone3' => $zone3->name,
-    'zone4' => $zone4->name,
-    'zone5' => $zone5->name,
-    'zone6' => $zone6->name,
-    'zone7' => $zone7->name,
-    'zone8' => $zone8->name,
-    'zone9' => $zone9->name,
     'type' => $category1->name
+]);
+
+$contactId = $I->grabFromDatabase('contacts', 'id', ['company' => $contact->company]);
+
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone1Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone2Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone3Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone4Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone5Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone6Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone7Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone8Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone9Id
 ]);
 
 $I->amOnPage('/contact.php?view');
@@ -47,15 +88,15 @@ $I->seeInField(['id' => 'email'], $contact->email);
 $I->seeInField(['id' => 'officephone'], $contact->officephone);
 $I->seeInField(['id' => 'cellphone'], $contact->cellphone);
 $I->seeInField(['id' => 'fax'], $contact->fax);
-$I->seeOptionIsSelected(['name' => 'zone'], $zone1->name);
-$I->seeOptionIsSelected(['name' => 'zone2'], $zone2->name);
-$I->seeOptionIsSelected(['name' => 'zone3'], $zone3->name);
-$I->seeOptionIsSelected(['name' => 'zone4'], $zone4->name);
-$I->seeOptionIsSelected(['name' => 'zone5'], $zone5->name);
-$I->seeOptionIsSelected(['name' => 'zone6'], $zone6->name);
-$I->seeOptionIsSelected(['name' => 'zone7'], $zone7->name);
-$I->seeOptionIsSelected(['name' => 'zone8'], $zone8->name);
-$I->seeOptionIsSelected(['name' => 'zone9'], $zone9->name);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone1Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone2Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone3Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone4Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone5Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone6Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone7Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone8Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone9Id]);
 $I->seeOptionIsSelected(['name' => 'type'], $category1->name);
 
 $I->fillField(['id' => 'company'], $contact->company = 'New Company Name');
@@ -69,15 +110,8 @@ $I->fillField(['id' => 'email'], $contact->email = 'NewEmail@example.org');
 $I->fillField(['id' => 'officephone'], $contact->officephone = '111-111-1111');
 $I->fillField(['id' => 'cellphone'], $contact->cellphone = '111-111-1112');
 $I->fillField(['id' => 'fax'], $contact->fax = '111-111-1113');
-$I->selectOption(['name' => 'zone'], ['value' => $zone2->name]);
-$I->selectOption(['name' => 'zone2'], ['value' => $zone3->name]);
-$I->selectOption(['name' => 'zone3'], ['value' => $zone4->name]);
-$I->selectOption(['name' => 'zone4'], ['value' => $zone5->name]);
-$I->selectOption(['name' => 'zone5'], ['value' => $zone6->name]);
-$I->selectOption(['name' => 'zone6'], ['value' => $zone7->name]);
-$I->selectOption(['name' => 'zone7'], ['value' => $zone8->name]);
-$I->selectOption(['name' => 'zone8'], ['value' => $zone9->name]);
-$I->selectOption(['name' => 'zone9'], ['value' => $zone1->name]);
+$I->uncheckOption(['id' => 'zone_' . $zone2Id]);
+$I->uncheckOption(['id' => 'zone_' . $zone5Id]);
 $I->selectOption(['name' => 'type'], ['value' => $category2->name]);
 $I->click('UPDATE');
 $I->see('Updated!');
@@ -102,13 +136,13 @@ $I->seeInField(['id' => 'email'], $contact->email);
 $I->seeInField(['id' => 'officephone'], $contact->officephone);
 $I->seeInField(['id' => 'cellphone'], $contact->cellphone);
 $I->seeInField(['id' => 'fax'], $contact->fax);
-$I->seeOptionIsSelected(['name' => 'zone'], $zone2->name);
-$I->seeOptionIsSelected(['name' => 'zone2'], $zone3->name);
-$I->seeOptionIsSelected(['name' => 'zone3'], $zone4->name);
-$I->seeOptionIsSelected(['name' => 'zone4'], $zone5->name);
-$I->seeOptionIsSelected(['name' => 'zone5'], $zone6->name);
-$I->seeOptionIsSelected(['name' => 'zone6'], $zone7->name);
-$I->seeOptionIsSelected(['name' => 'zone7'], $zone8->name);
-$I->seeOptionIsSelected(['name' => 'zone8'], $zone9->name);
-$I->seeOptionIsSelected(['name' => 'zone9'], $zone1->name);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone1Id]);
+$I->dontSeeCheckboxIsChecked(['id' => 'zone_' . $zone2Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone3Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone4Id]);
+$I->dontSeeCheckboxIsChecked(['id' => 'zone_' . $zone5Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone6Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone7Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone8Id]);
+$I->seeCheckboxIsChecked(['id' => 'zone_' . $zone9Id]);
 $I->seeOptionIsSelected(['name' => 'type'], $category2->name);

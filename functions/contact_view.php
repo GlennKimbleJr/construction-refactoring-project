@@ -110,59 +110,57 @@ if (isset($_GET['ts'])) {
 if (isset($_GET['zone'])) {
     echo "<h3>SELECT A ZONE</h3>";
 
-    $contacts = $db->getData("SELECT * FROM zones ORDER BY name");
+    $zones = $db->getData("SELECT * FROM zones ORDER BY name");
     
-    foreach ($contacts as $contact) {
-        $name = $contact['name'];
-
-        echo "<A href='?z=$name'>$name</a><br>";
+    foreach ($zones as $zone) {
+        echo "<A href='?z={$zone['id']}'>{$zone['name']}</a><br>";
     }
 }
 
 if (isset($_GET['z'])) {
-    $z = $_GET['z'];
+    $zone = $db->getFirst("SELECT * FROM zones WHERE id = ?", [intval($_GET['z'])]);
 
-    $contacts = $db->getData("SELECT * FROM contacts WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company", [$z, $z, $z, $z, $z, $z, $z, $z, $z]);
+    $contacts = $db->getData("SELECT c.* FROM contacts as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY c.company", [$zone['id']]);
     
-    contactViewTemplate($contacts, "View Contacts - {$z}");
+    contactViewTemplate($contacts, "View Contacts - {$zone['name']}");
 }
 
 if (isset($_GET['zf'])) {
-    $zf = $_GET['zf'];
+    $zone = $db->getFirst("SELECT * FROM zones WHERE id = ?", [intval($_GET['zf'])]);
 
-    $contacts = $db->getData("SELECT * FROM contacts WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY first, company", [$zf, $zf, $zf, $zf, $zf, $zf, $zf, $zf, $zf]);
-
-    contactViewTemplate($contacts, "View Contacts - {$zf}");
+    $contacts = $db->getData("SELECT c.* FROM contacts as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY c.first, c.company", [$zone['id']]);
+    
+    contactViewTemplate($contacts, "View Contacts - {$zone['name']}");
 }
 
 if (isset($_GET['zl'])) {
-    $zl = $_GET['zl'];
+    $zone = $db->getFirst("SELECT * FROM zones WHERE id = ?", [intval($_GET['zl'])]);
 
-    $contacts = $db->getData("SELECT * FROM contacts WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY last, company", [$zl, $zl, $zl, $zl, $zl, $zl, $zl, $zl, $zl]);
+    $contacts = $db->getData("SELECT c.* FROM contacts as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY c.last, c.company", [$zone['id']]);
     
-    contactViewTemplate($contacts, "View Contacts - {$zl}");
+    contactViewTemplate($contacts, "View Contacts - {$zone['name']}");
 }
 
 if (isset($_GET['zc'])) {
-    $zc = $_GET['zc'];
+    $zone = $db->getFirst("SELECT * FROM zones WHERE id = ?", [intval($_GET['zc'])]);
 
-    $contacts = $db->getData("SELECT * FROM contacts WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY city, company", [$zc, $zc, $zc, $zc, $zc, $zc, $zc, $zc, $zc]);
+    $contacts = $db->getData("SELECT c.* FROM contacts as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY c.city, c.company", [$zone['id']]);
     
-    contactViewTemplate($contacts, "View Contacts - {$zc}");
+    contactViewTemplate($contacts, "View Contacts - {$zone['name']}");
 }
 
 if (isset($_GET['zs'])) {
-    $zs = $_GET['zs'];
+    $zone = $db->getFirst("SELECT * FROM zones WHERE id = ?", [intval($_GET['zs'])]);
 
-    $contacts = $db->getData("SELECT * FROM contacts WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY state, company", [$zs, $zs, $zs, $zs, $zs, $zs, $zs, $zs, $zs]);
+    $contacts = $db->getData("SELECT c.* FROM contacts as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY c.state, c.company", [$zone['id']]);
     
-    contactViewTemplate($contacts, "View Contacts - {$zs}");
+    contactViewTemplate($contacts, "View Contacts - {$zone['name']}");
 }
 
 if (isset($_GET['zt'])) {
-    $zt = $_GET['zt'];
+    $zone = $db->getFirst("SELECT * FROM zones WHERE id = ?", [intval($_GET['zt'])]);
 
-    $contacts = $db->getData("SELECT * FROM contacts WHERE (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY type, company", [$zt, $zt, $zt, $zt, $zt, $zt, $zt, $zt, $zt]);
+    $contacts = $db->getData("SELECT c.* FROM contacts as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY c.type, c.company", [$zone['id']]);
     
-    contactViewTemplate($contacts, "View Contacts - {$zt}");
+    contactViewTemplate($contacts, "View Contacts - {$zone['name']}");
 }

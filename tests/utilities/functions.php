@@ -42,7 +42,6 @@ function create_new_contacts($attribs)
         'street' => '123 Test St.',
         'city' => 'Testville',
         'state' => 'Test State',
-        'zone' => '',
         'email' => 'test@example.org',
         'officephone' => '555-555-5555',
         'cellphone' => '555-555-5556',
@@ -50,16 +49,22 @@ function create_new_contacts($attribs)
         'type' => '',
         'company' => 'Test Company',
         'zip' => '11111',
-        'zone2' => '',
-        'zone3' => '',
-        'zone4' => '',
-        'zone5' => '',
-        'zone6' => '',
-        'zone7' => '',
-        'zone8' => '',
-        'zone9' => '',
         'score_per' => '0',
         'bid_per' => '0'
+    ], $attribs);
+}
+
+/**
+ * Data needed to create a new contact/zone relationship.
+ *
+ * @param  array  $attribs  Anything you want to override the default data supplied.
+ * @return array
+ */
+function create_new_contacts_zones($attribs)
+{
+    return override([
+        'contact_id' => 1,
+        'zone_id' => 1
     ], $attribs);
 }
 

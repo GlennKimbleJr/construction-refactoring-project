@@ -4,6 +4,7 @@ $I = new AcceptanceTester($scenario);
 $I->wantTo('Edit a contact\'s details');
 
 $category = $I->create('categories', ['name' => 'Test Category']);
+
 $zone1 = $I->create('zones', ['name' => 'Test Zone 1']);
 $zone2 = $I->create('zones', ['name' => 'Test Zone 2']);
 $zone3 = $I->create('zones', ['name' => 'Test Zone 3']);
@@ -13,17 +14,57 @@ $zone6 = $I->create('zones', ['name' => 'Test Zone 6']);
 $zone7 = $I->create('zones', ['name' => 'Test Zone 7']);
 $zone8 = $I->create('zones', ['name' => 'Test Zone 8']);
 $zone9 = $I->create('zones', ['name' => 'Test Zone 9']);
+
+$zone1Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone1->name]);
+$zone2Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone2->name]);
+$zone3Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone3->name]);
+$zone4Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone4->name]);
+$zone5Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone5->name]);
+$zone6Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone6->name]);
+$zone7Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone7->name]);
+$zone8Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone8->name]);
+$zone9Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone9->name]);
+
 $contact = $I->create('contacts', [
     'type' => $category->name,
-    'zone' => $zone1->name,
-    'zone2' => $zone2->name,
-    'zone3' => $zone3->name,
-    'zone4' => $zone4->name,
-    'zone5' => $zone5->name,
-    'zone6' => $zone6->name,
-    'zone7' => $zone7->name,
-    'zone8' => $zone8->name,
-    'zone9' => $zone9->name
+]);
+$contactId = $I->grabFromDatabase('contacts', 'id', ['company' => $contact->company]);
+
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone1Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone2Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone3Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone4Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone5Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone6Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone7Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone8Id
+]);
+$I->create('contacts_zones', [
+    'contact_id' => $contactId,
+    'zone_id' => $zone9Id
 ]);
 
 $I->amOnPage('/contact.php?view');

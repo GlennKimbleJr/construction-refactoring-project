@@ -9,16 +9,24 @@ $zone1 = $I->create('zones', ['name' => 'Zone 1']);
 $zone1Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone1->name]);
 $zone1Contact = $I->create('contacts', [
     'company' => 'Company 1',
-    'zone' => $zone1->name,
     'type' => $category->name
+]);
+$zone1ContactId = $I->grabFromDatabase('contacts', 'id', ['company' => $zone1Contact->company]);
+$I->create('contacts_zones', [
+    'zone_id' => $zone1Id,
+    'contact_id' => $zone1ContactId
 ]);
 
 $zone2 = $I->create('zones', ['name' => 'Zone 2']);
 $zone2Id = $I->grabFromDatabase('zones', 'id', ['name' => $zone2->name]);
 $zone2Contact = $I->create('contacts', [
     'company' => 'Company 2',
-    'zone' => $zone2->name,
     'type' => $category->name
+]);
+$zone2ContactId = $I->grabFromDatabase('contacts', 'id', ['company' => $zone2Contact->company]);
+$I->create('contacts_zones', [
+    'zone_id' => $zone2Id,
+    'contact_id' => $zone2ContactId
 ]);
 
 $zone1Project = $I->create('projects', ['zone_id' => $zone1Id]);

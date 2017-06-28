@@ -5,7 +5,7 @@ if (isset($_GET['edit'])) {
     if (isset($_POST['id2'])) {
 
         $query = $db->setData(
-            'UPDATE contacts SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, zone = ?, type = ?, company = ?, zip = ?, zone2 = ?, zone3 = ?, zone4 = ?, zone5 = ?, zone6 = ?, zone7 = ?, zone8 = ?, zone9 = ? WHERE id = ?', [
+            'UPDATE contacts SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, type = ?, company = ?, zip = ? WHERE id = ?', [
                 trim($_POST['first']), 
                 trim($_POST['last']), 
                 trim($_POST['street']), 
@@ -15,27 +15,38 @@ if (isset($_GET['edit'])) {
                 trim($_POST['officephone']), 
                 trim($_POST['cellphone']), 
                 trim($_POST['fax']), 
-                trim($_POST['zone']), 
                 trim($_POST['type']), 
                 htmlspecialchars($_POST['company']), 
                 trim($_POST['zip']), 
-                trim($_POST['zone2']),
-                trim($_POST['zone3']),
-                trim($_POST['zone4']),
-                trim($_POST['zone5']),
-                trim($_POST['zone6']),
-                trim($_POST['zone7']),
-                trim($_POST['zone8']),
-                trim($_POST['zone9']),
                 intval($_POST['id2'])
             ]);
 
-        die($db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error');
+        $db->setData("DELETE FROM `contacts_zones` WHERE `contact_id` = ?", [
+            intval($_POST['id2'])
+        ]);
+
+        if (isset($_POST['zone']) && is_array($_POST['zone'])) { foreach ($_POST['zone'] as $zone_id) {
+            $db->setData("INSERT INTO `contacts_zones` (`contact_id`, `zone_id`) VALUES (?, ?)", [
+                intval($_POST['id2']), 
+                $zone_id
+            ]);
+        }}
+
+        die('<br><br>Updated!');
     }
 
     $contact = $db->getFirst('SELECT * FROM contacts WHERE id = ?', [
         intval($_GET['edit'])
     ]);
+
+    $contactZones = $db->getData(
+        'SELECT zone_id FROM contacts_zones as cz, zones as z WHERE cz.zone_id = z.id AND cz.contact_id = ?', 
+        [intval($_GET['edit'])]
+    );
+
+    $contactZones = array_map(function($zone) {
+        return $zone['zone_id'];
+    }, $contactZones);
 
     if (empty($contact)) {
         die('Error: Unable to find data.');
@@ -90,84 +101,17 @@ if (isset($_GET['edit'])) {
         </p>
 
         <p>
-            <label>Zone: </label><b>( Choose up to 9 )</b> 
-            | <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a>
-            <br>
+            <label>
+                Zone(s): | <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a><br>
+            </label>
 
-            <select name="zone">    
-                <option value="<?= $contact['zone'] ?>"><?= $contact['zone'] ?></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-
-            <select name="zone2">   
-                <option value="<?= $contact['zone2'] ?>"><?= $contact['zone2'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-
-            <select name="zone3">
-                <option value="<?= $contact['zone3'] ?>"><?= $contact['zone3'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-        </p>
-
-        <p>
-            <select name="zone4">
-                <option value="<?= $contact['zone4'] ?>"><?= $contact['zone4'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-
-            <select name="zone5">
-                <option value="<?= $contact['zone5'] ?>"><?= $contact['zone5'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-
-            <select name="zone6">
-                <option value="<?= $contact['zone6'] ?>"><?= $contact['zone6'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-        </p>
-
-        <p>
-            <select name="zone7">
-                <option value="<?= $contact['zone7'] ?>"><?= $contact['zone7'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-
-            <select name="zone8">
-                <option value="<?= $contact['zone8'] ?>"><?= $contact['zone8'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
-
-            <select name="zone9">
-                <option value="<?= $contact['zone9'] ?>"><?= $contact['zone9'] ?></option>
-                <option value=""></option>
-                <?php foreach ($zones as $zone) {
-                    echo "<option value='{$zone['name']}'>{$zone['name']}</option>";
-                } ?>
-            </select>
+            <?php foreach ($zones as $zone) {
+                echo "<span>";
+                echo "<input type='checkbox' name='zone[]' id='zone_{$zone['id']}' value='{$zone['id']}'";
+                if (in_array($zone['id'], $contactZones)) echo ' checked';
+                echo ">{$zone['name']} ";
+                echo "</span>";
+            } ?>
         </p>
 
         <p>

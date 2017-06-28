@@ -31,7 +31,7 @@ if (isset($_GET['choose2'])) {
     $projectId = intval($_GET['choose2']);
     $category = $db->getFirst('SELECT * FROM categories WHERE id = ?', [intval($_GET['c'])]);
 
-    $project = $db->getFirst("SELECT p.*, z.name as zone_name FROM projects as p, zones as z WHERE p.zone_id = z.id AND p.id = ?", [$projectId]);
+    $project = $db->getFirst("SELECT * FROM projects WHERE id = ?", [$projectId]);
      if (! count($project)) {
        die('Could not get data');
     }
@@ -47,12 +47,10 @@ if (isset($_GET['choose2'])) {
                 <select name='company' required>";
                 
                 $zoneContacts = $db->getData(
-                    "SELECT id, company FROM contacts WHERE type = ? AND (zone = ? OR zone2 = ? OR zone3 = ? OR zone4 = ? OR zone5 = ? OR zone6 = ? OR zone7 = ? OR zone8 = ? OR zone9 = ?) ORDER BY company",
+                    "SELECT c.id, c.company FROM contacts as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.type = ? AND cz.zone_id = ? ORDER BY c.company",
                     [
                         $category['name'], 
-                        $project['zone_name'], $project['zone_name'], $project['zone_name'], 
-                        $project['zone_name'], $project['zone_name'], $project['zone_name'], 
-                        $project['zone_name'], $project['zone_name'], $project['zone_name']
+                        $project['zone_id']
                     ]
                 );
             
