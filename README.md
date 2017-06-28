@@ -29,3 +29,5 @@ I wanted to take this old piece of junk, and step by step turn it into something
     - In order to help me get the ball rolling on refactoring the database I decided to pull in robmorgan/phinx so I could take advantage of database migrations. The first step here was to recreate the current tables (as is).
 ## 2017.06.27
     - I'm really starting to appreciate my test suite with this recent series of refactoring. I'm modifying tables and columns in the database and without being able to run my test after every change and get immediate feedback on what broke and where I'd be trying to finde a needle in a haystack.
+## 2017.06.28 
+    - I've done a lot of work updating the database relationships, however in the process I've created a (bigger) mess of my (honestly) already messy test suite. Before I continue on I want to pause to clean up and refactor the test suite itself. As well, I want to pull in fzaninotto/faker and create some seed data.
