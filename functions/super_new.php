@@ -8,25 +8,11 @@ if (isset($_GET['new'])) {
             trim($_POST['phone'])
         ]);
 
-        die($db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create super.');
+        echo $templates->render('message', [
+            'template' => 'super',
+            'message' => $db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create super.'
+        ]); die();
     }
-    ?>
 
-    <h3>Add New Superintendent</h3>
-
-    <form action="" method="POST">
-        <p>
-            <label>Name: </label>
-            <input id="name" type="text" name="name" required placeholder="Joe Bob" />
-        </p>
-        
-        <p>
-            <label>Phone: </label>
-            <input id="phone" type="text" name="phone" required placeholder="xxx-xxx-xxxx" />
-        </p>
-
-        <input class="btn register" type="submit" name="submit" value="Add" />
-    </form>
-    
-    <?php
+    echo $templates->render('super/new', ['title' => 'Add a New Superintendant']);
 }
