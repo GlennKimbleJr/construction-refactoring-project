@@ -202,7 +202,7 @@ class ProjectCest
 
         $I->canSeeInSource($zone1Contact->company);
         $I->cantSeeInSource($zone2Contact->company);
-        $I->selectOption(['name' => 'company'], ['text' => $zone1Contact->company]);
+        $I->selectOption(['name' => 'company'], ['value' => $zone1Contact->id]);
         $I->click('Submit');
         $I->see('Sucess!');
         $I->click('GO BACK');

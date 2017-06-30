@@ -31,3 +31,5 @@ I wanted to take this old piece of junk, and step by step turn it into something
     - I'm really starting to appreciate my test suite with this recent series of refactoring. I'm modifying tables and columns in the database and without being able to run my test after every change and get immediate feedback on what broke and where I'd be trying to finde a needle in a haystack.
 ## 2017.06.28 
     - I've done a lot of work updating the database relationships, however in the process I've created a (bigger) mess of my (honestly) already messy test suite. Before I continue on I want to pause to clean up and refactor the test suite itself. As well, I want to pull in fzaninotto/faker and create some seed data.
+
+    - Happier with my test suite then I was yesterday. I still have more work to do on the database side, but I wanted to take a break from that and work on seperating my html templates from my php code. This will be my first step in refactoring to a more MVC architecture. I'm pulling in league/plates to help with this.
