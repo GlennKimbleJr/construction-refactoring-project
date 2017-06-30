@@ -8,32 +8,21 @@ if (isset($_GET['edit'])) {
             intval($_POST['id2'])
         ]);
 
-        die($db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error');
+        echo $templates->render('message', [
+            'template' => 'zone',
+            'message' => $db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error'
+        ]); die();
     }
 
-    $zoneId = intval($_GET['edit']);
-
-    $zone = $db->getFirst("SELECT name FROM zones WHERE id = ?", [$zoneId]);
+    $zone = $db->getFirst("SELECT id, name FROM zones WHERE id = ?", [intval($_GET['edit'])]);
     if (! count($zone)) {
-        die('Could not get data.');
+        echo $templates->render('message', [
+            'template' => 'zone',
+            'message' => 'Could not get data.'
+        ]); die();
     }
-    ?>
 
-    <h3>
-        EDIT Category | 
-        <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a> | 
-        [ <a href="?delete=<?=$zoneId;?>"><font color="red">DELETE</font></a> ]
-    </h3>
-
-    <form action="" method="POST">
-        <p>
-            <label>Name: </label>
-            <input id="id2" type="hidden" name="id2" required value="<?=$zoneId;?>" />
-            <input id="name" type="text" name="name" required value="<?=$zone['name'];?>" />
-        </p>
-
-        <input class="btn register" type="submit" name="submit" value="Update" />
-    </form>
-
-    <?php
+    echo $templates->render('zone/edit', [
+        'zone' => $zone,
+    ]); die();
 }
