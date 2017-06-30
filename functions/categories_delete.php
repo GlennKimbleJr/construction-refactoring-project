@@ -3,12 +3,15 @@
 if (isset($_GET['delete'])) {
     $categoryId = intval($_GET['delete']);
 
-    echo "<h1>ARE YOU SURE?</h1>
+    echo $templates->render('message', [
+        'template' => 'category',
+        'message' => "<h1>ARE YOU SURE?</h1>
         <br>
         <h2>
             <a href='?delyes={$categoryId}'>YES</a> | 
             <a href='?edit={$categoryId}'>NO</a>
-        </h2>";
+        </h2>"
+    ]); die();
 }
 
 // Confirm
@@ -17,5 +20,8 @@ if (isset($_GET['delyes'])) {
         intval($_GET['delyes'])
     ]);
 
-    die('<h1>DELETED!</h1><br>');
+    echo $templates->render('message', [
+        'template' => 'category',
+        'message' => '<h1>DELETED!</h1><br>'
+    ]); die();
 }

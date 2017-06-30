@@ -5,7 +5,10 @@ if (isset($_GET['edit'])) {
     $category = $db->getFirst('SELECT * FROM categories WHERE id = ?', [intval($_GET['edit'])]);
 
     if (empty($category)) {
-        die('Error: Unable to find data.');
+        echo $templates->render('message', [
+            'template' => 'category',
+            'message' => 'Error: Unable to find data.'
+        ]); die();
     }
 
     if (isset($_POST['name'])) {
@@ -14,28 +17,14 @@ if (isset($_GET['edit'])) {
             intval($_POST['id2'])
         ]);
 
-        die($db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error');
+        echo $templates->render('message', [
+            'template' => 'category',
+            'message' => $db->updated($query) ? '<br><br>Updated!' : '<br><br>Update Error'
+        ]); die();
     }
-    ?>
 
-    <h3>
-        EDIT Category | 
-        [ 
-            <a href="?delete=<?=$category['id'];?>">
-                <font color="red">DELETE</font>
-            </a> 
-        ]
-    </h3>
-    
-    <form action="" method="POST">
-        <p>
-            <label>Name: </label>
-            <input id="id2" type="hidden" name="id2" required value="<?=$category['id'];?>" />
-            <input id="name" type="text" name="name" required value="<?=$category['name'];?>" />
-        </p>
-
-        <input class="btn register" type="submit" name="submit" value="Update" />
-    </form>
-
-    <?php
+    echo $templates->render('category/edit', [
+        'title' => 'Edit a Category',
+        'category' => $category
+    ]);
 }

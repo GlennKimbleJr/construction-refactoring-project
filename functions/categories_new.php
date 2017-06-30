@@ -8,19 +8,11 @@ if (isset($_GET['new'])) {
             htmlspecialchars($_POST['name'])
         ]);
         
-        die($db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create categories.');
+        echo $templates->render('message', [
+            'template' => 'category',
+            'message' => $db->updated($query) ? '<br><br>Created!' : '<br><br>Error! Unable to create categories.'
+        ]); die();
     }
-    ?>
 
-    <h3>Start a New Category</h3>
-    <form action="" method="POST">
-        <p>
-            <label>Name: </label>
-            <input id="name" type="text" name="name" required placeholder="Category Name" />
-        </p>
-
-        <input class="btn register" type="submit" name="submit" value="Create" />
-    </form>
-
-    <?php
+    echo $templates->render('category/new', ['title' => 'Add a New Category']);
 }
