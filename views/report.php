@@ -9,8 +9,8 @@
                 <img src='/images/reports.png' width='48' height='48'><br> 
                 <a href='/index'>back to home</a><br>
                 <br>
-                <a href='?score'>SCORE</a><br>
-                <a href='?bid'>BID</a><br>
+                <a href='/reports/score'>SCORE</a><br>
+                <a href='/reports/bids'>BID</a><br>
                 </font>
             </td>
             <td width='40'>&nbsp;</td>

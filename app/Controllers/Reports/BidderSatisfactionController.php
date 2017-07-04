@@ -2,94 +2,45 @@
 
 namespace App\Controllers\Reports;
 
+use App\Controllers\BaseController;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class BidderSatisfactionController extends BaseController
 {
     /**
-     * Display a listing of the resource.
+     * Update and display report.
      * 
      * @return \Zend\Diactoros\Response
      */
     public function index()
     {
-        // 
-    }
+        // Update contacts score
+        $contacts = $this->db->getData("SELECT id FROM contacts");
+        
+        foreach ($contacts as $contact) {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Zend\Diactoros\Response
-     */
-    public function create()
-    {
-        // 
-    }
+            $score = $this->db->getFirst(
+                "SELECT sum(score) as sum FROM bidders WHERE contact_id = ? AND score != '0'", 
+                [$contact['id']]
+            );
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Zend\Diactoros\ServerRequest  $request
-     * @return \Zend\Diactoros\Response
-     */
-    public function store(Request $request)
-    {
-        // 
-    }
+            $scoredBidTotal = $this->db->getCount(
+                "SELECT NULL FROM bidders WHERE contact_id = ? AND score != '0'",
+                [$contact['id']]
+            );
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function show($id)
-    {
-        // 
-    }
+            $scoreAverage = $score['sum'] / $scoredBidTotal;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function edit($id)
-    {
-        // 
-    }
+            if ($score['sum']) {
+                $this->db->setData("UPDATE contacts SET score_per = ? WHERE id = ?", 
+                    [$scoreAverage, $contact['id']]
+                );
+            }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Zend\Diactoros\ServerRequest  $request
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // 
-    }
-
-    /**
-     * Confirm you want to remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function delete($id)
-    {
-        // 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function destroy($id)
-    {
-        // 
+        return $this->view('report/score', [
+            'title' => 'Reports: Score',
+            'contacts' => $this->db->getData("SELECT * FROM contacts WHERE score_per != '0' ORDER BY score_per")
+        ]);
     }
 }

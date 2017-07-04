@@ -2,94 +2,46 @@
 
 namespace App\Controllers\Reports;
 
+use App\Controllers\BaseController;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class BidderParticipationController extends BaseController
 {
     /**
-     * Display a listing of the resource.
+     * Update and display report.
      * 
      * @return \Zend\Diactoros\Response
      */
     public function index()
     {
-        // 
-    }
+        // Update contacts bid percentage
+        $contacts = $this->db->getData("SELECT id FROM contacts");
+        
+        foreach ($contacts as $contact) {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Zend\Diactoros\Response
-     */
-    public function create()
-    {
-        // 
-    }
+            $willBidCount = $this->db->getCount(
+                "SELECT null FROM bidders WHERE contact_id = ? AND status='will'",
+                [$contact['id']]
+            );
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Zend\Diactoros\ServerRequest  $request
-     * @return \Zend\Diactoros\Response
-     */
-    public function store(Request $request)
-    {
-        // 
-    }
+            $wontBidCount = $this->db->getCount(
+                "SELECT null FROM bidders WHERE contact_id = ? AND status='wont'",
+                [$contact['id']]
+            );
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function show($id)
-    {
-        // 
-    }
+            $totalBids = $willBidCount + $wontBidCount;
+            $bidPercentage = ($willBidCount / $totalBids) * 100;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function edit($id)
-    {
-        // 
-    }
+            if ($totalBids) {
+                $this->db->setData("UPDATE contacts SET bid_per=? WHERE id=?", 
+                    [$bidPercentage, $contact['id']]
+                );
+            }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Zend\Diactoros\ServerRequest  $request
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // 
-    }
-
-    /**
-     * Confirm you want to remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function delete($id)
-    {
-        // 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Zend\Diactoros\Response
-     */
-    public function destroy($id)
-    {
-        // 
+        return $this->view('report/bid', [
+            'title' => 'Reports: Bid Percentage',
+            'contacts' => $this->db->getData("SELECT * FROM contacts WHERE bid_per > 0 ORDER BY bid_per")
+        ]);
     }
 }

@@ -9,7 +9,7 @@ class ReportsCest
 
     public function seeASubcontractorsBidPercentageChangeAfterAcceptingAndDecliningBids(AcceptanceTester $I)
     {
-        $I->amOnPage('/reports.php?bid');
+        $I->amOnPage('/reports/bids');
         $I->dontsee($this->contact->company);
 
         $I->create('bidders', [
@@ -33,7 +33,7 @@ class ReportsCest
 
     public function seeASubcontractorsAverageScoreChangeAfterBeingRated(AcceptanceTester $I)
     {
-        $I->amOnPage('/reports.php?score');
+        $I->amOnPage('/reports/score');
         $I->dontsee($this->contact->company);
 
         $I->create('bidders', [

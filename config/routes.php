@@ -25,6 +25,6 @@ $route->resource('categories');
 
 $route->resource('zones');
 
-$route->resource('reports');
-$route->resource('reports/bids', 'Reports\BidderParticipationController');
-$route->resource('reports/score', 'Reports\BidderSatisfactionController');
+$route->get('reports', 'ReportsController@index');
+$route->get('reports/bids', 'Reports\BidderParticipationController@index');
+$route->get('reports/score', 'Reports\BidderSatisfactionController@index');
