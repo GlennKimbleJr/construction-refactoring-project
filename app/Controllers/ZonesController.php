@@ -13,7 +13,9 @@ class ZonesController extends BaseController
      */
     public function index()
     {
-        // 
+        return $this->view('zone/view', [
+            'zones' => $this->db->getData("SELECT * FROM zones ORDER BY name")
+        ]);
     }
 
     /**
@@ -23,7 +25,7 @@ class ZonesController extends BaseController
      */
     public function create()
     {
-        // 
+        return $this->view('zone/new');
     }
 
     /**
@@ -34,7 +36,16 @@ class ZonesController extends BaseController
      */
     public function store(Request $request)
     {
-        // 
+        $request = $request->getParsedBody();
+
+        $query = $this->db->setData("INSERT INTO `zones` (name) VALUES (?)", [$request['name']]);
+
+        return $this->view('message', [
+            'template' => 'zone',
+            'message' => $this->db->updated($query) 
+                ? '<br><br>Created!' 
+                : '<br><br>Error! Unable to create zone.'
+        ]);
     }
 
     /**
@@ -45,7 +56,7 @@ class ZonesController extends BaseController
      */
     public function show($id)
     {
-        // 
+        return $this->redirect("/zones/{$id}/edit");
     }
 
     /**
@@ -56,7 +67,11 @@ class ZonesController extends BaseController
      */
     public function edit($id)
     {
-        // 
+        $zone = $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
+
+        return $this->view('zone/edit', [
+            'zone' => $zone,
+        ]);
     }
 
     /**
@@ -68,7 +83,21 @@ class ZonesController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        // 
+        $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
+
+        $request = $request->getParsedBody();
+
+        $query = $this->db->setData("UPDATE zones SET name = ? WHERE id = ?", [
+            $request['name'],
+            $id
+        ]);
+
+        return $this->view('message', [
+            'template' => 'zone',
+            'message' => $this->db->updated($query) 
+                ? '<br><br>Updated!' 
+                : '<br><br>Update Error'
+        ]);
     }
 
     /**
@@ -79,7 +108,17 @@ class ZonesController extends BaseController
      */
     public function delete($id)
     {
-        // 
+        $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
+
+        return $this->view('message', [
+            'template' => 'zone',
+            'message' => "<h1>ARE YOU SURE?</h1><br>
+                <h2>
+                    <form method='post' action='/zones/{$id}/delete'>
+                        <button type='submit'>YES</button> | <a href='/zones/{$id}/edit'>NO</a>
+                    </form> 
+                </h2>"
+        ]);
     }
 
     /**
@@ -90,6 +129,13 @@ class ZonesController extends BaseController
      */
     public function destroy($id)
     {
-        // 
+        $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
+
+        $this->db->setData("DELETE FROM `zones` WHERE id = ?", [$id]);
+
+        return $this->view('message', [
+            'template' => 'zone',
+            'message' => '<h1>DELETED!</h1><br>'
+        ]);
     }
 }

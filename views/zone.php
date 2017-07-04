@@ -9,8 +9,8 @@
                 <img src='/images/zone.png' width='48' height='48'><br> 
                 <a href='/index'>back to home</a><br>
                 <br>
-                <a href='?new'>+ ADD NEW</a><br>
-                <a href='?view'>VIEW LIST</a><br>
+                <a href='/zones/create'>+ ADD NEW</a><br>
+                <a href='/zones'>VIEW LIST</a><br>
                 </font>
             </td>
             <td width='40'>&nbsp;</td>

@@ -9,7 +9,7 @@ class ZoneCest
 
     public function addANewZone(AcceptanceTester $I)
     {
-        $I->amOnPage('/zone.php');
+        $I->amOnPage('/zones');
         $I->dontSee('Test Zone');
 
         $I->click('+ ADD NEW');
@@ -24,7 +24,7 @@ class ZoneCest
 
     public function editAZonesDetails(AcceptanceTester $I)
     {
-        $I->amOnPage('/zone.php?view');
+        $I->amOnPage('/zones');
         $I->see($this->zone->name);
 
         $I->click($this->zone->name);
@@ -40,7 +40,7 @@ class ZoneCest
 
     public function deleteAExistingZone(AcceptanceTester $I)
     {
-        $I->amOnPage('/zone.php?view');
+        $I->amOnPage('/zones');
         $I->see($this->zone->name);
 
         $I->click($this->zone->name);

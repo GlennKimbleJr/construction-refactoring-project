@@ -6,7 +6,7 @@
 
     <?php foreach($zones as $zone): ?>
         <div class='z'>
-            <a href='?edit=<?=$this->e($zone['id'])?>'>
+            <a href='/zones/<?=$this->e($zone['id'])?>/edit'>
                 <?=$this->e($zone['name'])?>
             </a>
         </div>
