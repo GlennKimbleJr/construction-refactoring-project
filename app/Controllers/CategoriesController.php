@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\Models\Category;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class CategoriesController extends Controller
@@ -16,7 +17,7 @@ class CategoriesController extends Controller
     {
         return $this->view('category/view', [
             'title' => 'View Categories',
-            'categories' => $this->db->getData("SELECT * FROM categories ORDER BY name")
+            'categories' => (new Category($this->db))->get()
         ]);
     }
 
@@ -38,15 +39,13 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $request = $request->getParsedBody();
+        $model = new Category($this->db);
 
-        $query = $this->db->setData('INSERT INTO `categories` (name) VALUES (?)', [
-            $request['name']
-        ]);
+        $request = $request->getParsedBody();
         
         return $this->view('message', [
             'template' => 'category',
-            'message' => $this->db->updated($query) 
+            'message' => ($model)->add($request['name']) 
                 ? '<br><br>Created!' 
                 : '<br><br>Error! Unable to create categories.'
         ]);
@@ -71,11 +70,11 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+        $model = new Category($this->db);
 
         return $this->view('category/edit', [
             'title' => 'Edit a Category',
-            'category' => $category
+            'category' => $model->firstOrFail($id)
         ]);
     }
 
@@ -88,18 +87,15 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+        $model = new Category($this->db);
+
+        $model->firstOrFail($id, 'null');
 
         $request = $request->getParsedBody();
 
-        $query = $this->db->setData('UPDATE categories SET name = ? WHERE id = ?', [
-            $request['name'],
-            $id
-        ]);
-
         return $this->view('message', [
             'template' => 'category',
-            'message' => $this->db->updated($query) 
+            'message' => $model->update($id, $request['name'])
                 ? '<br><br>Updated!' 
                 : '<br><br>Update Error'
             ]);
@@ -113,7 +109,9 @@ class CategoriesController extends Controller
      */
     public function delete($id)
     {
-        $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+        $model = new Category($this->db);
+
+        $model->firstOrFail($id, 'null');
 
         return $this->view('message', [
             'template' => 'category',
@@ -135,9 +133,11 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+        $model = new Category($this->db);
 
-        $this->db->setData('DELETE FROM categories WHERE id = ?', [$id]);
+        $model->firstOrFail($id, 'null');
+
+        $model->delete($id);
 
         return $this->view('message', [
             'template' => 'category',

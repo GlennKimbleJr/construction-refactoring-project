@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\Models\Bidder;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class BiddersController extends Controller
@@ -16,12 +17,13 @@ class BiddersController extends Controller
      */
     public function setStatus(Request $request, $id) 
     {
-        $bidder = $this->db->getFirstOrFail("SELECT project_id FROM bidders WHERE id = ?", [$id]);
+        $model = new Bidder($this->db);
+
+        $bidder = $model->firstOrFail($id, 'project_id');
 
         $request = $request->getParsedBody();
 
-        $this->db->setData("UPDATE bidders SET status = ? WHERE id = ?", 
-            [($request['status'] == 'yes') ? 'will' : 'wont', $id]);
+        $model->setStatus($id, ($request['status'] == 'yes') ? 'will' : 'wont');
 
         return $this->view('message', [
             'template' => 'project',
@@ -38,7 +40,9 @@ class BiddersController extends Controller
      */
     public function winner($id) 
     {
-        $bidder = $this->db->getFirstOrFail("SELECT b.*, c.company, cat.name as 'category_name' FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.id = ?", [$id]);
+        $model = new Bidder($this->db);
+
+        $bidder = $model->getWinnerOrFail($id);
 
         return $this->view('message', [
             'template' => 'project',
@@ -62,14 +66,11 @@ class BiddersController extends Controller
      */
     public function setWinner($id) 
     {
-        $bidder = $this->db->getFirstOrFail("SELECT * FROM bidders WHERE id = ?", [$id]);
+        $model = new Bidder($this->db);
 
-        $this->db->setData("UPDATE bidders SET win='1' WHERE id = ?", [$id]);
+        $bidder = $model->firstOrFail($id);
 
-        $this->db->setData(
-            "UPDATE bidders SET win='0' WHERE id != ? AND project_id = ? AND category_id = ?", 
-            [$id, $bidder['project_id'], $bidder['category_id']]
-        );
+        $model->award($id, $bidder['project_id'], $bidder['category_id']);
 
         return $this->view('message', [
             'template' => 'project',
@@ -86,7 +87,9 @@ class BiddersController extends Controller
      */
     public function rate($id) 
     {
-        $bidder = $this->db->getFirstOrFail("SELECT * FROM bidders WHERE id = ?", [$id]);
+        $model = new Bidder($this->db);
+
+        $bidder = $model->firstOrFail($id, 'contact_id, project_id');
 
         return $this->view('project/rate', [
             'title' => 'Rate Sub-Contractor',
@@ -105,7 +108,9 @@ class BiddersController extends Controller
      */
     public function setRating(Request $request, $id) 
     {
-        $bidder = $this->db->getFirstOrFail("SELECT project_id FROM bidders WHERE id = ?", [$id]);
+        $model = new Bidder($this->db);
+
+        $bidder = $model->firstOrFail($id, 'project_id');
 
         $request = $request->getParsedBody();
 
@@ -118,7 +123,7 @@ class BiddersController extends Controller
             ]);
         }
 
-        $this->db->setData("UPDATE bidders SET score = ? WHERE id = ?", [$rating, $id]);
+        $model->setScore($id, $rating);
 
         return $this->view('message', [
             'template' => 'project',

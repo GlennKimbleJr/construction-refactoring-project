@@ -3,6 +3,10 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\Models\Category;
+use App\Models\Contact;
+use App\Models\ContactZone;
+use App\Models\Zone;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ContactsController extends Controller
@@ -29,11 +33,10 @@ class ContactsController extends Controller
      */
     public function index(Request $request, $sort = 'company')
     {
-        $sort = $this->getSortKey($request, $sort);
-
         return $this->view('contact/view', [
             'header' => 'View All Contacts',
-            'contacts' => $this->db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE cat.id = c.category_id ORDER BY " . $this->orderable[$sort])
+            'contacts' => (new Contact($this->db))
+                ->getSortable($this->getSortKey($request, $sort))
         ]);
     }
 
@@ -45,7 +48,7 @@ class ContactsController extends Controller
     public function selectCategory()
     {
         return $this->view('contact/view_select_category', [
-            'categories' => $this->db->getData("SELECT * FROM categories ORDER BY name")
+            'categories' => (new Category($this->db))->get()
         ]);
     }
 
@@ -59,13 +62,13 @@ class ContactsController extends Controller
      */
     public function category(Request $request, $category_id, $sort = 'company')
     {
-        $type = $this->db->getFirstOrFail("SELECT name FROM categories WHERE id = ?", [$category_id]);
-
-        $sort = $this->getSortKey($request, $sort);
+        $type = (new Category($this->db))
+            ->firstOrFail($category_id, 'name');
 
         return $this->view('contact/view', [
             'header' => "View Contacts - {$type['name']}",
-            'contacts' => $this->db->getData("SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.category_id = ? ORDER BY " . $this->orderable[$sort], [$category_id])
+            'contacts' => (new Contact($this->db))
+                ->getSortableByCategory($this->getSortKey($request, $sort), $category_id)
         ]);
     }
 
@@ -77,7 +80,7 @@ class ContactsController extends Controller
     public function selectZone()
     {
         return $this->view('contact/view_select_zone', [
-            'zones' => $this->db->getData("SELECT * FROM zones ORDER BY name")
+            'zones' => (new Zone($this->db))->get()
         ]);
     }
 
@@ -91,13 +94,13 @@ class ContactsController extends Controller
      */
     public function zone(Request $request, $zone_id, $sort = 'all')
     {
-        $zone = $this->db->getFirstOrFail("SELECT * FROM zones WHERE id = ?", [$zone_id]);
-        
-        $sort = $this->getSortKey($request, $sort);
+        $type = (new Zone($this->db))
+            ->firstOrFail($zone_id, 'name');
 
         return $this->view('contact/view', [
-            'header' => "View Contacts - {$zone['name']}",
-            'contacts' => $this->db->getData("SELECT c.* FROM contacts as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY " . $this->orderable[$sort], [$zone_id])
+            'header' => "View Contacts - {$type['name']}",
+            'contacts' => (new Contact($this->db))
+                ->getSortableByZone($this->getSortKey($request, $sort), $zone_id)
         ]);
     }
 
@@ -109,8 +112,8 @@ class ContactsController extends Controller
     public function create()
     {
         return $this->view('contact/new', [
-            'zones' => $this->db->getData('SELECT * FROM zones ORDER BY name'),
-            'categories' => $this->db->getData('SELECT * FROM categories ORDER BY name')
+            'zones' => (new Zone($this->db))->get(),
+            'categories' => (new Category($this->db))->get()
         ]);
     }
 
@@ -124,40 +127,17 @@ class ContactsController extends Controller
     {
         $request = $request->getParsedBody();
 
-        $query = $this->db->setData(
-            "INSERT INTO `contacts` (`first`, `last`, `street`, `city`, `state`, `email`, `officephone`, `cellphone`, `fax`, `category_id`, `company`, `zip`, `score_per`, `bid_per`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-                $request['first'],
-                $request['last'],
-                $request['street'],
-                $request['city'],
-                $request['state'],
-                $request['email'],
-                $request['officephone'],
-                $request['cellphone'],
-                $request['fax'],
-                $request['type'],
-                $request['company'],
-                $request['zip'],
-                '0',
-                '0'
-            ]);
+        $contact_id = (new Contact($this->db))->add($request);
 
-        if (! $this->db->updated($query)) {
+        if (! $contact_id) {
             return $this->view('message', [
                 'template' => 'contact',
                 'message' => '<br><br>Error! Unable to create contact.'
             ]);
         } 
 
-        if (isset($request['zone']) && is_array($request['zone'])) { 
-            $contact_id = $this->db->getID();
-            
-            foreach ($request['zone'] as $zone_id) {
-                $this->db->setData("INSERT INTO `contacts_zones` (`contact_id`, `zone_id`) VALUES (?, ?)", [
-                    $contact_id, 
-                    $zone_id
-                ]);
-            }
+        if (isset($request['zone']) && is_array($request['zone'])) {
+            (new ContactZone($this->db))->addZones($contact_id, $request['zone']);
         }
 
         return $this->view('message', [
@@ -174,9 +154,9 @@ class ContactsController extends Controller
      */
     public function show($id)
     {
-        $contact = $this->db->getFirstOrFail('SELECT c.*, cat.name as type FROM contacts as c, categories as cat WHERE c.category_id = cat.id AND c.id = ?', [$id]);
+        $contact = (new Contact($this->db))->getFirstWithTypeOrFail($id);
 
-        $contactZones = $this->db->getData('SELECT * FROM contacts_zones as cz, zones as z WHERE cz.zone_id = z.id AND cz.contact_id = ?', [$id]);
+        $contactZones = (new ContactZone($this->db))->getZonesByContact($id);
         
         $zoneString = '';
         foreach ($contactZones as $key => $value) {
@@ -202,17 +182,15 @@ class ContactsController extends Controller
      */
     public function edit($id)
     {
-        $contact = $this->db->getFirstOrFail('SELECT * FROM contacts WHERE id = ?', [$id]);
-
-        $contactZones = $this->db->getData('SELECT zone_id FROM contacts_zones as cz, zones as z WHERE cz.zone_id = z.id AND cz.contact_id = ?', [$id]);
+        $contact = (new Contact($this->db))->firstOrFail($id);
 
         $contactZones = array_map(function($zone) {
             return $zone['zone_id'];
-        }, $contactZones);
+        }, (new ContactZone($this->db))->getZonesByContact($id));
         
         return $this->view('contact/edit', [
-            'zones' => $this->db->getData('SELECT * FROM zones ORDER BY name'),
-            'categories' => $this->db->getData('SELECT * FROM categories ORDER BY name'),
+            'zones' => (new Zone($this->db))->get(),
+            'categories' => (new Category($this->db))->get(),
             'contact' => $contact,
             'contactZones' => $contactZones
         ]);
@@ -227,33 +205,21 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $contact = $this->db->getFirstOrFail('SELECT * FROM contacts WHERE id = ?', [$id]);
+        $contact = new Contact($this->db);
+
+        $contactZone = new ContactZone($this->db);
+
+        $contact->firstOrFail($id);
 
         $request = $request->getParsedBody();
 
-        $query = $this->db->setData('UPDATE contacts SET first = ?, last = ?, street = ?, city = ?, state = ?, email = ?, officephone = ?, cellphone = ?, fax = ?, category_id = ?, company = ?, zip = ? WHERE id = ?', [
-                $request['first'],
-                $request['last'],
-                $request['street'],
-                $request['city'],
-                $request['state'],
-                $request['email'],
-                $request['officephone'],
-                $request['cellphone'],
-                $request['fax'],
-                $request['type'],
-                $request['company'],
-                $request['zip'],
-                $id
-            ]);
+        $contact->update($id, $request);
 
-        $this->db->setData("DELETE FROM `contacts_zones` WHERE `contact_id` = ?", [$id]);
+        $contactZone->deleteAll($id);
 
-        if (isset($request['zone']) && is_array($request['zone'])) { foreach ($request['zone'] as $zone_id) {
-            $this->db->setData("INSERT INTO `contacts_zones` (`contact_id`, `zone_id`) VALUES (?, ?)", 
-                [$id, $zone_id]
-            );
-        }}
+        if (isset($request['zone']) && is_array($request['zone'])) {
+            $contactZone->addZones($id, $request['zone']);
+        }
 
         return $this->view('message', [
             'template' => 'contact',
@@ -269,7 +235,7 @@ class ContactsController extends Controller
      */
     public function delete($id)
     {
-        $this->db->getFirstOrFail('SELECT * FROM contacts WHERE id = ?', [$id]);
+        (new Contact($this->db))->firstOrFail($id);
 
         return $this->view('message', [
             'template' => 'contact',
@@ -290,9 +256,11 @@ class ContactsController extends Controller
      */
     public function destroy($id)
     {
-        $this->db->getFirstOrFail('SELECT * FROM contacts WHERE id = ?', [$id]);
+        $contact = new Contact($this->db);
 
-        $this->db->setData('DELETE FROM contacts WHERE id = ?', [$id]);
+        $contact->firstOrFail($id);
+
+        $contact->delete($id);
 
         return $this->view('message', [
             'template' => 'contact',
@@ -315,6 +283,6 @@ class ContactsController extends Controller
 
         if (! key_exists($sort, $this->orderable)) $sort = 'company';
 
-        return $sort;
+        return $this->orderable[$sort];
     }
 }
