@@ -88,14 +88,7 @@ class ProjectsController extends BaseController
      */
     public function show($id)
     {
-        $project = $this->db->getFirst("SELECT * FROM projects WHERE id = ?", [$id]);
-
-        if (! count($project)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
 
         $bidders = $this->db->getData(
             "SELECT b.*, c.company, c.email, cat.name as category_name, cat.id as category_id FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = cat.id AND b.win = ? AND b.status != ?", 
@@ -124,15 +117,8 @@ class ProjectsController extends BaseController
      */
     public function edit($id)
     {
-        $project = $this->db->getFirst("SELECT p.*, z.name as zone_name FROM projects as p, zones as z WHERE p.zone_id = z.id AND p.id = ?", [$id]);
+        $project = $this->db->getFirstOrFail("SELECT p.*, z.name as zone_name FROM projects as p, zones as z WHERE p.zone_id = z.id AND p.id = ?", [$id]);
 
-        if (! count($project)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
-        
         $date1 = substr($project['bidduedate'], 5, -3);
         $date2 = substr($project['bidduedate'], 8);
         $date3 = substr($project['bidduedate'], 0, -6);
@@ -170,6 +156,8 @@ class ProjectsController extends BaseController
      */
     public function update(Request $request, $id)
     {
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+
         $request = $request->getParsedBody();
 
         $query = $this->db->setData(
@@ -203,14 +191,7 @@ class ProjectsController extends BaseController
      */
     public function delete($id)
     {
-        $project = $this->db->getFirst("SELECT * FROM projects WHERE id = ?", [$id]);
-
-        if (! count($project)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
 
         return $this->view('message', [
             'template' => 'project',
@@ -231,14 +212,7 @@ class ProjectsController extends BaseController
      */
     public function destroy($id)
     {
-        $project = $this->db->getFirst("SELECT * FROM projects WHERE id = ?", [$id]);
-
-        if (! count($project)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
 
         $this->db->setData("DELETE FROM `projects` WHERE id = ?", [$id]);
         
@@ -256,14 +230,7 @@ class ProjectsController extends BaseController
      */
     public function complete($id) 
     {
-        $project = $this->db->getFirst("SELECT * FROM projects WHERE id = ?", [$id]);
-
-        if (! count($project)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
 
         return $this->view('message', [
             'template' => 'project',
@@ -284,14 +251,7 @@ class ProjectsController extends BaseController
      */
     public function completed($id) 
     {
-        $project = $this->db->getFirst("SELECT * FROM projects WHERE id = ?", [$id]);
-
-        if (! count($project)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
 
         $this->db->setData("UPDATE projects SET completedate = ? WHERE id = ?", [date("Y-m-d"), $id]);
 
@@ -309,14 +269,7 @@ class ProjectsController extends BaseController
      */
     public function selectCat($id) 
     {
-        $project = $this->db->getFirst("SELECT * FROM projects WHERE id = ?", [$id]);
-
-        if (! count($project)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
 
         $categories = $this->db->getData("SELECT * FROM categories ORDER BY name");
 
@@ -343,15 +296,8 @@ class ProjectsController extends BaseController
      */
     public function selectBid($id, $category_id) 
     {
-        $project = $this->db->getFirst("SELECT * FROM projects WHERE id = ?", [$id]);
-        $category = $this->db->getFirst("SELECT * FROM categories WHERE id = ?", [$category_id]);
-
-        if (! count($project) || ! count($category)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        $category = $this->db->getFirstOrFail("SELECT * FROM categories WHERE id = ?", [$category_id]);
 
         $zoneContacts = $this->db->getData("SELECT c.id, c.company FROM contacts as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.category_id = ? AND cz.zone_id = ? ORDER BY c.company", [
             $category['id'], 
@@ -381,15 +327,10 @@ class ProjectsController extends BaseController
      */
     public function addBid($id) 
     {
-        $contact = $this->db->getFirst("SELECT * FROM contacts WHERE id = ?", [intval($_POST['company'])]);
-
-        if (! $this->db->getCount("SELECT null FROM projects WHERE id = ?", [$id])
-            || ! count($contact)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        $contact = $this->db->getFirstOrFail("SELECT * FROM contacts WHERE id = ?", [
+            intval($_POST['company'])
+        ]);
 
         $query = $this->db->setData(
             "INSERT INTO `bidders` (project_id, contact_id, category_id, status, win, score) 
@@ -420,11 +361,7 @@ class ProjectsController extends BaseController
      */
     public function calllog($id)
     {
-        $project = $this->db->getFirst("SELECT p.*, s.name as super_name, s.phone as super_phone FROM projects as p, supers as s WHERE p.super_id = s.id AND p.id = ?", [$id]);
-        
-        if (! count($project)) {
-           die('Could not get data');
-        }
+        $project = $this->db->getFirstOrFail("SELECT p.*, s.name as super_name, s.phone as super_phone FROM projects as p, supers as s WHERE p.super_id = s.id AND p.id = ?", [$id]);
         
         $winners = $this->db->getData(
             "SELECT c.*, cat.name as category FROM contacts as c, bidders as b, categories as cat WHERE c.id = b.contact_id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ? ORDER BY b.category_id", 

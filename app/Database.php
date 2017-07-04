@@ -3,6 +3,7 @@
 namespace App;
 
 use \PDO;
+use App\Exceptions\MissingRecordException;
 
 class Database
 {
@@ -50,7 +51,8 @@ class Database
     {
         return $this->prepare($query, $params)
             ->fetchAll(PDO::FETCH_ASSOC);
-    }    
+    }
+
     /** 
      * Returns array of the data. 
      * Limits to first record returned.
@@ -67,6 +69,25 @@ class Database
         if (! count($data)) return $data;
 
         return $data[0];
+    }
+
+    /** 
+     * Returns array of the data. 
+     * Limits to first record returned. Thows error if no record is found.
+     * 
+     * @param  string $query
+     * @param  array  $params
+     * @return array
+     */
+    public function getFirstOrFail($query, $params = null)
+    {
+        $data = $this->getFirst($query, $params);
+
+        if (! count($data)) {
+            throw new MissingRecordException('Unable to find the requested record.');
+        }
+
+        return $data;
     }
 
     /**

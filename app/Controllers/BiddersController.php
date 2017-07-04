@@ -15,14 +15,7 @@ class BiddersController extends BaseController
      */
     public function setStatus(Request $request, $id) 
     {
-        $bidder = $this->db->getFirst("SELECT project_id FROM bidders WHERE id = ?", [$id]);
-
-        if (! count($bidder)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $bidder = $this->db->getFirstOrFail("SELECT project_id FROM bidders WHERE id = ?", [$id]);
 
         $request = $request->getParsedBody();
 
@@ -44,14 +37,7 @@ class BiddersController extends BaseController
      */
     public function winner($id) 
     {
-        $bidder = $this->db->getFirst("SELECT b.*, c.company, cat.name as 'category_name' FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.id = ?", [$id]);
-
-        if (! count($bidder)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $bidder = $this->db->getFirstOrFail("SELECT b.*, c.company, cat.name as 'category_name' FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.id = ?", [$id]);
 
         return $this->view('message', [
             'template' => 'project',
@@ -75,14 +61,7 @@ class BiddersController extends BaseController
      */
     public function setWinner($id) 
     {
-        $bidder = $this->db->getFirst("SELECT * FROM bidders WHERE id = ?", [$id]);
-
-        if (! count($bidder)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $bidder = $this->db->getFirstOrFail("SELECT * FROM bidders WHERE id = ?", [$id]);
 
         $this->db->setData("UPDATE bidders SET win='1' WHERE id = ?", [$id]);
 
@@ -106,14 +85,7 @@ class BiddersController extends BaseController
      */
     public function rate($id) 
     {
-        $bidder = $this->db->getFirst("SELECT * FROM bidders WHERE id = ?", [$id]);
-
-        if (! count($bidder)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $bidder = $this->db->getFirstOrFail("SELECT * FROM bidders WHERE id = ?", [$id]);
 
         return $this->view('project/rate', [
             'title' => 'Rate Sub-Contractor',
@@ -132,14 +104,7 @@ class BiddersController extends BaseController
      */
     public function setRating(Request $request, $id) 
     {
-        $bidder = $this->db->getFirst("SELECT project_id FROM bidders WHERE id = ?", [$id]);
-
-        if (! count($bidder)) {
-            return $this->view('message', [
-                'template' => 'project',
-                'message' => 'Could not get data.'
-            ]);
-        }
+        $bidder = $this->db->getFirstOrFail("SELECT project_id FROM bidders WHERE id = ?", [$id]);
 
         $request = $request->getParsedBody();
 

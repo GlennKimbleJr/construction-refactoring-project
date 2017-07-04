@@ -10,10 +10,22 @@ try {
         ));
 }
 
-catch (League\Route\Http\Exception\NotFoundException $e) {
-    echo '404 Not Found';
+catch (\RuntimeException $e) {
+    echo displayError($container->get('League\Plates\Engine'), $e->getMessage());
 }
 
-catch (\RuntimeException $e) {
-    echo $e;
+catch (League\Route\Http\Exception\NotFoundException $e) {
+    echo displayError($container->get('League\Plates\Engine'), $e->getMessage());
+}
+
+catch (App\Exceptions\MissingRecordException $e) {
+    echo displayError($container->get('League\Plates\Engine'), $e->getMessage());
+}
+
+function displayError($template, $message) 
+{
+    return $template->render('message', [
+        'template' => 'error',
+        'message' => $message
+    ]);
 }
