@@ -1,12 +1,12 @@
 <?php 
 
-namespace App\Controllers;
+namespace App;
 
 use App\Database;
 use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
 
-class BaseController
+class Controller
 {
     /**
      * @param App\Database $db

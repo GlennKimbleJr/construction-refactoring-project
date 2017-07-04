@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class BiddersController extends BaseController
+class BiddersController extends Controller
 {
     /**
      * Set if a bidder will or wont bid a project they've been invited to.

@@ -2,10 +2,10 @@
 
 namespace App\Controllers\Reports;
 
-use App\Controllers\BaseController;
+use App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class BidderSatisfactionController extends BaseController
+class BidderSatisfactionController extends Controller
 {
     /**
      * Update and display report.

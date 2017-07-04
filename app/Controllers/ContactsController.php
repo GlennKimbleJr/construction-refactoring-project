@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ContactsController extends BaseController
+class ContactsController extends Controller
 {
     /**
      * List of sortable options for a query.

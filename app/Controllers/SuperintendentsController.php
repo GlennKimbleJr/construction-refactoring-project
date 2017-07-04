@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class SuperintendentsController extends BaseController
+class SuperintendentsController extends Controller
 {
     /**
      * Display a listing of the resource.

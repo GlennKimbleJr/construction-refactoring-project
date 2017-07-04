@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ZonesController extends BaseController
+class ZonesController extends Controller
 {
     /**
      * Display a listing of the resource.

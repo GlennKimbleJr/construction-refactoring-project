@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
-class HomeController extends BaseController
+use App\Controller;
+
+class HomeController extends Controller
 {
     /**
      * Application main page.
