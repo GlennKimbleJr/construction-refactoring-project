@@ -35,7 +35,7 @@ class ContactCest
     {
         $contact = make('contacts');
 
-        $I->amOnPage('/contact.php');
+        $I->amOnPage('/contacts');
         $I->click('+ ADD NEW');
         $I->see('New Contact');
 
@@ -103,7 +103,7 @@ class ContactCest
     {
         $this->generateContactZones($I, $this->contact, 9);
 
-        $I->amOnPage('/contact.php?view');
+        $I->amOnPage('/contacts');
         $I->see($this->contact->company);
         $I->see($this->contact->first);
         $I->see($this->contact->last);
@@ -185,7 +185,7 @@ class ContactCest
 
     public function deleteAnExistingContact(AcceptanceTester $I)
     {
-        $I->amOnPage('/contact.php?view');
+        $I->amOnPage('/contacts');
         $I->see($this->contact->company);
         $I->see($this->contact->first);
         $I->see($this->contact->last);
@@ -227,7 +227,7 @@ class ContactCest
     {
         $this->generateContactZones($I, $this->contact, 9);
 
-        $I->amOnPage('/contact.php?view');
+        $I->amOnPage('/contacts');
         $I->see($this->contact->company);
         $I->see($this->contact->first);
         $I->see($this->contact->last);
@@ -274,7 +274,7 @@ class ContactCest
             'zone_id' => $this->zone2->id
         ]);
 
-        $I->amOnPage('/contact.php?view');
+        $I->amOnPage('/contacts');
         $I->see($contact1->company);
         $I->see($contact2->company);
 
@@ -297,7 +297,7 @@ class ContactCest
             'category_id' => $this->category2->id
         ]);
 
-        $I->amOnPage('/contact.php?view');
+        $I->amOnPage('/contacts');
         $I->see($contact1->company);
         $I->see($contact2->company);
 

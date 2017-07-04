@@ -1,7 +1,7 @@
 <?php $this->layout('contact', ['title' => 'Add New Contact']) ?>
 <h3>New Contact</h3>
 
-<form action="" method="POST">
+<form action="/contacts" method="POST">
     <p>
         <label>Company: </label>
         <input id="company" type="text" name="company" required size='24'>

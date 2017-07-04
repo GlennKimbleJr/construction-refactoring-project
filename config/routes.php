@@ -18,6 +18,10 @@ $route->get('/bidders/{id:number}/rate[/]', 'BiddersController@rate');
 $route->post('/bidders/{id:number}/rate', 'BiddersController@setRating');
 
 $route->resource('contacts');
+$route->get('/contacts/categories[/]', 'ContactsController@selectCategory');
+$route->get('/contacts/categories/{category_id:number}[/]', 'ContactsController@category');
+$route->get('/contacts/zones[/]', 'ContactsController@selectZone');
+$route->get('/contacts/zones/{zone_id:number}[/]', 'ContactsController@zone');
 
 $route->resource('superintendents');
 

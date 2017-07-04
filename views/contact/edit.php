@@ -1,10 +1,10 @@
 <?php $this->layout('contact', ['title' => 'Edit Contact']) ?>
 <h3>
     Edit Contact | 
-    [ <a href="?delete=<?=$this->e($contact['id'])?>"><font color="red">DELETE</font></a> ]
+    [ <a href="/contacts/<?=$this->e($contact['id'])?>/delete"><font color="red">DELETE</font></a> ]
 </h3>
 
-<form action="" method="POST">
+<form action="/contacts/<?=$this->e($contact['id'])?>" method="POST">
     <input id="id2" type="hidden" name="id2" required value="<?=$this->e($contact['id'])?>" size='24'/>
 
     <p>

@@ -1,6 +1,6 @@
 <?php $this->layout('contact', ['title' => 'View Contact']) ?>
 <u><b><?=$this->e($contact['company'])?></b></u>&nbsp;&nbsp;&nbsp; <?=$this->e($contact['type'])?>. | 
-<a href='?edit=<?=$this->e($contact['id'])?>'><font color='red'>EDIT</font></a><br>
+<a href='/contacts/<?=$this->e($contact['id'])?>/edit'><font color='red'>EDIT</font></a><br>
 <br>
 
 <table width='100%'>
