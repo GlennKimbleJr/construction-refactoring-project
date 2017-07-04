@@ -13,7 +13,10 @@ class CategoriesController extends BaseController
      */
     public function index()
     {
-        // 
+        return $this->view('category/view', [
+            'title' => 'View Categories',
+            'categories' => $this->db->getData("SELECT * FROM categories ORDER BY name")
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class CategoriesController extends BaseController
      */
     public function create()
     {
-        // 
+        return $this->view('category/new', ['title' => 'Add a New Category']);
     }
 
     /**
@@ -34,7 +37,18 @@ class CategoriesController extends BaseController
      */
     public function store(Request $request)
     {
-        // 
+        $request = $request->getParsedBody();
+
+        $query = $this->db->setData('INSERT INTO `categories` (name) VALUES (?)', [
+            $request['name']
+        ]);
+        
+        return $this->view('message', [
+            'template' => 'category',
+            'message' => $this->db->updated($query) 
+                ? '<br><br>Created!' 
+                : '<br><br>Error! Unable to create categories.'
+        ]);
     }
 
     /**
@@ -45,7 +59,7 @@ class CategoriesController extends BaseController
      */
     public function show($id)
     {
-        // 
+        return $this->redirect("/categories/{$id}/edit");
     }
 
     /**
@@ -56,7 +70,12 @@ class CategoriesController extends BaseController
      */
     public function edit($id)
     {
-        // 
+        $category = $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+
+        return $this->view('category/edit', [
+            'title' => 'Edit a Category',
+            'category' => $category
+        ]);
     }
 
     /**
@@ -68,7 +87,21 @@ class CategoriesController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        // 
+        $category = $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+
+        $request = $request->getParsedBody();
+
+        $query = $this->db->setData('UPDATE categories SET name = ? WHERE id = ?', [
+            $request['name'],
+            $id
+        ]);
+
+        return $this->view('message', [
+            'template' => 'category',
+            'message' => $this->db->updated($query) 
+                ? '<br><br>Updated!' 
+                : '<br><br>Update Error'
+            ]);
     }
 
     /**
@@ -79,7 +112,18 @@ class CategoriesController extends BaseController
      */
     public function delete($id)
     {
-        // 
+        $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+
+        return $this->view('message', [
+            'template' => 'category',
+            'message' => "<h1>ARE YOU SURE?</h1>
+            <br>
+            <h2>
+                <form method='post' action='/categories/{$id}/delete'>
+                    <button type='submit'>YES</button> | <a href='/categories/{$id}/edit'>NO</a>
+                </form> 
+            </h2>"
+        ]);
     }
 
     /**
@@ -90,6 +134,13 @@ class CategoriesController extends BaseController
      */
     public function destroy($id)
     {
-        // 
+        $this->db->getFirstOrFail('SELECT * FROM categories WHERE id = ?', [$id]);
+
+        $this->db->setData('DELETE FROM categories WHERE id = ?', [$id]);
+
+        return $this->view('message', [
+            'template' => 'category',
+            'message' => '<h1>DELETED!</h1><br>'
+        ]);
     }
 }

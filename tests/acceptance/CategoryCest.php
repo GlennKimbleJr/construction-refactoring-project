@@ -9,7 +9,7 @@ class CategoryCest
 
     public function addANewCategory(AcceptanceTester $I)
     {
-        $I->amOnPage('/categories.php');
+        $I->amOnPage('/categories');
         $I->dontSee('New Category Name');
 
         $I->click('+ ADD NEW');
@@ -24,7 +24,7 @@ class CategoryCest
 
     public function editACategoriesDetails(AcceptanceTester $I)
     {
-        $I->amOnPage('/categories.php?view');
+        $I->amOnPage('/categories');
         $I->see($this->category->name);
         $I->click($this->category->name);
 
@@ -43,7 +43,7 @@ class CategoryCest
 
     public function deleteAnExistingCategory(AcceptanceTester $I)
     {
-        $I->amOnPage('/categories.php?view');
+        $I->amOnPage('/categories');
         $I->see($this->category->name);
         $I->click($this->category->name);
         

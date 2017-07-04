@@ -4,7 +4,7 @@
 
 <?php foreach($categories as $category): ?>
     <div class='z'>
-        <a href='?edit=<?=$this->e($category['id'])?>'>
+        <a href='/categories/<?=$this->e($category['id'])?>/edit'>
             <?=$this->e($category['name'])?>
         </a>
     </div>
