@@ -2,13 +2,13 @@
 <h3>
     EDIT Project | 
     [ 
-        <a href="?delete=<?=$this->e($project['id'])?>">
+        <a href="/projects/<?=$this->e($project['id'])?>/delete">
             <font color="red">DELETE</font>
         </a> 
     ]
 </h3>
 
-<form action="" method="POST">
+<form action="/projects/<?=$this->e($project['id'])?>" method="POST">
     <input id="id2" type="hidden" name="id2" required value="<?=$this->e($project['id'])?>" />
     
     <p>

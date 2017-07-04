@@ -1,6 +1,6 @@
 <?php $this->layout('project', ['title' => $title]) ?>
 <h3>Start a New Project</h3>
-<form action="" method="POST">
+<form action="/projects" method="POST">
 
     <p>
         <label>Project Name: </label>

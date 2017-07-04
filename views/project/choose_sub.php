@@ -1,13 +1,11 @@
 <?php $this->layout('project', ['title' => $title]) ?>
 <?php if (count($project)): ?>
-    <b>[ <a href='?choose=<?=$this->e($projectId)?>'>GO BACK</a> ]</b><br>
+    <b>[ <a href='/projects/<?=$this->e($projectId)?>/categories'>GO BACK</a> ]</b><br>
     <br>
-    <b>Choose a <u>{$category['name']}</u> Sub-Contractor</b><br>
+    <b>Choose a <u><?=$this->e($category['name'])?></u> Sub-Contractor</b><br>
     <br>
 
-    <form action='' method='POST'>
-        <input id='did' type='hidden' name='did' required value='<?=$this->e($projectId)?>' />
-        <input id='c' type='hidden' name='c' required value='<?=$this->e($category['id'])?>' />
+    <form action='/projects/<?=$this->e($projectId)?>/bidders' method='POST'>
         <p>
             <select name='company' required>
         

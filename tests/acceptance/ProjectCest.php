@@ -21,7 +21,7 @@ class ProjectCest
         $project = make('projects');
         $project_date = explode('-', $project->bidduedate);
 
-        $I->amOnPage('/project.php');
+        $I->amOnPage('/projects');
         $I->click('+ ADD NEW');
         $I->see('Start a New Project');
 
@@ -76,7 +76,7 @@ class ProjectCest
             '12' => 'Dec'
         ];
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see("{$this->project->name} - {$this->project->bidduedate}");
         $I->click('EDIT');
 
@@ -138,7 +138,7 @@ class ProjectCest
 
     public function deleteAnExistingProject(AcceptanceTester $I)
     {
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see("{$this->project->name} - {$this->project->bidduedate}");
         $I->click('EDIT');
 
@@ -188,7 +188,7 @@ class ProjectCest
             'contact_id' => $zone2Contact->id
         ]);
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see($this->project->name);
         $I->click($this->project->name);
         $I->dontSee($zone1Contact->company);
@@ -210,6 +210,7 @@ class ProjectCest
         $I->see($this->category->name);
         $I->see($zone1Contact->company);
         $I->dontSee($zone2Contact->company);
+        $I->click('GO BACK');
         $I->click('GO BACK');
 
         $I->see("{$this->category->name} - {$zone1Contact->company}");
@@ -239,7 +240,7 @@ class ProjectCest
             'contact_id' => $contact2->id
         ]);
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see($this->project->name);
         $I->click($this->project->name);
         $I->see("{$this->category->name} - {$contact1->company}");
@@ -248,7 +249,7 @@ class ProjectCest
         $I->see('Bid Status Updated!');
         $I->click('GO BACK');
         $I->see("{$this->category->name} - {$contact1->company} | EMAIL BID INVITE | [ CHOOSE AS WINNER ]");
-        $I->see("{$this->category->name} - {$contact2->company} | EMAIL BID INVITE | Set Status: will bid - won't bid");
+        $I->see("{$this->category->name} - {$contact2->company} | EMAIL BID INVITE | Set Status:");
 
         $I->seeInDatabase('bidders', [
             'project_id' => $this->project->id,
@@ -276,7 +277,7 @@ class ProjectCest
             'contact_id' => $contact->id
         ]);
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see($this->project->name);
         $I->click($this->project->name);
         $I->see("{$this->category->name} - {$contact->company}");
@@ -317,7 +318,7 @@ class ProjectCest
             'contact_id' => $contact2->id
         ]);
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see($this->project->name);
         $I->click($this->project->name);
         $I->see("{$this->category->name} - {$contact1->company} | EMAIL BID INVITE | [ CHOOSE AS WINNER ]");
@@ -378,7 +379,7 @@ class ProjectCest
             'win' => 0,
         ]);
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see($this->project->name);
         $I->click($this->project->name);
 
@@ -468,7 +469,7 @@ class ProjectCest
             'contact_id' => $contact5->id
         ]);
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->click($this->project->name);
 
         $I->see($contact1->company);
@@ -528,7 +529,7 @@ class ProjectCest
             'completedate' => ''
         ]);
 
-        $I->amOnPage('/project.php?open');
+        $I->amOnPage('/projects');
         $I->see($this->project->name);
         $I->click($this->project->name);
         $I->see('MARK AS COMPLETE');
@@ -543,6 +544,7 @@ class ProjectCest
         ]);
 
         $I->click('VIEW LIST');
+        $I->click('Open Only');
         $I->dontSee($this->project->name);
         $I->click('Closed Only');
         $I->see($this->project->name);
@@ -563,7 +565,7 @@ class ProjectCest
             'completedate' => '',
         ]);
 
-        $I->amOnPage('/project.php?view');
+        $I->amOnPage('/projects');
         $I->see($completedProject->name);
         $I->see($incompletedProject->name);
 

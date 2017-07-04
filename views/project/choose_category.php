@@ -1,12 +1,12 @@
 <?php $this->layout('project', ['title' => $title]) ?>
-<b>[ <a href='?details=<?=$this->e($projectId)?>'>GO BACK</a> ]</b><br>
+<b>[ <a href='/projects/<?=$this->e($projectId)?>'>GO BACK</a> ]</b><br>
 <br>
 <b>CHOOSE A CATEGORY</b><br>
 <br>
 <?php foreach($categories as $category): ?>
     <br>
     <b><u>
-        <a href='?choose2=<?=$this->e($projectId)?>&c=<?=$this->e($category['id'])?>'>
+        <a href='/projects/<?=$this->e($projectId)?>/categories/<?=$this->e($category['id'])?>/bidders'>
             <?=$this->e($category['name'])?>
         </a>
     </u></b><br>

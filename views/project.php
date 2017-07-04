@@ -6,13 +6,13 @@
         <tr>
             <td width='120' valign='top' align='center'>
                 <font size='1'>
-                <img src='images/project.png' width='48' height='48'><br> 
-                <a href='index.php'>back to home</a><br>
+                <img src='/images/project.png' width='48' height='48'><br> 
+                <a href='/index'>back to home</a><br>
                 <br>
-                <a href='?new'>+ ADD NEW</a><br>
-                <a href='?open'>VIEW LIST</a><br>
+                <a href='/projects/create'>+ ADD NEW</a><br>
+                <a href='/projects'>VIEW LIST</a><br>
                 <br>
-                <a href='super.php'>Superintendent</a><br>
+                <a href='/superintendents'>Superintendent</a><br>
                 </font>
             </td>
             <td width='40'>&nbsp;</td>
