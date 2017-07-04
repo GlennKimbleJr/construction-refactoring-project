@@ -4,7 +4,7 @@
 <div id='pagenation'>
     <?php foreach($supers as $super): ?>
         <div class='z'>
-            <a href='?edit=<?=$this->e($super['id'])?>'>
+            <a href='/superintendents/<?=$this->e($super['id'])?>/edit'>
                 <?=$this->e($super['name'])?>
             </a> - <?=$this->e($super['phone'])?>
         </div>

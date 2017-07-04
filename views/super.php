@@ -9,8 +9,8 @@
                 <img src='/images/contact.png' width='48' height='48'><br> 
                 <a href='/index'>back to home</a><br>
                 <br>
-                <a href='?new'>+ ADD NEW</a><br>
-                <a href='?view'>VIEW LIST</a><br>
+                <a href='/superintendents/create'>+ ADD NEW</a><br>
+                <a href='/superintendents/'>VIEW LIST</a><br>
                 </font>
             </td>
             <td width='40'>&nbsp;</td>

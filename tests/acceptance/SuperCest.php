@@ -9,7 +9,7 @@ class SuperCest
 
     public function addANewSuperintendent(AcceptanceTester $I)
     {
-        $I->amOnPage('/super.php');
+        $I->amOnPage('/superintendents');
         $I->dontSee('Test Name - 555-555-5555');
 
         $I->click('+ ADD NEW');
@@ -25,7 +25,7 @@ class SuperCest
 
     public function editASuperintendentsDetails(AcceptanceTester $I)
     {
-        $I->amOnPage('/super.php?view');
+        $I->amOnPage('/superintendents');
         $I->see($this->super->name);
         $I->see($this->super->phone);
 
@@ -45,7 +45,7 @@ class SuperCest
 
     public function deleteAnExistingSuperintedent(AcceptanceTester $I)
     {
-        $I->amOnPage('/super.php?view');
+        $I->amOnPage('/superintendents');
         $I->see($this->super->name);
         $I->see($this->super->phone);
 

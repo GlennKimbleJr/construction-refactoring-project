@@ -13,7 +13,10 @@ class SuperintendentsController extends BaseController
      */
     public function index()
     {
-        // 
+        return $this->view('super/view', [
+            'title' => 'View All Superintendants',
+            'supers' => $this->db->getData("SELECT * FROM supers ORDER BY name")
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class SuperintendentsController extends BaseController
      */
     public function create()
     {
-        // 
+        return $this->view('super/new', ['title' => 'Add a New Superintendant']);
     }
 
     /**
@@ -34,7 +37,19 @@ class SuperintendentsController extends BaseController
      */
     public function store(Request $request)
     {
-        // 
+        $request = $request->getParsedBody();
+
+        $query = $this->db->setData("INSERT INTO `supers` (name, phone) VALUES (?, ?)", [
+            $request['name'],
+            $request['phone']
+        ]);
+
+        return $this->view('message', [
+            'template' => 'super',
+            'message' => $this->db->updated($query) 
+                ? '<br><br>Created!' 
+                : '<br><br>Error! Unable to create super.'
+        ]);
     }
 
     /**
@@ -45,7 +60,7 @@ class SuperintendentsController extends BaseController
      */
     public function show($id)
     {
-        // 
+        return $this->redirect("/superintendents/{$id}/edit");
     }
 
     /**
@@ -56,7 +71,12 @@ class SuperintendentsController extends BaseController
      */
     public function edit($id)
     {
-        // 
+        $super = $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
+
+        return $this->view('super/edit', [
+            'title' => 'Edit a Superintendant',
+            'super' => $super
+        ]);
     }
 
     /**
@@ -68,7 +88,22 @@ class SuperintendentsController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        // 
+        $super = $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
+
+        $request = $request->getParsedBody();
+
+        $query = $this->db->setData("UPDATE supers SET name = ?, phone = ? WHERE id = ?", [
+            $request['name'],
+            $request['phone'],
+            $id
+        ]);
+
+        return $this->view('message', [
+            'template' => 'super',
+            'message' => $this->db->updated($query) 
+                ? '<br><br>Updated!' 
+                : '<br><br>Update Error'
+        ]);
     }
 
     /**
@@ -79,7 +114,17 @@ class SuperintendentsController extends BaseController
      */
     public function delete($id)
     {
-        // 
+        $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
+
+        return $this->view('message', [
+            'template' => 'super',
+            'message' => "<h1>ARE YOU SURE?</h1><br>
+                <h2>
+                    <form method='post' action='/superintendents/{$id}/delete'>
+                        <button type='submit'>YES</button> | <a href='/superintendents/{$id}/edit'>NO</a>
+                    </form> 
+                </h2>"
+        ]);
     }
 
     /**
@@ -90,6 +135,13 @@ class SuperintendentsController extends BaseController
      */
     public function destroy($id)
     {
-        // 
+        $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
+
+        $this->db->setData("DELETE FROM `supers` WHERE id = ?", [$id]);
+        
+        return $this->view('message', [
+            'template' => 'super',
+            'message' => '<h1>DELETED!</h1><br>'
+        ]);
     }
 }

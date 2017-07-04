@@ -1,7 +1,7 @@
 <?php $this->layout('super', ['title' => $title]) ?>
 <h3>Add New Superintendent</h3>
 
-<form action="" method="POST">
+<form action="/superintendents" method="POST">
     <p>
         <label>Name: </label>
         <input id="name" type="text" name="name" required placeholder="Joe Bob" />

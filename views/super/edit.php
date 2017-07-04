@@ -1,10 +1,10 @@
 <?php $this->layout('super', ['title' => $title]) ?>
 <h3>
     EDIT Superintendent | 
-    [ <a href="?delete=<?=$this->e($super['id'])?>"><font color="red">DELETE</font></a> ]
+    [ <a href="/superintendents/<?=$this->e($super['id'])?>/delete"><font color="red">DELETE</font></a> ]
 </h3>
 
-<form action="" method="POST">
+<form action="/superintendents/<?=$this->e($super['id'])?>" method="POST">
     <input id="id2" type="hidden" name="id2" required value="<?=$this->e($super['id'])?>" />
 
     <p>
