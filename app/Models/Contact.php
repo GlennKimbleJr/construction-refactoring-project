@@ -69,6 +69,21 @@ class Contact extends Model
     }
 
     /**
+     * Update a column for an existing resource in storage.
+     * 
+     * @param  integer $id
+     * @param  string $column
+     * @param  string $value
+     * @return boolean
+     */
+    public function updateColumn($id, $column, $value)
+    {
+        $query = $this->db->setData("UPDATE {$this->table} SET `{$column}` = ? WHERE `id` = ?", [$value, $id]);
+
+        return $this->db->updated($query);
+    }
+
+    /**
      * Return the resource.
      * 
      * @param  string $sort
@@ -125,5 +140,25 @@ class Contact extends Model
     {
         return $this->db->getData("SELECT c.id, c.company FROM {$this->table} as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.category_id = ? AND cz.zone_id = ? ORDER BY c.company", 
             [$category_id, $zone_id]);
+    }
+
+    /**
+     * Return scored contacts by percentage.
+     * 
+     * @return array
+     */
+    public function getByScorePercentage()
+    {
+        return $this->db->getData("SELECT * FROM contacts WHERE score_per != '0' ORDER BY score_per");
+    }
+
+    /**
+     * Return bidding contacts by percentage.
+     * 
+     * @return array
+     */
+    public function getByBidPercentage()
+    {
+        return $this->db->getData("SELECT * FROM contacts WHERE bid_per > 0 ORDER BY bid_per");
     }
 }

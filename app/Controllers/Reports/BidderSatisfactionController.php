@@ -3,6 +3,7 @@
 namespace App\Controllers\Reports;
 
 use App\Controller;
+use App\Reports\BidderSatisfactionReport;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class BidderSatisfactionController extends Controller
@@ -14,33 +15,13 @@ class BidderSatisfactionController extends Controller
      */
     public function index()
     {
-        // Update contacts score
-        $contacts = $this->db->getData("SELECT id FROM contacts");
-        
-        foreach ($contacts as $contact) {
+        $report = new BidderSatisfactionReport($this->db);
 
-            $score = $this->db->getFirst(
-                "SELECT sum(score) as sum FROM bidders WHERE contact_id = ? AND score != '0'", 
-                [$contact['id']]
-            );
-
-            $scoredBidTotal = $this->db->getCount(
-                "SELECT NULL FROM bidders WHERE contact_id = ? AND score != '0'",
-                [$contact['id']]
-            );
-
-            $scoreAverage = $score['sum'] / $scoredBidTotal;
-
-            if ($score['sum']) {
-                $this->db->setData("UPDATE contacts SET score_per = ? WHERE id = ?", 
-                    [$scoreAverage, $contact['id']]
-                );
-            }
-        }
+        $report->update();
 
         return $this->view('report/score', [
             'title' => 'Reports: Score',
-            'contacts' => $this->db->getData("SELECT * FROM contacts WHERE score_per != '0' ORDER BY score_per")
+            'contacts' => $report->get()
         ]);
     }
 }

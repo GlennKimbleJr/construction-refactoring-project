@@ -3,6 +3,7 @@
 namespace App\Controllers\Reports;
 
 use App\Controller;
+use App\Reports\BidderParticipationReport;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class BidderParticipationController extends Controller
@@ -14,34 +15,13 @@ class BidderParticipationController extends Controller
      */
     public function index()
     {
-        // Update contacts bid percentage
-        $contacts = $this->db->getData("SELECT id FROM contacts");
-        
-        foreach ($contacts as $contact) {
+        $report = new BidderParticipationReport($this->db);
 
-            $willBidCount = $this->db->getCount(
-                "SELECT null FROM bidders WHERE contact_id = ? AND status='will'",
-                [$contact['id']]
-            );
-
-            $wontBidCount = $this->db->getCount(
-                "SELECT null FROM bidders WHERE contact_id = ? AND status='wont'",
-                [$contact['id']]
-            );
-
-            $totalBids = $willBidCount + $wontBidCount;
-            $bidPercentage = ($willBidCount / $totalBids) * 100;
-
-            if ($totalBids) {
-                $this->db->setData("UPDATE contacts SET bid_per=? WHERE id=?", 
-                    [$bidPercentage, $contact['id']]
-                );
-            }
-        }
+        $report->update();
 
         return $this->view('report/bid', [
             'title' => 'Reports: Bid Percentage',
-            'contacts' => $this->db->getData("SELECT * FROM contacts WHERE bid_per > 0 ORDER BY bid_per")
+            'contacts' => $report->get()
         ]);
     }
 }

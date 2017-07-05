@@ -13,6 +13,13 @@ class Bidder extends Model
      */
     protected $table = 'bidders';
 
+    /**
+     * Store a newly created resource in storage.
+     * 
+     * @param integer $project_id
+     * @param integer $contact_id
+     * @param integer $category_id
+     */
     public function add($project_id, $contact_id, $category_id)
     {
         $query = $this->db->setData(
@@ -106,5 +113,42 @@ class Bidder extends Model
             "UPDATE {$this->table} SET win = '0' WHERE id != ? AND project_id = ? AND category_id = ?", 
             [$winner_id, $project_id, $category_id]
         );
+    }
+
+    /**
+     * Get a count of all the times the bidder was willing/unwilling to bid a project.
+     * 
+     * @param  string $status
+     * @param  integer $contact_id
+     * @return integer
+     */
+    public function getTotalTimesBid($status, $contact_id)
+    {
+        return $this->db->getCount(
+            "SELECT null FROM {$this->table} WHERE contact_id = ? AND status='{$status}'", 
+            [$contact_id]
+        );
+    }
+
+    /**
+     * Add all of the scores together for that contacts bids.
+     * 
+     * @param  integer $contact_id
+     * @return array
+     */
+    public function sumOfScores($contact_id) 
+    {
+        return $this->db->getFirst("SELECT sum(score) as sum FROM {$this->table} WHERE contact_id = ? AND score != '0'", [$contact_id]);
+    }
+
+    /**
+     * Return the total number of bids that have been scored.
+     * 
+     * @param  integer $contact_id
+     * @return integer
+     */
+    public function totalTimesScored($contact_id)
+    {
+        return $this->db->getCount("SELECT NULL FROM bidders WHERE contact_id = ? AND score != '0'",[$contact_id]);
     }
 }
