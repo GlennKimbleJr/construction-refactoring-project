@@ -3,6 +3,12 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\Models\Bidder;
+use App\Models\Category;
+use App\Models\Contact;
+use App\Models\Project;
+use App\Models\Superintendent;
+use App\Models\Zone;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ProjectsController extends Controller
@@ -30,7 +36,7 @@ class ProjectsController extends Controller
 
         return $this->view('project/view', [
             'title' => 'Project Menu',
-            'projects' => $this->db->getData("SELECT * FROM projects " . $orderable[$sort]),
+            'projects' => (new Project($this->db))->getSortable($orderable[$sort]),
             'sort' => $sort
         ]);
     }
@@ -44,8 +50,8 @@ class ProjectsController extends Controller
     {
         return $this->view('project/new', [
             'title' => 'Add New Project',
-            'supers' => $this->db->getData("SELECT * FROM supers ORDER BY name"),
-            'zones' => $this->db->getData("SELECT * FROM zones ORDER BY name")
+            'supers' => (new Superintendent($this->db))->get('*', 'ORDER BY name'),
+            'zones' => (new Zone($this->db))->get('*', 'ORDER BY name')
         ]);
     }
 
@@ -56,26 +62,10 @@ class ProjectsController extends Controller
      * @return \Zend\Diactoros\Response
      */
     public function store(Request $request)
-    {
-        $request = $request->getParsedBody();
-        
-        $query = $this->db->setData("INSERT INTO `projects` (name, bidduedate, completedate, zone_id, plans, location, planuser, planpass, owner_name, owner_phone, super_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-            $request['name'],
-            $request['due3'] . '-' . $request['due1'] . '-' . $request['due2'],
-            '', 
-            $request['zone'],
-            $request['plans'],
-            $request['location'],
-            $request['planuser'],
-            $request['planpass'],
-            $request['owner_name'],
-            $request['owner_phone'],
-            $request['super']
-        ]);
-
+    {   
         return $this->view('message', [
             'template' => 'project',
-            'message' => $this->db->updated($query) ? 
+            'message' => (new Project($this->db))->add($request->getParsedBody()) ? 
                 '<br><br>Project Created!' : 
                 '<br><br>Error! Unable to create project.'
         ]);
@@ -89,24 +79,16 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        $project = (new Project($this->db))->firstOrFail($id);
 
-        $bidders = $this->db->getData(
-            "SELECT b.*, c.company, c.email, cat.name as category_name, cat.id as category_id FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = cat.id AND b.win = ? AND b.status != ?", 
-            [$id, '', 'wont']
-        );
-
-        $winners = $this->db->getData(
-            "SELECT b.*, c.company, c.email, cat.name as category FROM bidders as b, contacts as c, categories as cat WHERE b.contact_id = c.id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ?", 
-            [$id, '1']
-        );
+        $bidder = new Bidder($this->db);
 
         return $this->view('project/details', [
             'title' => 'View Project',
             'projectId' => $id,
             'project' => $project,
-            'bidders' => $bidders,
-            'winners' => $winners
+            'bidders' => $bidder->getProjectParticipatingBiddersForUndecidedCategories($id),
+            'winners' => $bidder->getProjectWinners($id)
         ]);
     }
 
@@ -118,7 +100,7 @@ class ProjectsController extends Controller
      */
     public function edit($id)
     {
-        $project = $this->db->getFirstOrFail("SELECT p.*, z.name as zone_name FROM projects as p, zones as z WHERE p.zone_id = z.id AND p.id = ?", [$id]);
+        $project = (new Project($this->db))->withZoneNameOrFail($id);
 
         $date1 = substr($project['bidduedate'], 5, -3);
         $date2 = substr($project['bidduedate'], 8);
@@ -143,8 +125,8 @@ class ProjectsController extends Controller
             'date2' => $date2,
             'date3' => $date3,
             'date4' => $date4,
-            'zones' => $this->db->getData("SELECT * FROM zones ORDER BY name"),
-            'supers' => $this->db->getData("SELECT id, name FROM supers ORDER BY name")
+            'supers' => (new Superintendent($this->db))->get('*', 'ORDER BY name'),
+            'zones' => (new Zone($this->db))->get('*', 'ORDER BY name')
         ]);
     }
 
@@ -157,30 +139,15 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        $model = new Project($this->db);
+        
+        $model->firstOrFail($id);
 
-        $request = $request->getParsedBody();
-
-        $query = $this->db->setData(
-            "UPDATE projects SET name=?, bidduedate=?, zone_id=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_id=? WHERE id=?",
-            [
-                $request['name'],
-                $request['due3'] . '-' . $request['due1'] . '-' . $request['due2'],
-                $request['zone'],
-                $request['plans'],
-                $request['location'],
-                $request['planuser'],
-                $request['planpass'],
-                $request['owner_name'],
-                $request['owner_phone'],
-                $request['super'],
-                $id
-            ]
-        );
+        $query = $model->update($id, $request->getParsedBody());
 
         return $this->view('message', [
             'template' => 'project',
-            'message' => $this->db->updated($query) ? '<br><br>Project Updated!' : '<br><br>Update Error'
+            'message' => $query ? '<br><br>Project Updated!' : '<br><br>Update Error'
         ]);
     }
 
@@ -192,7 +159,8 @@ class ProjectsController extends Controller
      */
     public function delete($id)
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        (new Project($this->db))
+            ->firstOrFail($id);
 
         return $this->view('message', [
             'template' => 'project',
@@ -213,9 +181,11 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        $project = new Project($this->db);
+        
+        $project->firstOrFail($id);
 
-        $this->db->setData("DELETE FROM `projects` WHERE id = ?", [$id]);
+        $project->delete($id);
         
         return $this->view('message', [
             'template' => 'project',
@@ -231,7 +201,8 @@ class ProjectsController extends Controller
      */
     public function complete($id) 
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        (new Project($this->db))
+            ->firstOrFail($id);
 
         return $this->view('message', [
             'template' => 'project',
@@ -252,9 +223,11 @@ class ProjectsController extends Controller
      */
     public function completed($id) 
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
+        $project = new Project($this->db);
+        
+        $project->firstOrFail($id);
 
-        $this->db->setData("UPDATE projects SET completedate = ? WHERE id = ?", [date("Y-m-d"), $id]);
+        $project->complete($id);
 
         return $this->view('message', [
             'template' => 'project',
@@ -270,21 +243,13 @@ class ProjectsController extends Controller
      */
     public function selectCat($id) 
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
-
-        $categories = $this->db->getData("SELECT * FROM categories ORDER BY name");
-
-        foreach ($categories as $key=>$category) {
-            $categories[$key]['bidders'] = $this->db->getData( "SELECT c.company FROM bidders as b, contacts as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?", [
-                    $id, 
-                    $category['id']
-            ]);
-        }
+        (new Project($this->db))
+            ->firstOrFail($id);
 
         return $this->view('project/choose_category', [
             'title' => 'Choose a Category',
             'projectId' => $id,
-            'categories' => $categories
+            'categories' => (new Category($this->db))->withBiddersForProject($id)
         ]);
     }
 
@@ -297,18 +262,15 @@ class ProjectsController extends Controller
      */
     public function selectBid($id, $category_id) 
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
-        $category = $this->db->getFirstOrFail("SELECT * FROM categories WHERE id = ?", [$category_id]);
+        $project = (new Project($this->db))->firstOrFail($id);
 
-        $zoneContacts = $this->db->getData("SELECT c.id, c.company FROM contacts as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.category_id = ? AND cz.zone_id = ? ORDER BY c.company", [
-            $category['id'], 
-            $project['zone_id']
-        ]);
+        $category = (new Category($this->db))->firstOrFail($id);
 
-        $bidders = $this->db->getData("SELECT c.company FROM bidders as b, contacts as c WHERE b.contact_id = c.id AND b.project_id = ? AND b.category_id = ?", [
-            $id, 
-            $category_id
-        ]);
+        $zoneContacts = (new Contact($this->db))
+            ->getFromCategoryAndZone($category['id'], $project['zone_id']);
+
+        $bidders = (new Bidder($this->db))
+            ->getSelectedBiddersForProjectByCategory($id, $category_id);
 
         return $this->view('project/choose_sub', [
             'title' => 'Choose a Sub-Contractor',
@@ -323,30 +285,22 @@ class ProjectsController extends Controller
     /**
      * Creates a bidders resource (project/contact relationship) in storage.
      *
+     * @param  \Zend\Diactoros\ServerRequest  $request
      * @param  int  $id
      * @return \Zend\Diactoros\Response
      */
-    public function addBid($id) 
+    public function addBid(Request $request, $id) 
     {
-        $project = $this->db->getFirstOrFail("SELECT * FROM projects WHERE id = ?", [$id]);
-        $contact = $this->db->getFirstOrFail("SELECT * FROM contacts WHERE id = ?", [
-            intval($_POST['company'])
-        ]);
+        (new Project($this->db))
+            ->firstOrFail($id);
 
-        $query = $this->db->setData(
-            "INSERT INTO `bidders` (project_id, contact_id, category_id, status, win, score) 
-                VALUES (?, ?, ?, ?, ?, ?)", [
-                    $id,
-                    $contact['id'],
-                    $contact['category_id'],
-                    '',
-                    '',
-                    'NA'
-                ]
-            );
+        $contact = (new Contact($this->db))
+            ->firstOrFail($request->getParsedBody()['company']);
+
+        $query = (new Bidder($this->db))->add($id, $contact['id'], $contact['category_id']);
 
         $message = "<b> [ <a href='/projects/{$id}/categories/{$contact['category_id']}/bidders'>GO BACK</a> ]</b><br>";
-        $message .= $this->db->updated($query) ? '<br><br>Sucess!' : '<br><br>Error!';
+        $message .= $query ? '<br><br>Sucess!' : '<br><br>Error!';
 
         return $this->view('message', [
             'template' => 'project',
@@ -362,17 +316,10 @@ class ProjectsController extends Controller
      */
     public function calllog($id)
     {
-        $project = $this->db->getFirstOrFail("SELECT p.*, s.name as super_name, s.phone as super_phone FROM projects as p, supers as s WHERE p.super_id = s.id AND p.id = ?", [$id]);
-        
-        $winners = $this->db->getData(
-            "SELECT c.*, cat.name as category FROM contacts as c, bidders as b, categories as cat WHERE c.id = b.contact_id AND b.category_id = cat.id AND b.project_id = ? AND b.win = ? ORDER BY b.category_id", 
-            [$id, 1]
-        );
-
         return $this->view('print', [
             'title' => 'Print Call Log',
-            'project' => $project,
-            'winners' => $winners
+            'project' => (new Project($this->db))->withSuperintendantOrFail($id),
+            'winners' => (new Bidder($this->db))->getProjectWinners($id)
         ]);
     }
 }

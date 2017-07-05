@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Model;
+use App\Models\Bidder;
 
 class Category extends Model
 {
@@ -38,5 +39,23 @@ class Category extends Model
         $query = $this->db->setData("UPDATE {$this->table} SET name = ? WHERE id = ?", [$name, $id]);
 
         return $this->db->updated($query);
+    }
+
+    /**
+     * Return a nested list of bidders for each category in a project.
+     * 
+     * @param  integer $project_id
+     * @return array
+     */
+    public function withBiddersForProject($project_id)
+    {
+        $categories = $this->get();
+
+        foreach ($categories as $key => $category) {
+            $categories[$key]['bidders'] = (new Bidder($this->db))
+                ->getSelectedBiddersForProjectByCategory($project_id, $category['id']);
+        }
+
+        return $categories;
     }
 }

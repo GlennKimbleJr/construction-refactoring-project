@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\Models\Superintendent;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class SuperintendentsController extends Controller
@@ -16,7 +17,7 @@ class SuperintendentsController extends Controller
     {
         return $this->view('super/view', [
             'title' => 'View All Superintendants',
-            'supers' => $this->db->getData("SELECT * FROM supers ORDER BY name")
+            'supers' => (new Superintendent($this->db))->get()
         ]);
     }
 
@@ -38,16 +39,9 @@ class SuperintendentsController extends Controller
      */
     public function store(Request $request)
     {
-        $request = $request->getParsedBody();
-
-        $query = $this->db->setData("INSERT INTO `supers` (name, phone) VALUES (?, ?)", [
-            $request['name'],
-            $request['phone']
-        ]);
-
         return $this->view('message', [
             'template' => 'super',
-            'message' => $this->db->updated($query) 
+            'message' => (new Superintendent($this->db))->add($request->getParsedBody())
                 ? '<br><br>Created!' 
                 : '<br><br>Error! Unable to create super.'
         ]);
@@ -72,11 +66,9 @@ class SuperintendentsController extends Controller
      */
     public function edit($id)
     {
-        $super = $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
-
         return $this->view('super/edit', [
             'title' => 'Edit a Superintendant',
-            'super' => $super
+            'super' => (new Superintendent($this->db))->firstOrFail($id)
         ]);
     }
 
@@ -89,19 +81,13 @@ class SuperintendentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $super = $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
-
-        $request = $request->getParsedBody();
-
-        $query = $this->db->setData("UPDATE supers SET name = ?, phone = ? WHERE id = ?", [
-            $request['name'],
-            $request['phone'],
-            $id
-        ]);
+        $model = new Superintendent($this->db);
+        
+        $model->firstOrFail($id);
 
         return $this->view('message', [
             'template' => 'super',
-            'message' => $this->db->updated($query) 
+            'message' => $model->update($id, $request->getParsedBody())
                 ? '<br><br>Updated!' 
                 : '<br><br>Update Error'
         ]);
@@ -115,7 +101,8 @@ class SuperintendentsController extends Controller
      */
     public function delete($id)
     {
-        $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
+        (new Superintendent($this->db))
+            ->firstOrFail($id);
 
         return $this->view('message', [
             'template' => 'super',
@@ -136,9 +123,11 @@ class SuperintendentsController extends Controller
      */
     public function destroy($id)
     {
-        $this->db->getFirstOrFail("SELECT * FROM supers WHERE id = ?", [$id]);
+        $model = new Superintendent($this->db);
+        
+        $model->firstOrFail($id);
 
-        $this->db->setData("DELETE FROM `supers` WHERE id = ?", [$id]);
+        $model->delete($id);
         
         return $this->view('message', [
             'template' => 'super',

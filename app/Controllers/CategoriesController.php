@@ -45,7 +45,7 @@ class CategoriesController extends Controller
         
         return $this->view('message', [
             'template' => 'category',
-            'message' => ($model)->add($request['name']) 
+            'message' => $model->add($request['name']) 
                 ? '<br><br>Created!' 
                 : '<br><br>Error! Unable to create categories.'
         ]);

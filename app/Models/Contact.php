@@ -113,4 +113,17 @@ class Contact extends Model
     {
         return $this->db->getFirstOrFail("SELECT c.*, cat.name as type FROM {$this->table} as c, categories as cat WHERE c.category_id = cat.id AND c.id = ?", [$id]);
     }
+
+    /**
+     * Get contacts for a category that work within a specific zone.
+     * 
+     * @param  integer $category_id
+     * @param  integer $zone_id
+     * @return array
+     */
+    public function getFromCategoryAndZone($category_id, $zone_id)
+    {
+        return $this->db->getData("SELECT c.id, c.company FROM {$this->table} as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.category_id = ? AND cz.zone_id = ? ORDER BY c.company", 
+            [$category_id, $zone_id]);
+    }
 }

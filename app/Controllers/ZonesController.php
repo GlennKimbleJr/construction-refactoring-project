@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\Models\Zone;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ZonesController extends Controller
@@ -15,7 +16,7 @@ class ZonesController extends Controller
     public function index()
     {
         return $this->view('zone/view', [
-            'zones' => $this->db->getData("SELECT * FROM zones ORDER BY name")
+            'zones' => (new Zone($this->db))->get()
         ]);
     }
 
@@ -37,13 +38,13 @@ class ZonesController extends Controller
      */
     public function store(Request $request)
     {
-        $request = $request->getParsedBody();
+        $model = new Zone($this->db);
 
-        $query = $this->db->setData("INSERT INTO `zones` (name) VALUES (?)", [$request['name']]);
+        $request = $request->getParsedBody();
 
         return $this->view('message', [
             'template' => 'zone',
-            'message' => $this->db->updated($query) 
+            'message' => $model->add($request['name'])
                 ? '<br><br>Created!' 
                 : '<br><br>Error! Unable to create zone.'
         ]);
@@ -68,10 +69,8 @@ class ZonesController extends Controller
      */
     public function edit($id)
     {
-        $zone = $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
-
         return $this->view('zone/edit', [
-            'zone' => $zone,
+            'zone' => (new Zone($this->db))->firstOrFail($id),
         ]);
     }
 
@@ -84,18 +83,15 @@ class ZonesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
+        $model = new Zone($this->db);
+
+        $model->firstOrFail($id);
 
         $request = $request->getParsedBody();
 
-        $query = $this->db->setData("UPDATE zones SET name = ? WHERE id = ?", [
-            $request['name'],
-            $id
-        ]);
-
         return $this->view('message', [
             'template' => 'zone',
-            'message' => $this->db->updated($query) 
+            'message' => $model->update($id, $request['name'])
                 ? '<br><br>Updated!' 
                 : '<br><br>Update Error'
         ]);
@@ -109,7 +105,7 @@ class ZonesController extends Controller
      */
     public function delete($id)
     {
-        $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
+        (new Zone($this->db))->firstOrFail($id);
 
         return $this->view('message', [
             'template' => 'zone',
@@ -130,9 +126,11 @@ class ZonesController extends Controller
      */
     public function destroy($id)
     {
-        $this->db->getFirstOrFail("SELECT id, name FROM zones WHERE id = ?", [$id]);
+        $model = new Zone($this->db);
 
-        $this->db->setData("DELETE FROM `zones` WHERE id = ?", [$id]);
+        $model->firstOrFail($id);
+
+        $model->delete($id);
 
         return $this->view('message', [
             'template' => 'zone',

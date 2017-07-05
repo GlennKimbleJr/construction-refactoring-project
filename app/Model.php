@@ -25,11 +25,12 @@ class Model
      * Return the resource.
      * 
      * @param  string $columns columns needed from table
+     * @param  string $orderBy order results by
      * @return array
      */
-    public function get($columns = '*')
+    public function get($columns = '*', $orderBy = null)
     {
-        return $this->db->getData("SELECT {$columns} FROM {$this->table}");
+        return $this->db->getData("SELECT {$columns} FROM {$this->table} {$orderBy}");
     }
 
     /**
