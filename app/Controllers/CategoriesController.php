@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
@@ -10,7 +10,7 @@ class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * 
+     *
      * @return \Zend\Diactoros\Response
      */
     public function index()
@@ -42,11 +42,11 @@ class CategoriesController extends Controller
         $model = new Category($this->db);
 
         $request = $request->getParsedBody();
-        
+
         return $this->view('message', [
             'template' => 'category',
-            'message' => $model->add($request['name']) 
-                ? '<br><br>Created!' 
+            'message' => $model->add($request['name'])
+                ? '<br><br>Created!'
                 : '<br><br>Error! Unable to create categories.'
         ]);
     }
@@ -96,7 +96,7 @@ class CategoriesController extends Controller
         return $this->view('message', [
             'template' => 'category',
             'message' => $model->update($id, $request['name'])
-                ? '<br><br>Updated!' 
+                ? '<br><br>Updated!'
                 : '<br><br>Update Error'
             ]);
     }
@@ -115,13 +115,10 @@ class CategoriesController extends Controller
 
         return $this->view('message', [
             'template' => 'category',
-            'message' => "<h1>ARE YOU SURE?</h1>
-            <br>
-            <h2>
+            'message' => "<h2>ARE YOU SURE?</h2>
                 <form method='post' action='/categories/{$id}/delete'>
-                    <button type='submit'>YES</button> | <a href='/categories/{$id}/edit'>NO</a>
-                </form> 
-            </h2>"
+                    <button class='btn btn-lg btn-success' type='submit'>YES</button> <a class='btn btn-lg btn-danger' href='/categories/{$id}/edit'>NO</a>
+                </form>"
         ]);
     }
 

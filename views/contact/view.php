@@ -1,5 +1,4 @@
 <?php $this->layout('contact') ?>
-<h3><?=$this->e($header)?></h3>
 
 <table width='100%' cellspacing='1' cellpadding='1' border='1'>
     <tr>

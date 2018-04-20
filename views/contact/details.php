@@ -1,5 +1,5 @@
 <?php $this->layout('contact', ['title' => 'View Contact']) ?>
-<u><b><?=$this->e($contact['company'])?></b></u>&nbsp;&nbsp;&nbsp; <?=$this->e($contact['type'])?>. | 
+<u><b><?=$this->e($contact['company'])?></b></u>&nbsp;&nbsp;&nbsp; <?=$this->e($contact['type'])?>. |
 <a href='/contacts/<?=$this->e($contact['id'])?>/edit'><font color='red'>EDIT</font></a><br>
 <br>
 
@@ -14,7 +14,7 @@
 </table><br>
 
 <?=$this->e($contact['first']) . ' ' . $this->e($contact['last'])?><br>
-<?=$this->e($contact['street'])?>. 
+<?=$this->e($contact['street'])?>.
 <?=$this->e($contact['city'])?>, <?=$this->e($contact['state'])?>. <?=$this->e($contact['zip'])?><br>
 <br>
 
@@ -25,9 +25,8 @@
         <td width='33'>Fax:<br> <?=$this->e($contact['fax'])?></td>
     </tr>
 </table>
+<br>
 
-<h2>
-    <a href='mailto:<?=$this->e($contact['email'])?>'>
-        <?=$this->e($contact['email'])?>
-    </a>
-</h2>
+<a href='mailto:<?=$this->e($contact['email'])?>'>
+    <?=$this->e($contact['email'])?>
+</a>
