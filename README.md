@@ -7,6 +7,9 @@ So I picked one of the fist projects I ever did, a simple script for my dad's co
 I wanted to take this old piece of junk, and step by step turn it into something respectable. Along the way I hope to learn a thing or two.
 
 # Captain's Log
+## 2018.04.19
+- Back at it again. Made a few tweaks to the readme. Began the process of redesigning the site using bootstrap.
+
 ## 2017.07.04
 - I've created a number of model objects to move the database logic out of the controllers themselves an into dedicated classes. 
 
