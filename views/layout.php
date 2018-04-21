@@ -43,6 +43,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/superintendents">
+                  <span data-feather="users"></span>
+                  Employees
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/categories">
                   <span data-feather="layers"></span>
                   Categories

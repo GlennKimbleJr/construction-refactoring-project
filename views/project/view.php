@@ -1,19 +1,18 @@
 <?php $this->layout('project', ['title' => $title]) ?>
-<h3>
     <?php if ($sort == 'open'): ?>
-        View Open Projects - 
-        <a href='/projects/?s=all'><u>View All</u></a>
-        | <a href='/projects/?s=closed'><u>Closed Only</u></a> 
+        view open projects -
+        <a href='/projects/?s=all'><u>view all</u></a>
+        | <a href='/projects/?s=closed'><u>closed only</u></a>
     <?php elseif ($sort == 'closed'): ?>
-        View Closed Projects - 
-        <a href='/projects/?s=all'><u>View All</u></a>
-        | <a href='/projects/?s=open'><u>Open Only</u></a> 
+        view closed projects -
+        <a href='/projects/?s=all'><u>view all</u></a>
+        | <a href='/projects/?s=open'><u>open only</u></a>
     <?php else: ?>
-        View All Projects - 
-        <a href='/projects/?s=open'><u>Open Only</u></a> 
-        | <a href='/projects/?s=closed'><u>Closed Only</u></a>
+        view all projects -
+        <a href='/projects/?s=open'><u>open only</u></a>
+        | <a href='/projects/?s=closed'><u>closed only</u></a>
     <?php endif ?>
-</h3>
+    <hr>
 
 <div id='pagenation'>
 
@@ -25,8 +24,8 @@
         <div class='z'>
             <a href='/projects/<?=$this->e($project['id'])?>'>
                 <?=$this->e($project['name'])?>
-            </a> 
-            - <?=$this->e($project['bidduedate'])?> 
+            </a>
+            - <?=$this->e($project['bidduedate'])?>
             | <a href='/projects/<?=$this->e($project['id'])?>/edit'>EDIT</a>
         </div>
     <?php endforeach ?>
