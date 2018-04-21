@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $container->delegate(new League\Container\ReflectionContainer);
 
@@ -13,6 +13,8 @@ $container->share('request', function () {
 });
 
 $container->add('Psr\Http\Message\ResponseInterface', $container->get('response'));
+
+$container->add('Psr\Http\Message\RequestInterface', $container->get('request'));
 
 $container->add('League\Plates\Engine', function () {
     return new League\Plates\Engine('../views');
