@@ -13,7 +13,10 @@
         "codeception/codeception": "*"
     },
     "autoload-dev": {
-        "files": ["tests/utilities/functions.php"]
+        "files": [
+            "tests/utilities/functions.php",
+            "app/helpers.php"
+        ]
     },
     "autoload":
     {
