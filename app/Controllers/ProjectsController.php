@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
@@ -35,7 +35,7 @@ class ProjectsController extends Controller
         if (! key_exists($sort, $orderable)) $sort = 'all';
 
         return $this->view('project/view', [
-            'title' => 'Project Menu',
+            'title' => 'Projects',
             'projects' => (new Project($this->db))->getSortable($orderable[$sort]),
             'sort' => $sort
         ]);
@@ -62,11 +62,11 @@ class ProjectsController extends Controller
      * @return \Zend\Diactoros\Response
      */
     public function store(Request $request)
-    {   
+    {
         return $this->view('message', [
             'template' => 'project',
-            'message' => (new Project($this->db))->add($request->getParsedBody()) ? 
-                '<br><br>Project Created!' : 
+            'message' => (new Project($this->db))->add($request->getParsedBody()) ?
+                '<br><br>Project Created!' :
                 '<br><br>Error! Unable to create project.'
         ]);
     }
@@ -140,7 +140,7 @@ class ProjectsController extends Controller
     public function update(Request $request, $id)
     {
         $model = new Project($this->db);
-        
+
         $model->firstOrFail($id);
 
         $query = $model->update($id, $request->getParsedBody());
@@ -168,7 +168,7 @@ class ProjectsController extends Controller
                 <h3>
                     <form method='post' action='/projects/{$id}/delete'>
                         <button type='submit'>YES</button> | <a href='/projects/{$id}/edit'>NO</a>
-                    </form> 
+                    </form>
                 <h3>"
         ]);
     }
@@ -182,11 +182,11 @@ class ProjectsController extends Controller
     public function destroy($id)
     {
         $project = new Project($this->db);
-        
+
         $project->firstOrFail($id);
 
         $project->delete($id);
-        
+
         return $this->view('message', [
             'template' => 'project',
             'message' => '<h1>PROJECT DELETED!</h1><br>'
@@ -199,7 +199,7 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Zend\Diactoros\Response
      */
-    public function complete($id) 
+    public function complete($id)
     {
         (new Project($this->db))
             ->firstOrFail($id);
@@ -210,21 +210,21 @@ class ProjectsController extends Controller
                 <h3>
                     <form method='post' action='/projects/{$id}/complete'>
                         <button type='submit'>YES</button> | <a href='/projects/{$id}'>NO</a>
-                    </form> 
+                    </form>
                 <h3>"
         ]);
     }
-    
+
     /**
      * Marks the project as being complete.
      *
      * @param  int  $id
      * @return \Zend\Diactoros\Response
      */
-    public function completed($id) 
+    public function completed($id)
     {
         $project = new Project($this->db);
-        
+
         $project->firstOrFail($id);
 
         $project->complete($id);
@@ -241,7 +241,7 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Zend\Diactoros\Response
      */
-    public function selectCat($id) 
+    public function selectCat($id)
     {
         (new Project($this->db))
             ->firstOrFail($id);
@@ -260,7 +260,7 @@ class ProjectsController extends Controller
      * @param  int  $category_id
      * @return \Zend\Diactoros\Response
      */
-    public function selectBid($id, $category_id) 
+    public function selectBid($id, $category_id)
     {
         $project = (new Project($this->db))->firstOrFail($id);
 
@@ -289,7 +289,7 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Zend\Diactoros\Response
      */
-    public function addBid(Request $request, $id) 
+    public function addBid(Request $request, $id)
     {
         (new Project($this->db))
             ->firstOrFail($id);
