@@ -1,18 +1,23 @@
-<?php $this->layout('zone', ['title' => 'View Zones']) ?>
+<?php $this->layout('zone', ['title' => 'Zones']) ?>
 
-<h3>View All zone | <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a></h3>
-
-<div id='pagenation'>";
-
-    <?php foreach($zones as $zone): ?>
-        <div class='z'>
-            <a href='/zones/<?=$this->e($zone['id'])?>/edit'>
-                <?=$this->e($zone['name'])?>
-            </a>
-        </div>
-    <?php endforeach ?>
-
-</div><br>
+<a href='/zones/create' class="btn btn-sm btn-success">Add Zone</a><br>
 <br>
 
-<div id='pagingControls'></div>
+<table class="table table-striped table-hover table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($zones as $zone): ?>
+        <tr>
+            <td scope="row"><?=$this->e($zone['name'])?></td>
+            <td scope="row" class="text-right">
+                <a href='/zones/<?=$this->e($zone['id'])?>/edit' class="btn btn-sm btn-success">Edit</a>
+            </td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>

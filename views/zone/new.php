@@ -1,11 +1,10 @@
-<?php $this->layout('zone', ['title' => 'Add New Zone']) ?>
-<h3>Start a New Zone | <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a></h3>
+<?php $this->layout('zone', ['title' => 'Add Zone']) ?>
 
 <form action="/zones" method="POST">
-    <p>
+    <div class="form-group">
         <label>Name: </label>
-        <input id="name" type="text" name="name" required placeholder="FL - Northwest" />
-    </p>
+        <input class="form-control" id="name" type="text" name="name" required>
+    </div>
 
-    <input class="btn register" type="submit" name="submit" value="Create" />
+    <input class="btn btn-success register" type="submit" name="submit" value="Create">
 </form>
