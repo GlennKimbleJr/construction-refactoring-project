@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
@@ -10,13 +10,13 @@ class SuperintendentsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * 
+     *
      * @return \Zend\Diactoros\Response
      */
     public function index()
     {
         return $this->view('super/view', [
-            'title' => 'View All Superintendants',
+            'title' => 'Employees',
             'supers' => (new Superintendent($this->db))->get()
         ]);
     }
@@ -28,7 +28,7 @@ class SuperintendentsController extends Controller
      */
     public function create()
     {
-        return $this->view('super/new', ['title' => 'Add a New Superintendant']);
+        return $this->view('super/new', ['title' => 'Add Employee']);
     }
 
     /**
@@ -42,7 +42,7 @@ class SuperintendentsController extends Controller
         return $this->view('message', [
             'template' => 'super',
             'message' => (new Superintendent($this->db))->add($request->getParsedBody())
-                ? '<br><br>Created!' 
+                ? '<br><br>Created!'
                 : '<br><br>Error! Unable to create super.'
         ]);
     }
@@ -67,7 +67,7 @@ class SuperintendentsController extends Controller
     public function edit($id)
     {
         return $this->view('super/edit', [
-            'title' => 'Edit a Superintendant',
+            'title' => 'Edit Employee',
             'super' => (new Superintendent($this->db))->firstOrFail($id)
         ]);
     }
@@ -82,13 +82,13 @@ class SuperintendentsController extends Controller
     public function update(Request $request, $id)
     {
         $model = new Superintendent($this->db);
-        
+
         $model->firstOrFail($id);
 
         return $this->view('message', [
             'template' => 'super',
             'message' => $model->update($id, $request->getParsedBody())
-                ? '<br><br>Updated!' 
+                ? '<br><br>Updated!'
                 : '<br><br>Update Error'
         ]);
     }
@@ -110,7 +110,7 @@ class SuperintendentsController extends Controller
                 <h2>
                     <form method='post' action='/superintendents/{$id}/delete'>
                         <button type='submit'>YES</button> | <a href='/superintendents/{$id}/edit'>NO</a>
-                    </form> 
+                    </form>
                 </h2>"
         ]);
     }
@@ -124,11 +124,11 @@ class SuperintendentsController extends Controller
     public function destroy($id)
     {
         $model = new Superintendent($this->db);
-        
+
         $model->firstOrFail($id);
 
         $model->delete($id);
-        
+
         return $this->view('message', [
             'template' => 'super',
             'message' => '<h1>DELETED!</h1><br>'

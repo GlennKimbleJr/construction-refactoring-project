@@ -1,16 +1,14 @@
 <?php $this->layout('super', ['title' => $title]) ?>
-<h3>Add New Superintendent</h3>
-
 <form action="/superintendents" method="POST">
-    <p>
+    <div class="form-group">
         <label>Name: </label>
-        <input id="name" type="text" name="name" required placeholder="Joe Bob" />
-    </p>
-    
-    <p>
-        <label>Phone: </label>
-        <input id="phone" type="text" name="phone" required placeholder="xxx-xxx-xxxx" />
-    </p>
+        <input class="form-control" id="name" type="text" name="name" required>
+    </div>
 
-    <input class="btn register" type="submit" name="submit" value="Add" />
+    <div class="form-group">
+        <label>Phone: </label>
+        <input class="form-control" id="phone" type="text" name="phone" required>
+    </div>
+
+    <input class="btn btn-success register" type="submit" name="submit" value="Create">
 </form>
