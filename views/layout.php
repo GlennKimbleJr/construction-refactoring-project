@@ -25,7 +25,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="/index">
+                <a class="nav-link" href="/index">
                   <span data-feather="home"></span>
                   Dashboard
                 </a>
@@ -38,13 +38,13 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/contacts">
-                  <span data-feather="users"></span>
+                  <span data-feather="user"></span>
                   Contacts
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/superintendents">
-                  <span data-feather="users"></span>
+                  <span data-feather="briefcase"></span>
                   Employees
                 </a>
               </li>
@@ -56,7 +56,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/zones">
-                  <span data-feather="compass"></span>
+                  <span data-feather="map-pin"></span>
                   Zones
                 </a>
               </li>
