@@ -8,3 +8,11 @@ actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+modules:
+    enabled:
+        - Db:
+            dsn: 'mysql:host=%DB_TESTING_HOST%;dbname=%DB_TESTING_DATABASE%;'
+            user: '%DB_TESTING_USERNAME%'
+            password: '%DB_TESTING_PASSWORD%'
+params:
+    - .env

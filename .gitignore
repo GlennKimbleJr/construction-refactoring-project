@@ -1,4 +1,4 @@
 /vendor/
-todo.md
 *.DS_Store
 LocalValetDriver.php
+.env

@@ -1,8 +1,11 @@
-<?php 
+<?php
 
 error_reporting(E_ALL);
 
 require 'vendor/autoload.php';
+
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
 
 $date = date("Y-m-d");
 

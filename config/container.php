@@ -21,7 +21,12 @@ $container->add('League\Plates\Engine', function () {
 }, true);
 
 $container->add('App\Database', function () {
-    return new App\Database('mysql:host=localhost;dbname=construction;', 'root', '');
+    $host = getenv('DB_' . strtoupper(getenv('APP_ENV')) . '_HOST');
+    $database = getenv('DB_' . strtoupper(getenv('APP_ENV')) . '_DATABASE');
+    $username = getenv('DB_' . strtoupper(getenv('APP_ENV')) . '_USERNAME');
+    $password = getenv('DB_' . strtoupper(getenv('APP_ENV')) . '_PASSWORD');
+
+    return new App\Database("mysql:host={$host};dbname={$database};", $username, $password);
 }, true);
 
 $container->share('auth', function () use ($container) {
