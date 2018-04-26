@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8a4b56a87c19248e221485e99b963d9a",
-    "content-hash": "8de82debd4c4c327e273790849f47555",
+    "content-hash": "4bea0b25a3859459eb951f9fcf4c8f91",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -36,7 +35,207 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
-            "time": "2017-02-14 19:40:03"
+            "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "delight-im/auth",
+            "version": "v8.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/delight-im/PHP-Auth.git",
+                "reference": "f6607f664d01c6308bf81c91b3e623114c28f1f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/delight-im/PHP-Auth/zipball/f6607f664d01c6308bf81c91b3e623114c28f1f4",
+                "reference": "f6607f664d01c6308bf81c91b3e623114c28f1f4",
+                "shasum": ""
+            },
+            "require": {
+                "delight-im/base64": "^1.0",
+                "delight-im/cookie": "^3.1",
+                "delight-im/db": "^1.2",
+                "ext-openssl": "*",
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Delight\\Auth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Authentication for PHP. Simple, lightweight and secure.",
+            "homepage": "https://github.com/delight-im/PHP-Auth",
+            "keywords": [
+                "Authentication",
+                "auth",
+                "login",
+                "security"
+            ],
+            "time": "2018-04-20T16:01:00+00:00"
+        },
+        {
+            "name": "delight-im/base64",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/delight-im/PHP-Base64.git",
+                "reference": "687b2a49f663e162030a8d27b32838bbe7f91c78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/delight-im/PHP-Base64/zipball/687b2a49f663e162030a8d27b32838bbe7f91c78",
+                "reference": "687b2a49f663e162030a8d27b32838bbe7f91c78",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Delight\\Base64\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple and convenient Base64 encoding and decoding for PHP",
+            "homepage": "https://github.com/delight-im/PHP-Base64",
+            "keywords": [
+                "URL-safe",
+                "base-64",
+                "base64",
+                "decode",
+                "decoding",
+                "encode",
+                "encoding",
+                "url"
+            ],
+            "time": "2017-07-24T18:59:51+00:00"
+        },
+        {
+            "name": "delight-im/cookie",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/delight-im/PHP-Cookie.git",
+                "reference": "76ef2a21817cf7a034f85fc3f4d4bfc60f873947"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/delight-im/PHP-Cookie/zipball/76ef2a21817cf7a034f85fc3f4d4bfc60f873947",
+                "reference": "76ef2a21817cf7a034f85fc3f4d4bfc60f873947",
+                "shasum": ""
+            },
+            "require": {
+                "delight-im/http": "^2.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Delight\\Cookie\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Modern cookie management for PHP",
+            "homepage": "https://github.com/delight-im/PHP-Cookie",
+            "keywords": [
+                "cookie",
+                "cookies",
+                "csrf",
+                "http",
+                "same-site",
+                "samesite",
+                "xss"
+            ],
+            "time": "2017-10-18T19:48:59+00:00"
+        },
+        {
+            "name": "delight-im/db",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/delight-im/PHP-DB.git",
+                "reference": "df99ef7c2e86c7ce206647ffe8ba74447c075b57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/delight-im/PHP-DB/zipball/df99ef7c2e86c7ce206647ffe8ba74447c075b57",
+                "reference": "df99ef7c2e86c7ce206647ffe8ba74447c075b57",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Delight\\Db\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Safe and convenient SQL database access in a driver-agnostic way",
+            "homepage": "https://github.com/delight-im/PHP-DB",
+            "keywords": [
+                "database",
+                "mysql",
+                "pdo",
+                "pgsql",
+                "postgresql",
+                "sql",
+                "sqlite"
+            ],
+            "time": "2017-03-18T20:51:59+00:00"
+        },
+        {
+            "name": "delight-im/http",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/delight-im/PHP-HTTP.git",
+                "reference": "0a19a72a7eac8b1301aa972fb20cff494ac43e09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/delight-im/PHP-HTTP/zipball/0a19a72a7eac8b1301aa972fb20cff494ac43e09",
+                "reference": "0a19a72a7eac8b1301aa972fb20cff494ac43e09",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Delight\\Http\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Hypertext Transfer Protocol (HTTP) utilities for PHP",
+            "homepage": "https://github.com/delight-im/PHP-HTTP",
+            "keywords": [
+                "headers",
+                "http",
+                "https"
+            ],
+            "time": "2016-07-21T15:05:01+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -84,7 +283,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29 12:21:54"
+            "time": "2016-04-29T12:21:54+00:00"
         },
         {
             "name": "league/container",
@@ -149,7 +348,7 @@
                 "provider",
                 "service"
             ],
-            "time": "2017-05-10 09:20:27"
+            "time": "2017-05-10T09:20:27+00:00"
         },
         {
             "name": "league/plates",
@@ -204,7 +403,7 @@
                 "templating",
                 "views"
             ],
-            "time": "2016-12-28 00:14:17"
+            "time": "2016-12-28T00:14:17+00:00"
         },
         {
             "name": "league/route",
@@ -268,7 +467,7 @@
                 "psr7",
                 "route"
             ],
-            "time": "2017-03-22 09:09:41"
+            "time": "2017-03-22T09:09:41+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -311,7 +510,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2017-01-19 11:35:12"
+            "time": "2017-01-19T11:35:12+00:00"
         },
         {
             "name": "psr/container",
@@ -360,7 +559,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14 16:28:37"
+            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "psr/http-message",
@@ -410,7 +609,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -457,7 +656,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "robmorgan/phinx",
@@ -523,7 +722,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2017-06-05 13:30:19"
+            "time": "2017-06-05T13:30:19+00:00"
         },
         {
             "name": "symfony/config",
@@ -583,7 +782,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02 18:07:20"
+            "time": "2017-06-02T18:07:20+00:00"
         },
         {
             "name": "symfony/console",
@@ -652,7 +851,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02 19:24:58"
+            "time": "2017-06-02T19:24:58+00:00"
         },
         {
             "name": "symfony/debug",
@@ -708,7 +907,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-01 21:01:25"
+            "time": "2017-06-01T21:01:25+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -757,7 +956,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-28 14:08:56"
+            "time": "2017-05-28T14:08:56+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -816,7 +1015,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09 14:24:12"
+            "time": "2017-06-09T14:24:12+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -871,7 +1070,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02 22:05:06"
+            "time": "2017-06-02T22:05:06+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
@@ -923,7 +1122,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2017-04-06 16:18:34"
+            "time": "2017-04-06T16:18:34+00:00"
         }
     ],
     "packages-dev": [
@@ -984,7 +1183,7 @@
                 "gherkin",
                 "parser"
             ],
-            "time": "2016-10-30 11:50:56"
+            "time": "2016-10-30T11:50:56+00:00"
         },
         {
             "name": "codeception/codeception",
@@ -1078,7 +1277,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2017-06-02 00:22:30"
+            "time": "2017-06-02T00:22:30+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1132,7 +1331,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "facebook/webdriver",
@@ -1184,7 +1383,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2017-04-28 14:54:49"
+            "time": "2017-04-28T14:54:49+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1249,7 +1448,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22 18:50:49"
+            "time": "2017-06-22T18:50:49+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1300,7 +1499,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-12-20 10:07:11"
+            "time": "2016-12-20T10:07:11+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1365,7 +1564,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-03-20 17:10:46"
+            "time": "2017-03-20T17:10:46+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1407,7 +1606,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-04-12 18:52:22"
+            "time": "2017-04-12T18:52:22+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1462,7 +1661,7 @@
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2017-03-05 18:14:27"
+            "time": "2017-03-05T18:14:27+00:00"
         },
         {
             "name": "phar-io/version",
@@ -1509,7 +1708,7 @@
                 }
             ],
             "description": "Library for handling version information and constraints",
-            "time": "2017-03-05 17:38:23"
+            "time": "2017-03-05T17:38:23+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1563,7 +1762,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-12-27 11:43:31"
+            "time": "2015-12-27T11:43:31+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1608,7 +1807,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1655,7 +1854,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25 06:54:22"
+            "time": "2016-11-25T06:54:22+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -1718,7 +1917,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-03-02 20:05:34"
+            "time": "2017-03-02T20:05:34+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1782,7 +1981,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-04-21 08:03:57"
+            "time": "2017-04-21T08:03:57+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1829,7 +2028,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1870,7 +2069,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -1919,7 +2118,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-02-26 11:10:40"
+            "time": "2017-02-26T11:10:40+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -1968,7 +2167,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-02-27 10:12:30"
+            "time": "2017-02-27T10:12:30+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -2052,7 +2251,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-13 14:07:07"
+            "time": "2017-06-13T14:07:07+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2111,7 +2310,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-06-30 08:15:21"
+            "time": "2017-06-30T08:15:21+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2156,7 +2355,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04 06:30:41"
+            "time": "2017-03-04T06:30:41+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -2220,7 +2419,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-03-03 06:26:08"
+            "time": "2017-03-03T06:26:08+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -2272,7 +2471,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-22 07:24:03"
+            "time": "2017-05-22T07:24:03+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -2322,7 +2521,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2017-06-20 16:25:05"
+            "time": "2017-06-20T16:25:05+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -2389,7 +2588,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2017-04-03 13:19:02"
+            "time": "2017-04-03T13:19:02+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -2440,7 +2639,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2017-04-27 15:39:26"
+            "time": "2017-04-27T15:39:26+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -2487,7 +2686,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-03-12 15:17:29"
+            "time": "2017-03-12T15:17:29+00:00"
         },
         {
             "name": "sebastian/object-reflector",
@@ -2532,7 +2731,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2017-03-29 09:07:27"
+            "time": "2017-03-29T09:07:27+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2585,7 +2784,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-03 06:23:57"
+            "time": "2017-03-03T06:23:57+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -2627,7 +2826,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2015-07-28 20:34:47"
+            "time": "2015-07-28T20:34:47+00:00"
         },
         {
             "name": "sebastian/version",
@@ -2670,7 +2869,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "stecman/symfony-console-completion",
@@ -2715,7 +2914,7 @@
                 }
             ],
             "description": "Automatic BASH completion for Symfony Console Component based applications.",
-            "time": "2016-02-24 05:08:54"
+            "time": "2016-02-24T05:08:54+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -2772,7 +2971,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12 14:14:56"
+            "time": "2017-04-12T14:14:56+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -2825,7 +3024,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-01 15:01:29"
+            "time": "2017-05-01T15:01:29+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -2881,7 +3080,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-25 23:10:31"
+            "time": "2017-05-25T23:10:31+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2944,7 +3143,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-04 18:15:29"
+            "time": "2017-06-04T18:15:29+00:00"
         },
         {
             "name": "symfony/finder",
@@ -2993,7 +3192,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-01 21:01:25"
+            "time": "2017-06-01T21:01:25+00:00"
         },
         {
             "name": "symfony/process",
@@ -3042,7 +3241,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-22 12:32:03"
+            "time": "2017-05-22T12:32:03+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -3082,7 +3281,7 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
-            "time": "2017-04-07 12:08:54"
+            "time": "2017-04-07T12:08:54+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3132,7 +3331,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:58"
+            "time": "2016-11-23T20:04:58+00:00"
         }
     ],
     "aliases": [],

@@ -11,3 +11,11 @@ if (! function_exists('dd')) {
         die();
     }
 }
+
+if (! function_exists('auth')) {
+    function auth() {
+        global $container;
+
+        return $container->get('auth');
+    }
+}

@@ -23,3 +23,7 @@ $container->add('League\Plates\Engine', function () {
 $container->add('App\Database', function () {
     return new App\Database('mysql:host=localhost;dbname=construction;', 'root', '');
 }, true);
+
+$container->share('auth', function () use ($container) {
+    return new Delight\Auth\Auth($container->get('App\Database')->getPdoObject());
+});

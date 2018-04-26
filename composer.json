@@ -30,6 +30,7 @@
         "fzaninotto/faker": "^1.6",
         "league/plates": "^3.3",
         "league/route": "^3.0",
-        "zendframework/zend-diactoros": "^1.4"
+        "zendframework/zend-diactoros": "^1.4",
+        "delight-im/auth": "^8.0"
     }
 }
