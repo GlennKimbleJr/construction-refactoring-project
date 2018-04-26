@@ -7,6 +7,9 @@ So I picked one of the fist projects I ever did, a simple script for my dad's co
 I wanted to take this old piece of junk, and step by step turn it into something respectable. Along the way I hope to learn a thing or two.
 
 # Captain's Log
+## 2018.04.26
+- Fixed a problem I've been meaning to solve for a while now in that I had hardcoded values for the database connection and I wanted to get away from that and start using enviornment variables. Pulled in the dotenv package and updated Phinx and Codeception to use it, as well as the App\Database in the container. Also pulled in an auth package I'm going to start playing with for a login system.
+
 ## 2018.04.19
 - Back at it again. Made a few tweaks to the readme. Began the process of redesigning the site using bootstrap.
 
