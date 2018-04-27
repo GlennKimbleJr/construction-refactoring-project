@@ -49,12 +49,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="<?= navClass('categories', $route_path); ?>" href="/categories">
-                  <span data-feather="layers"></span>
-                  Divisions
-                </a>
-              </li>
-              <li class="nav-item">
                 <a class="<?= navClass('reports', $route_path); ?>" href="/reports">
                   <span data-feather="bar-chart-2"></span>
                   Reports

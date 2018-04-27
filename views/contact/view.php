@@ -5,7 +5,7 @@
     </div>
     <div class="col text-right">
             view by:
-            <a href='/contacts/categories'>type</a>
+            <a href='/contacts/categories'>division</a>
     </div>
 </div>
 <br>

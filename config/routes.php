@@ -25,8 +25,6 @@ $route->get('/contacts/categories/{category_id:number}[/]', 'ContactsController@
 
 $route->resource('superintendents')->middleware($auth);
 
-$route->resource('categories')->middleware($auth);
-
 $route->get('reports', 'ReportsController@index')->middleware($auth);
 $route->get('reports/bids', 'Reports\BidderParticipationController@index')->middleware($auth);
 $route->get('reports/score', 'Reports\BidderSatisfactionController@index')->middleware($auth);
