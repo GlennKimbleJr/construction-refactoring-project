@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title><?=$this->e(isset($title) ? $title : 'Construction Database')?></title>
+    <title><?=$this->e(isset($title) ? $title : 'Bidvite')?></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/includes/css/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="/includes/css/ddimgtooltip.css" />
   </head>
 
   <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/dashboard">Construction Database</a>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow text-center">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/dashboard">bid<b>vite</b></a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="/auth/logout">Sign out</a>
