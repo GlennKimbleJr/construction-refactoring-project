@@ -19,3 +19,11 @@ if (! function_exists('auth')) {
         return $container->get('auth');
     }
 }
+
+if (! function_exists('navClass')) {
+    function navClass($name, $route_path) {
+        $route_path = explode('/', $route_path);
+
+        return strpos($route_path[1], $name) !== false ? 'nav-link active' : 'nav-link';
+    }
+}

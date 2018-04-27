@@ -25,45 +25,51 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link" href="/dashboard">
+                <a class="<?= navClass('dashboard', $route_path); ?>" href="/dashboard">
                   <span data-feather="home"></span>
                   Dashboard
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/projects">
+                <a class="<?= navClass('projects', $route_path); ?>" href="/projects">
                   <span data-feather="clipboard"></span>
                   Projects
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/contacts">
+                <a class="<?= navClass('contacts', $route_path); ?>" href="/contacts">
                   <span data-feather="user"></span>
-                  Contacts
+                  Subcontractors
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/superintendents">
+                <a class="<?= navClass('superintendents', $route_path); ?>" href="/superintendents">
                   <span data-feather="briefcase"></span>
                   Employees
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/categories">
+                <a class="<?= navClass('categories', $route_path); ?>" href="/categories">
                   <span data-feather="layers"></span>
-                  Categories
+                  Divisions
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/zones">
+                <a class="<?= navClass('zones', $route_path); ?>" href="/zones">
                   <span data-feather="map-pin"></span>
                   Zones
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/reports">
+                <a class="<?= navClass('reports', $route_path); ?>" href="/reports">
                   <span data-feather="bar-chart-2"></span>
                   Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="<?= navClass('settings', $route_path); ?>" href="/settings">
+                  <span data-feather="settings"></span>
+                  Settings
                 </a>
               </li>
             </ul>
