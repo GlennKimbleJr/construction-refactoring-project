@@ -7,38 +7,6 @@
     </div>
 
     <div class="form-group">
-        <label>Plan Directory: </label>
-
-        <div class="form-row">
-            <div class="col">
-                <input class="form-control" size='35' id="plans" type="text" name="plans" required placeholder="directory name">
-            </div>
-
-            <div class="col">
-                <input class="form-control" size='10' id="planuser" type="text" name="planuser" required placeholder="user name">
-            </div>
-
-            <div class="col">
-                <input class="form-control" size='10' id="planpass" type="text" name="planpass" required placeholder="password">
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Owner: </label><br>
-
-        <div class="form-row">
-            <div class="col">
-                <input class="form-control" id="owner_name" type="text" name="owner_name" placeholder="name" required>
-            </div>
-
-            <div class="col">
-                <input class="form-control" id="owner_phone" type="text" name="owner_phone" placeholder="phone" required>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
         <label>Bid Due By: </label>
 
         <div class="form-row">
@@ -99,18 +67,6 @@
                 <input class="form-control" id="due3" type="text" name="due3" required placeholder="<?=date('Y');?>" maxlength="4" size="4"/>
             </div>
         </div>
-    </div>
-
-    <div class="form-group">
-        <label>Select Superintendent:</label><br>
-        <select name="super" class="form-control">
-            <option value=""></option>
-             <?php foreach($supers as $super): ?>
-                <option value='<?=$this->e($super['id'])?>'>
-                    <?=$this->e($super['name'])?>
-                </option>
-            <?php endforeach ?>
-        </select>
     </div>
 
     <div class="form-group">
