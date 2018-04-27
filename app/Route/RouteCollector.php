@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Route;
 
@@ -13,7 +13,7 @@ class RouteCollector
 
     /**
      * Path to the controllers directory.
-     * 
+     *
      * @var string
      */
     protected $controller_dir = 'App\Controllers\\';
@@ -28,7 +28,7 @@ class RouteCollector
 
     /**
      * Return the RouteCollection instance.
-     * 
+     *
      * @return League\Route\RouteCollection
      */
     public function collect()
@@ -38,53 +38,57 @@ class RouteCollector
 
     /**
      * Map a GET request to the route collection.
-     * 
+     *
      * @param  string $route
      * @param  string $controller
      * @return void
      */
     public function get($route, $controller)
     {
-        $this->collection->map('GET', $route, $this->resolve($controller));
+        return $this->collection->map('GET', $route, $this->resolve($controller));
     }
 
     /**
      * Map a POST request to the route collection.
-     * 
+     *
      * @param  string $route
      * @param  string $controller
      * @return void
      */
     public function post($route, $controller)
     {
-        $this->collection->map('POST', $route, $this->resolve($controller));
+        return $this->collection->map('POST', $route, $this->resolve($controller));
     }
 
     /**
      * Map a resourceful collection of GET and POST request to the route collection.
-     * 
+     *
      * @param  string $resource
      * @param  string $controller
      * @return void
      */
     public function resource($resource, $controller = NULL)
     {
-        if (! $controller) $controller = ucfirst($resource) . 'Controller';
+        if (! $controller) {
+            $controller = ucfirst($resource) . 'Controller';
+        }
 
-        $this->get('/'.$resource.'[/]', "{$controller}@index");
-        $this->get('/'.$resource.'/create[/]', "{$controller}@create");
-        $this->get('/'.$resource.'/{id:number}[/]', "{$controller}@show");
-        $this->get('/'.$resource.'/{id:number}/edit[/]', "{$controller}@edit");
-        $this->get('/'.$resource.'/{id:number}/delete[/]', "{$controller}@delete");
-        
-        $this->post('/'.$resource.'[/]', "{$controller}@store");
-        $this->post('/'.$resource.'/{id:number}', "{$controller}@update");
-        $this->post('/'.$resource.'/{id:number}/delete', "{$controller}@destroy");
+        return $this->collection->group("/{$resource}", function ($router) use ($controller) {
+            $router->get('/', $this->resolve("{$controller}@index"));
+            $router->get('/create[/]', $this->resolve("{$controller}@create"));
+            $router->get('/{id:number}[/]', $this->resolve("{$controller}@show"));
+            $router->get('/{id:number}/edit[/]', $this->resolve("{$controller}@edit"));
+            $router->get('/{id:number}/delete[/]', $this->resolve("{$controller}@delete"));
+
+            $router->post('/', $this->resolve("{$controller}@store"));
+            $router->post('/{id:number}', $this->resolve("{$controller}@update"));
+            $router->post('/{id:number}/delete', $this->resolve("{$controller}@destroy"));
+        });
     }
 
     /**
      * Return the path to the controller.
-     * 
+     *
      * @param  string $controller
      * @return string
      */

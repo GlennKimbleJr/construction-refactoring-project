@@ -1,34 +1,40 @@
-<?php 
+<?php
 
-$route->get('/[index]', 'HomeController@index');
+$auth = new App\Middleware\Auth;
 
-$route->resource('projects');
-$route->get('/projects/{id:number}/complete', 'ProjectsController@complete');
-$route->post('/projects/{id:number}/complete', 'ProjectsController@completed');
-$route->get('/projects/{id:number}/calllog', 'ProjectsController@calllog');
+$route->get('/dashboard', 'HomeController@index')->middleware($auth);
 
-$route->get('/projects/{id:number}/categories', 'ProjectsController@selectCat');
-$route->get('/projects/{id:number}/categories/{category_id:number}/bidders', 'ProjectsController@selectBid');
-$route->post('/projects/{id:number}/bidders', 'ProjectsController@addBid');
+$route->resource('projects')->middleware($auth);
+$route->get('/projects/{id:number}/complete', 'ProjectsController@complete')->middleware($auth);
+$route->post('/projects/{id:number}/complete', 'ProjectsController@completed')->middleware($auth);
+$route->get('/projects/{id:number}/calllog', 'ProjectsController@calllog')->middleware($auth);
 
-$route->post('/bidders/{id:number}/status', 'BiddersController@setStatus');
-$route->get('/bidders/{id:number}/winner[/]', 'BiddersController@winner');
-$route->post('/bidders/{id:number}/winner', 'BiddersController@setWinner');
-$route->get('/bidders/{id:number}/rate[/]', 'BiddersController@rate');
-$route->post('/bidders/{id:number}/rate', 'BiddersController@setRating');
+$route->get('/projects/{id:number}/categories', 'ProjectsController@selectCat')->middleware($auth);
+$route->get('/projects/{id:number}/categories/{category_id:number}/bidders', 'ProjectsController@selectBid')->middleware($auth);
+$route->post('/projects/{id:number}/bidders', 'ProjectsController@addBid')->middleware($auth);
 
-$route->resource('contacts');
-$route->get('/contacts/categories[/]', 'ContactsController@selectCategory');
-$route->get('/contacts/categories/{category_id:number}[/]', 'ContactsController@category');
-$route->get('/contacts/zones[/]', 'ContactsController@selectZone');
-$route->get('/contacts/zones/{zone_id:number}[/]', 'ContactsController@zone');
+$route->post('/bidders/{id:number}/status', 'BiddersController@setStatus')->middleware($auth);
+$route->get('/bidders/{id:number}/winner[/]', 'BiddersController@winner')->middleware($auth);
+$route->post('/bidders/{id:number}/winner', 'BiddersController@setWinner')->middleware($auth);
+$route->get('/bidders/{id:number}/rate[/]', 'BiddersController@rate')->middleware($auth);
+$route->post('/bidders/{id:number}/rate', 'BiddersController@setRating')->middleware($auth);
 
-$route->resource('superintendents');
+$route->resource('contacts')->middleware($auth);
+$route->get('/contacts/categories[/]', 'ContactsController@selectCategory')->middleware($auth);
+$route->get('/contacts/categories/{category_id:number}[/]', 'ContactsController@category')->middleware($auth);
+$route->get('/contacts/zones[/]', 'ContactsController@selectZone')->middleware($auth);
+$route->get('/contacts/zones/{zone_id:number}[/]', 'ContactsController@zone')->middleware($auth);
 
-$route->resource('categories');
+$route->resource('superintendents')->middleware($auth);
 
-$route->resource('zones');
+$route->resource('categories')->middleware($auth);
 
-$route->get('reports', 'ReportsController@index');
-$route->get('reports/bids', 'Reports\BidderParticipationController@index');
-$route->get('reports/score', 'Reports\BidderSatisfactionController@index');
+$route->resource('zones')->middleware($auth);
+
+$route->get('reports', 'ReportsController@index')->middleware($auth);
+$route->get('reports/bids', 'Reports\BidderParticipationController@index')->middleware($auth);
+$route->get('reports/score', 'Reports\BidderSatisfactionController@index')->middleware($auth);
+
+$route->get('auth/login', 'Auth\LoginController@index');
+$route->post('auth/login', 'Auth\LoginController@store');
+$route->get('auth/logout', 'Auth\LogoutController@index');
