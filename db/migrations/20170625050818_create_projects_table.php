@@ -17,7 +17,6 @@ class CreateProjectsTable extends AbstractMigration
               ->addColumn('owner_name', 'string', ['null' => true])
               ->addColumn('owner_phone', 'string', ['null' => true])
               ->addColumn('super_id', 'integer')
-              ->addColumn('zone_id', 'integer')
               ->addColumn('bidduedate', 'string', ['null' => true])
               ->addColumn('completedate', 'string', ['null' => true])
               ->save();

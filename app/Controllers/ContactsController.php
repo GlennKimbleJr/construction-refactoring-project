@@ -1,12 +1,10 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
 use App\Controller;
 use App\Models\Category;
 use App\Models\Contact;
-use App\Models\ContactZone;
-use App\Models\Zone;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ContactsController extends Controller
@@ -42,7 +40,7 @@ class ContactsController extends Controller
 
     /**
      * Display a listing of categories to select.
-     * 
+     *
      * @return \Zend\Diactoros\Response
      */
     public function selectCategory()
@@ -73,38 +71,6 @@ class ContactsController extends Controller
     }
 
     /**
-     * Display a listing of zones to select.
-     * 
-     * @return \Zend\Diactoros\Response
-     */
-    public function selectZone()
-    {
-        return $this->view('contact/view_select_zone', [
-            'zones' => (new Zone($this->db))->get()
-        ]);
-    }
-
-    /**
-     * Display a listing of the resource by zone.
-     *
-     * @param  \Zend\Diactoros\ServerRequest  $request
-     * @param  integer $zone_id
-     * @param  string  $sort  default sort option for query.
-     * @return \Zend\Diactoros\Response
-     */
-    public function zone(Request $request, $zone_id, $sort = 'all')
-    {
-        $type = (new Zone($this->db))
-            ->firstOrFail($zone_id, 'name');
-
-        return $this->view('contact/view', [
-            'header' => "View Contacts - {$type['name']}",
-            'contacts' => (new Contact($this->db))
-                ->getSortableByZone($this->getSortKey($request, $sort), $zone_id)
-        ]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Zend\Diactoros\Response
@@ -112,7 +78,6 @@ class ContactsController extends Controller
     public function create()
     {
         return $this->view('contact/new', [
-            'zones' => (new Zone($this->db))->get(),
             'categories' => (new Category($this->db))->get()
         ]);
     }
@@ -134,10 +99,6 @@ class ContactsController extends Controller
                 'template' => 'contact',
                 'message' => '<br><br>Error! Unable to create contact.'
             ]);
-        } 
-
-        if (isset($request['zone']) && is_array($request['zone'])) {
-            (new ContactZone($this->db))->addZones($contact_id, $request['zone']);
         }
 
         return $this->view('message', [
@@ -156,20 +117,7 @@ class ContactsController extends Controller
     {
         $contact = (new Contact($this->db))->getFirstWithTypeOrFail($id);
 
-        $contactZones = (new ContactZone($this->db))->getZonesByContact($id);
-        
-        $zoneString = '';
-        foreach ($contactZones as $key => $value) {
-            if ($key == 0) {
-                $zoneString = $value['name'];
-                continue;
-            }
-
-            $zoneString .= "&nbsp;&nbsp;&&nbsp;&nbsp;&nbsp; {$value['name']}";
-        }
-
         return $this->view('contact/details', [
-            'zoneString' => $zoneString,
             'contact' => $contact
         ]);
     }
@@ -184,15 +132,9 @@ class ContactsController extends Controller
     {
         $contact = (new Contact($this->db))->firstOrFail($id);
 
-        $contactZones = array_map(function($zone) {
-            return $zone['zone_id'];
-        }, (new ContactZone($this->db))->getZonesByContact($id));
-        
         return $this->view('contact/edit', [
-            'zones' => (new Zone($this->db))->get(),
             'categories' => (new Category($this->db))->get(),
             'contact' => $contact,
-            'contactZones' => $contactZones
         ]);
     }
 
@@ -207,19 +149,11 @@ class ContactsController extends Controller
     {
         $contact = new Contact($this->db);
 
-        $contactZone = new ContactZone($this->db);
-
         $contact->firstOrFail($id);
 
         $request = $request->getParsedBody();
 
         $contact->update($id, $request);
-
-        $contactZone->deleteAll($id);
-
-        if (isset($request['zone']) && is_array($request['zone'])) {
-            $contactZone->addZones($id, $request['zone']);
-        }
 
         return $this->view('message', [
             'template' => 'contact',
@@ -243,7 +177,7 @@ class ContactsController extends Controller
                 <h2>
                     <form method='post' action='/contacts/{$id}/delete'>
                         <button type='submit'>YES</button> | <a href='/contacts/{$id}/edit'>NO</a>
-                    </form> 
+                    </form>
                 </h2>"
         ]);
     }
@@ -270,7 +204,7 @@ class ContactsController extends Controller
 
     /**
      * Return the default sortable key for the $orderable property.
-     * 
+     *
      * @param  \Zend\Diactoros\ServerRequest  $request
      * @param  string  $sort  default sort option for query.
      * @return $string

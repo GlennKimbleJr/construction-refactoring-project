@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -8,14 +8,14 @@ class Contact extends Model
 {
     /**
      * The database table's name.
-     * 
+     *
      * @var string
      */
     protected $table = 'contacts';
 
     /**
      * Store a newly created resource in storage.
-     * 
+     *
      * @param array $request
      */
     public function add($request)
@@ -43,7 +43,7 @@ class Contact extends Model
 
     /**
      * Update an existing resource in storage.
-     * 
+     *
      * @param integer $id
      * @param array $request
      */
@@ -70,7 +70,7 @@ class Contact extends Model
 
     /**
      * Update a column for an existing resource in storage.
-     * 
+     *
      * @param  integer $id
      * @param  string $column
      * @param  string $value
@@ -85,7 +85,7 @@ class Contact extends Model
 
     /**
      * Return the resource.
-     * 
+     *
      * @param  string $sort
      * @return array
      */
@@ -96,7 +96,7 @@ class Contact extends Model
 
     /**
      * Return the resource.
-     * 
+     *
      * @param  string $sort
      * @param  integer $category_id
      * @return array
@@ -107,20 +107,8 @@ class Contact extends Model
     }
 
     /**
-     * Return the resource.
-     * 
-     * @param  string $sort
-     * @param  integer $zone_id
-     * @return array
-     */
-    public function getSortableByZone($sort, $zone_id)
-    {
-        return $this->db->getData("SELECT c.* FROM {$this->table} as c, contacts_zones as cz WHERE cz.contact_id = c.id AND cz.zone_id = ? ORDER BY {$sort}", [$zone_id]);
-    }
-
-    /**
      * Get the the resource with the category name or throw an exception.
-     * 
+     *
      * @param  integer $id
      * @return array
      */
@@ -130,21 +118,8 @@ class Contact extends Model
     }
 
     /**
-     * Get contacts for a category that work within a specific zone.
-     * 
-     * @param  integer $category_id
-     * @param  integer $zone_id
-     * @return array
-     */
-    public function getFromCategoryAndZone($category_id, $zone_id)
-    {
-        return $this->db->getData("SELECT c.id, c.company FROM {$this->table} as c, contacts_zones as cz WHERE c.id = cz.contact_id AND c.category_id = ? AND cz.zone_id = ? ORDER BY c.company", 
-            [$category_id, $zone_id]);
-    }
-
-    /**
      * Return scored contacts by percentage.
-     * 
+     *
      * @return array
      */
     public function getByScorePercentage()
@@ -154,7 +129,7 @@ class Contact extends Model
 
     /**
      * Return bidding contacts by percentage.
-     * 
+     *
      * @return array
      */
     public function getByBidPercentage()

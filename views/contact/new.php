@@ -60,23 +60,6 @@
     </div>
 
     <div class="form-group">
-        <label>
-            Zone(s): | <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a><br>
-        </label><br>
-
-        <?php foreach($zones as $zone): ?>
-        <span>
-            <input
-                type='checkbox'
-                name='zone[]'
-                id='zone_<?=$this->e($zone['id'])?>'
-                value='<?=$this->e($zone['id'])?>'
-            > <?=$this->e($zone['name'])?>
-        </span>
-        <?php endforeach ?>
-    </div>
-
-    <div class="form-group">
         <label>Category: </label>
         <select name="type" class="form-control">
             <?php foreach($categories as $cat): ?>

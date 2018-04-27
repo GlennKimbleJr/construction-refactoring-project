@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -8,24 +8,23 @@ class Project extends Model
 {
     /**
      * The database table's name.
-     * 
+     *
      * @var string
      */
     protected $table = 'projects';
 
     /**
      * Store a newly created resource in storage.
-     * 
+     *
      * @param array $request
      * @return boolean
      */
     public function add($request)
     {
-        $query = $this->db->setData("INSERT INTO `{$this->table}` (name, bidduedate, completedate, zone_id, plans, location, planuser, planpass, owner_name, owner_phone, super_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+        $query = $this->db->setData("INSERT INTO `{$this->table}` (name, bidduedate, completedate, plans, location, planuser, planpass, owner_name, owner_phone, super_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
             $request['name'],
             $request['due3'] . '-' . $request['due1'] . '-' . $request['due2'],
-            '', 
-            $request['zone'],
+            '',
             $request['plans'],
             $request['location'],
             $request['planuser'],
@@ -40,17 +39,16 @@ class Project extends Model
 
     /**
      * Update a exiting resource.
-     * 
+     *
      * @param  integer $id
      * @param  array $request
      * @return boolean
      */
     public function update($id, $request)
     {
-        $query = $this->db->setData("UPDATE projects SET name=?, bidduedate=?, zone_id=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_id=? WHERE id=?", [
+        $query = $this->db->setData("UPDATE projects SET name=?, bidduedate=?, plans=?, location=?, planuser=?, planpass=?, owner_name=?, owner_phone=?, super_id=? WHERE id=?", [
                 $request['name'],
                 $request['due3'] . '-' . $request['due1'] . '-' . $request['due2'],
-                $request['zone'],
                 $request['plans'],
                 $request['location'],
                 $request['planuser'],
@@ -66,7 +64,7 @@ class Project extends Model
 
     /**
      * Mark a project as being complete.
-     * 
+     *
      * @param  integer $id
      */
     public function complete($id)
@@ -76,7 +74,7 @@ class Project extends Model
 
     /**
      * Return a sorted collection of resources.
-     * 
+     *
      * @param  string $sort
      * @return array
      */
@@ -86,19 +84,8 @@ class Project extends Model
     }
 
     /**
-     * Return a sorted collection of resources.
-     * 
-     * @param  integer $id
-     * @return array
-     */
-    public function withZoneNameOrFail($id)
-    {
-        return $this->db->getFirstOrFail("SELECT p.*, z.name as zone_name FROM {$this->table} as p, zones as z WHERE p.zone_id = z.id AND p.id = ?", [$id]);
-    }
-
-    /**
      * Return a sorted collection of resources with the superintendants contact information.
-     * 
+     *
      * @param  integer $id
      * @return array
      */

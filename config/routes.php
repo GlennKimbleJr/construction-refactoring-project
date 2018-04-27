@@ -22,14 +22,10 @@ $route->post('/bidders/{id:number}/rate', 'BiddersController@setRating')->middle
 $route->resource('contacts')->middleware($auth);
 $route->get('/contacts/categories[/]', 'ContactsController@selectCategory')->middleware($auth);
 $route->get('/contacts/categories/{category_id:number}[/]', 'ContactsController@category')->middleware($auth);
-$route->get('/contacts/zones[/]', 'ContactsController@selectZone')->middleware($auth);
-$route->get('/contacts/zones/{zone_id:number}[/]', 'ContactsController@zone')->middleware($auth);
 
 $route->resource('superintendents')->middleware($auth);
 
 $route->resource('categories')->middleware($auth);
-
-$route->resource('zones')->middleware($auth);
 
 $route->get('reports', 'ReportsController@index')->middleware($auth);
 $route->get('reports/bids', 'Reports\BidderParticipationController@index')->middleware($auth);

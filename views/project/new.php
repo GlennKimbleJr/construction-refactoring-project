@@ -102,18 +102,6 @@
     </div>
 
     <div class="form-group">
-        <label>Zone: <a href='' rel='imgtip[0]'><b><u>VIEW MAP</u></b></a></label>
-
-        <select name="zone" class="form-control">
-            <?php foreach($zones as $zone): ?>
-                <option value='<?=$this->e($zone['id'])?>'>
-                    <?=$this->e($zone['name'])?>
-                </option>
-            <?php endforeach ?>
-        </select>
-    </div>
-
-    <div class="form-group">
         <label>Select Superintendent:</label><br>
         <select name="super" class="form-control">
             <option value=""></option>

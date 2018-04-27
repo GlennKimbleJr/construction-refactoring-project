@@ -55,12 +55,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="<?= navClass('zones', $route_path); ?>" href="/zones">
-                  <span data-feather="map-pin"></span>
-                  Zones
-                </a>
-              </li>
-              <li class="nav-item">
                 <a class="<?= navClass('reports', $route_path); ?>" href="/reports">
                   <span data-feather="bar-chart-2"></span>
                   Reports

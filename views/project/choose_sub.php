@@ -2,13 +2,13 @@
 <?php if (count($project)): ?>
     <b>[ <a href='/projects/<?=$this->e($projectId)?>/categories'>GO BACK</a> ]</b><br>
     <br>
-    <b>Choose a <u><?=$this->e($category['name'])?></u> Sub-Contractor</b><br>
+    <b>Choose a <u><?=$this->e($category['name'])?></u> Subcontractor</b><br>
     <br>
 
     <form action='/projects/<?=$this->e($projectId)?>/bidders' method='POST'>
         <p>
             <select name='company' required>
-        
+
             <?php foreach($zoneContacts as $contact): ?>
                 <option value='<?=$this->e($contact['id'])?>'>
                     <?=$this->e($contact['company'])?>

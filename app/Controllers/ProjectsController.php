@@ -8,7 +8,6 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Project;
 use App\Models\Superintendent;
-use App\Models\Zone;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ProjectsController extends Controller
@@ -51,7 +50,6 @@ class ProjectsController extends Controller
         return $this->view('project/new', [
             'title' => 'Add New Project',
             'supers' => (new Superintendent($this->db))->get('*', 'ORDER BY name'),
-            'zones' => (new Zone($this->db))->get('*', 'ORDER BY name')
         ]);
     }
 
@@ -100,7 +98,7 @@ class ProjectsController extends Controller
      */
     public function edit($id)
     {
-        $project = (new Project($this->db))->withZoneNameOrFail($id);
+        $project = (new Project($this->db))->firstOrFail($id);
 
         $date1 = substr($project['bidduedate'], 5, -3);
         $date2 = substr($project['bidduedate'], 8);
@@ -126,7 +124,6 @@ class ProjectsController extends Controller
             'date3' => $date3,
             'date4' => $date4,
             'supers' => (new Superintendent($this->db))->get('*', 'ORDER BY name'),
-            'zones' => (new Zone($this->db))->get('*', 'ORDER BY name')
         ]);
     }
 
@@ -266,9 +263,6 @@ class ProjectsController extends Controller
 
         $category = (new Category($this->db))->firstOrFail($id);
 
-        $zoneContacts = (new Contact($this->db))
-            ->getFromCategoryAndZone($category['id'], $project['zone_id']);
-
         $bidders = (new Bidder($this->db))
             ->getSelectedBiddersForProjectByCategory($id, $category_id);
 
@@ -277,7 +271,6 @@ class ProjectsController extends Controller
             'projectId' => $id,
             'category' => $category,
             'project' => $project,
-            'zoneContacts' => $zoneContacts,
             'bidders' => $bidders,
         ]);
     }

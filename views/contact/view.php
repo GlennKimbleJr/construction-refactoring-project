@@ -5,7 +5,6 @@
     </div>
     <div class="col text-right">
             view by:
-            <a href='/contacts/zones'>zone</a> |
             <a href='/contacts/categories'>type</a>
     </div>
 </div>
