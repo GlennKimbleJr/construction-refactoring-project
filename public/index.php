@@ -15,11 +15,15 @@ catch (\RuntimeException $e) {
 }
 
 catch (League\Route\Http\Exception\NotFoundException $e) {
-    echo displayError($container->get('League\Plates\Engine'), $e->getMessage());
+    echo '<h1>404</h1>';
 }
 
 catch (App\Exceptions\MissingRecordException $e) {
     echo displayError($container->get('League\Plates\Engine'), $e->getMessage());
+}
+
+catch (App\Exceptions\UnauthenticatedUserException $e) {
+    header('Location: /auth/login'); die();
 }
 
 function displayError($template, $message)

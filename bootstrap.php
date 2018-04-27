@@ -4,10 +4,6 @@ error_reporting(E_ALL);
 
 require 'vendor/autoload.php';
 
-require 'app/ExceptionHandler.php';
-
-set_exception_handler('exception_handler');
-
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
