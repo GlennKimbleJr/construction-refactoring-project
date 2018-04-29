@@ -21,17 +21,10 @@ class Project extends Model
      */
     public function add($request)
     {
-        $query = $this->db->setData("INSERT INTO `{$this->table}` (name, bidduedate, completedate, plans, location, planuser, planpass, owner_name, owner_phone, super_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+        $query = $this->db->setData("INSERT INTO `{$this->table}` (name, bidduedate, location) VALUES (?, ?, ?)", [
             $request['name'],
             $request['due3'] . '-' . $request['due1'] . '-' . $request['due2'],
-            '',
-            $request['plans'],
-            $request['location'],
-            $request['planuser'],
-            $request['planpass'],
-            $request['owner_name'],
-            $request['owner_phone'],
-            $request['super']
+            $request['location']
         ]);
 
         return $this->db->updated($query);
